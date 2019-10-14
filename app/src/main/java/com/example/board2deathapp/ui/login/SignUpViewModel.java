@@ -1,4 +1,4 @@
-package com.example.board2deathapp.ui.home;
+package com.example.board2deathapp.ui.login;
 
         import androidx.lifecycle.LiveData;
         import androidx.lifecycle.MutableLiveData;
