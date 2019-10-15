@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1060615198960-ekrkovvkohfq14j68g793fv6g8ummmce.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.board2deathapp",
+            "certificate_hash": "64317737397b4920b18807b0ccd48d0614795964"
+          }
+        },
+        {
           "client_id": "1060615198960-fo8rr0s8gjsq0uc73dmqqkdqqrv1dqvn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

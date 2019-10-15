@@ -1,7 +1,6 @@
 package com.example.board2deathapp.ui.login;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,18 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.board2deathapp.LandingActivity;
+import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,20 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
-    private LoginViewModel loginViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        loginViewModel =
-                ViewModelProviders.of(this).get(LoginViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_login, container, false);
-        final TextView textView = root.findViewById(R.id.text_login);
-        loginViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         final Button sign_up = root.findViewById(R.id.btnSignup);
         sign_up.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -70,23 +55,29 @@ public class LoginFragment extends Fragment {
                 // Validate If entered credentials are valid
                 if (isUser(name,password)) {
                     FirebaseAuth fba = FirebaseAuth.getInstance();
-                    fba.signInWithEmailAndPassword(name, password)
-                            .addOnCompleteListener((Activity)getContext(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("LOGIN", "signInWithEmail:success");
-                                Intent land_activity = new Intent(getActivity().getApplicationContext(), LandingActivity.class);
-                                startActivity(land_activity);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("LOGIN ERROR", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(getActivity(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    Activity current_activity = (Activity) getContext();
+                    if( current_activity != null) {
+                        fba.signInWithEmailAndPassword(name, password)
+                                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            Log.d("LOGIN", "signInWithEmail:success");
+                                            LoginActivity current_activity = (LoginActivity) getActivity();
+                                            if (current_activity != null) {
+                                                current_activity.navigateToLanding();
+                                            }
+
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            Log.w("LOGIN ERROR", "signInWithEmail:failure", task.getException());
+                                            Toast.makeText(getActivity(), "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
                 }
 
             }

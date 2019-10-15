@@ -1,6 +1,5 @@
 package com.example.board2deathapp.ui.login;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+
+import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,12 +23,9 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignUpFragment extends Fragment {
 
     private static String tag = "SIGNUP";
-    private com.example.board2deathapp.ui.login.SignUpViewModel SignUpViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SignUpViewModel =
-                ViewModelProviders.of(this).get(SignUpViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_signup, container, false);
         Log.d("CHECKPOINT", "Sign up fragment created.");
 
@@ -49,7 +46,14 @@ public class SignUpFragment extends Fragment {
                 }
                 String email = ((EditText)root.findViewById(R.id.ediEmail)).getText().toString();
 
-                registerInDatabase(user_name,password,email);
+                if(registerInDatabase(user_name,password,email)){
+
+                    //TODO Add code to get user instance
+                    LoginActivity current_activity = (LoginActivity) getActivity();
+                    if(current_activity != null){
+                        current_activity.navigateToLanding();
+                    }
+                }
             }
         });
         return root;
@@ -58,21 +62,31 @@ public class SignUpFragment extends Fragment {
     private boolean registerInDatabase(String user_name, final String password, String email){
         Log.d(SignUpFragment.tag, "USER:"+user_name+" PASS:" +password+ " EMAIL:"+email);
         final FirebaseAuth fba = FirebaseAuth.getInstance();
-        fba.createUserWithEmailAndPassword(user_name, password)
-                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseUser user = fba.getCurrentUser();
-                    Toast.makeText(getActivity(), "Creation of account successful",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d("Signup Error", task.getException().toString());
-                    Toast.makeText(getActivity(), "Create Account Failed, try again later",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        LoginActivity current_activity = (LoginActivity)getActivity();
+        if(current_activity != null) {
+            fba.createUserWithEmailAndPassword(user_name, password)
+                    .addOnCompleteListener(current_activity, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = fba.getCurrentUser();
+                                if(user != null) {
+                                    Log.d(tag, user.toString());
+                                }
+                                Toast.makeText(getActivity(), "Creation of account successful",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Exception error = task.getException();
+                                if(error != null){
+                                    Log.d("Sign up Error", error.toString());
+                                    Toast.makeText(getActivity(), "Create Account Failed, try again later",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        }
+                    });
+        }
         return true;
     }
 
