@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060615198960",
+    "firebase_url": "https://board2death.firebaseio.com",
+    "project_id": "board2death",
+    "storage_bucket": "board2death.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060615198960:android:06e517e46fb49959250a35",
+        "android_client_info": {
+          "package_name": "com.example.board2deathapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060615198960-fo8rr0s8gjsq0uc73dmqqkdqqrv1dqvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.board2deathapp",
+            "certificate_hash": "5e9bf32a9f844256f4cbca85bfa240f57164f5f2"
+          }
+        },
+        {
+          "client_id": "1060615198960-oh06tcm1lnuckk1t5p5sak7pejv0635a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT_7fw21UokvH-WGj6tTqGJZgXrXFa72w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060615198960-oh06tcm1lnuckk1t5p5sak7pejv0635a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
