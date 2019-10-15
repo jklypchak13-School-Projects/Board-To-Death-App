@@ -4,7 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="user_name">Username</string>
-    <string name="email">E-mail</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="create_account">Create Account</string>
     <string name="login">Log In</string>
