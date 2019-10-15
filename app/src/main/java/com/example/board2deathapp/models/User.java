@@ -13,13 +13,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class User implements OnCompleteListener<AuthResult> {
+public class User {
     private static String TAG = "USER";
 
     private String mUserName;
     private String mEmail;
     private boolean mIsAdmin;
-    private Activity mActiv;
 
     public User() {}
 
@@ -32,36 +31,30 @@ public class User implements OnCompleteListener<AuthResult> {
     }
 
     /**
-     * Login to a User
+     * Login as a User via Email and Password
      *
-     * @param email email associated with an account
-     * @param password password for the account
+     * @param activ the current Activity
+     * @param email the email address to login as
+     * @param password the password for User
      */
     public void login(final Activity activ, final String email, final String password) {
         this.mEmail = email;
-        this.mActiv = activ;
         FirebaseAuth fbAuth = FirebaseAuth.getInstance();
         Log.d(TAG, "Attempting to Login User with email " + this.mEmail);
-        // Check to see if Empty email and password
         if (!email.isEmpty() && !password.isEmpty()) {
-            fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this);
-        }
-    }
-
-    /**
-     * Override onComplete, handles when a task finishes
-     *
-     * @param task to handle its return value
-     */
-    @Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        if (task.isSuccessful()) {
-            Log.d(TAG, "Successfully Logged in User with email " + this.mEmail);
-            Intent landing_activity = new Intent(this.mActiv.getApplicationContext(), LandingActivity.class);
-            mActiv.startActivity(landing_activity);
-        } else {
-            Toast.makeText(this.mActiv, "Invalid Username and/or Password", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "Failed to login in User with email " + this.mEmail);
+            fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(activ, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Successfully Logged in User with email " + email);
+                        Intent landing_activity = new Intent(activ.getApplicationContext(), LandingActivity.class);
+                        activ.startActivity(landing_activity);
+                    } else {
+                        Toast.makeText(activ, "Invalid Username and/or Password", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "Failed to login in User with email " + email);
+                    }
+                }
+            });
         }
     }
 }
