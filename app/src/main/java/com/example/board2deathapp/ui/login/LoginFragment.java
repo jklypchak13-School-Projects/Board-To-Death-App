@@ -1,5 +1,6 @@
 package com.example.board2deathapp.ui.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +22,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
@@ -60,10 +67,26 @@ public class LoginFragment extends Fragment {
                 String name = ((EditText)root.findViewById(R.id.etUserName)).getText().toString();
                 String password = ((EditText)root.findViewById(R.id.etPassword)).getText().toString();
 
-                //Validate If entered credentials are valid
-                if(isUser(name,password)){
-                    Intent land_activity = new Intent(getActivity().getApplicationContext(), LandingActivity.class);
-                    startActivity(land_activity);
+                // Validate If entered credentials are valid
+                if (isUser(name,password)) {
+                    FirebaseAuth fba = FirebaseAuth.getInstance();
+                    fba.signInWithEmailAndPassword(name, password)
+                            .addOnCompleteListener((Activity)getContext(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("LOGIN", "signInWithEmail:success");
+                                Intent land_activity = new Intent(getActivity().getApplicationContext(), LandingActivity.class);
+                                startActivity(land_activity);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("LOGIN ERROR", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(getActivity(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
             }
@@ -78,7 +101,7 @@ public class LoginFragment extends Fragment {
      *
      * @param user_name the username to be checked
      * @param password the password to be checked
-     * @return wheter or not the given user is valid in the database
+     * @return whether or not the given user is valid in the database
      */
     private static boolean isUser(String user_name, String password){
         if(!user_name.equals("") && !password.equals("")){
