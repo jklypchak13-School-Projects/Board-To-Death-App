@@ -22,8 +22,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -66,29 +68,7 @@ public class LoginFragment extends Fragment {
                 // Read the Username and Password
                 String name = ((EditText)root.findViewById(R.id.etUserName)).getText().toString();
                 String password = ((EditText)root.findViewById(R.id.etPassword)).getText().toString();
-
-                // Validate If entered credentials are valid
-                if (isUser(name,password)) {
-                    FirebaseAuth fba = FirebaseAuth.getInstance();
-                    fba.signInWithEmailAndPassword(name, password)
-                            .addOnCompleteListener((Activity)getContext(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("LOGIN", "signInWithEmail:success");
-                                Intent land_activity = new Intent(getActivity().getApplicationContext(), LandingActivity.class);
-                                startActivity(land_activity);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("LOGIN ERROR", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(getActivity(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-
+                new User().login(getActivity(), name, password);
             }
         });
         Log.d("CHECKPOINT","Login Fragment Created");
