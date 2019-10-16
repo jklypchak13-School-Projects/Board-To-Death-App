@@ -26,8 +26,7 @@ public abstract class Model {
      */
     public void create(final DBResponse dbResponse) {
         final Map<String, Object> map = this.toMap();
-        FirebaseFirestore fbStore = FirebaseFirestore.getInstance();
-        fbStore.collection(this.getClass().getName())
+        this.collection()
                 .add(map)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -100,7 +99,6 @@ public abstract class Model {
      */
     public void update(final String document, final DBResponse dbResponse) {
         final Map<String, Object> map = this.toMap();
-        FirebaseFirestore fbStore = FirebaseFirestore.getInstance();
         this.collection()
                 .document(document)
                 .set(map)
