@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class BoardGame extends Model {
     private static String TAG = "BOARDGAME";
-    private String name;
-    private String description;
-    private String owner;
-    private int player_count;
-    private double play_time;
+    public String name;
+    public String description;
+    public String owner;
+    public int player_count;
+    public double play_time;
 
     public BoardGame(String name, String des, String owner, int players, double time, final Activity a){
         this.name = name;
@@ -38,6 +38,9 @@ public class BoardGame extends Model {
             }
         });
     }
+    public BoardGame(){
+
+    }
     
     public String getTitle(){
         return this.name;
@@ -55,4 +58,5 @@ public class BoardGame extends Model {
         attrs.put("play_time", this.play_time);
         return attrs;
     }
+
 }

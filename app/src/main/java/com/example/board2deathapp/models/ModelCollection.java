@@ -13,13 +13,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelCollection {
+public class ModelCollection<T extends Model> {
 
-    private List<Model> data;
+    private List<T> data;
     private Class clazz;
     public ModelCollection(Class clazz){
         this.clazz = clazz;
-        this.data = new ArrayList<Model>();
+        this.data = new ArrayList<T>();
 
     }
 
@@ -32,7 +32,8 @@ public class ModelCollection {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Log.d(this.getClass().getName().toUpperCase(), "Successfully acquired" + q);
-                    ModelCollection.this.data = task.getResult().toObjects(clazz);
+                    ModelCollection.this.data.clear();
+                    ModelCollection.this.data.addAll(task.getResult().toObjects(clazz));
                     if(dbResponse != null){
                         dbResponse.onSuccess(task.getResult(), null);
                     }
@@ -40,8 +41,6 @@ public class ModelCollection {
                 } else {
                     Log.d(this.getClass().getName().toUpperCase(), "Failed to get" + q);
                     if(dbResponse != null) {
-
-
                         dbResponse.onFailure(null);
                     }
                 }

@@ -8,15 +8,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
+import com.example.board2deathapp.models.DBResponse;
+import com.example.board2deathapp.models.Model;
 import com.example.board2deathapp.models.ModelCollection;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +36,12 @@ public class BoardGameFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String TAG = "BOARDGAME";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private List<BoardGame> ITEMS;
+    private ModelCollection<BoardGame> ITEMS;
     private OnListFragmentInteractionListener mListener;
+    private MyBoardGameRecyclerViewAdapter adpt;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -43,8 +50,6 @@ public class BoardGameFragment extends Fragment {
     public BoardGameFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static BoardGameFragment newInstance(int columnCount) {
 
 
@@ -58,10 +63,10 @@ public class BoardGameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ModelCollection temp = new ModelCollection(BoardGame.class);
-        Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", "jklypchak13");
-        temp.read(q, null);
-        ITEMS = temp.getItems();
+
+        ITEMS = new ModelCollection<BoardGame>(BoardGame.class);
+        adpt = new MyBoardGameRecyclerViewAdapter(this.ITEMS.getItems(),mListener);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -81,7 +86,21 @@ public class BoardGameFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyBoardGameRecyclerViewAdapter(this.ITEMS, mListener));
+            recyclerView.setAdapter(adpt);
+            Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", "jklypchak13");
+            this.ITEMS.read(q, new DBResponse(getActivity()) {
+                @Override
+                public <T> void onSuccess(T t, Model m) {
+                    adpt.notifyDataSetChanged();
+                    Log.d(TAG, "Successfully read Board Game list");
+                }
+
+                @Override
+                public <T> void onFailure(T t) {
+                    Log.d(TAG, "Failed to read Board Game List");
+                }
+            });
+
         }
         return view;
     }
