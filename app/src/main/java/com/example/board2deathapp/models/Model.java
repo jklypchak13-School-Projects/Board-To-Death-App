@@ -17,9 +17,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Map;
 
 public abstract class Model {
+    private DocumentReference mDocRef;
 
     /**
-     * Performs the CRUD operation Create
+     * Performs the CRUD operation Create, using a randomly generated ID
      *
      * @param dbResponse an Abstract class that dictates what to do upon a success or a failure.
      *                  Passes in the appropriate values provided by the addOnSuccessListener/addOnFailureListener
@@ -30,9 +31,37 @@ public abstract class Model {
                 .add(map)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(DocumentReference docRef) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Created " + docRef);
-                        dbResponse.onSuccess(docRef);
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Created Document " + documentReference + " with " + map);
+                        dbResponse.onSuccess(documentReference);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(this.getClass().getName().toUpperCase(), "Failed to create" + map + " because " + e);
+                        dbResponse.onFailure(e);
+                    }
+                });
+    }
+
+    /**
+     * Performs the CRUD operation Create, specifying the ID to use
+     *
+     * @param doc The name of the document to Create
+     * @param dbResponse an Abstract class that dictates what to do upon a success or a failure.
+     *                  Passes in the appropriate values provided by the addOnSuccessListener/addOnFailureListener
+     */
+    public void create(final String doc, final DBResponse dbResponse) {
+        final Map<String, Object> map = this.toMap();
+        this.collection()
+                .document(doc)
+                .set(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Created Document named " + doc + " with " + map);
+                        dbResponse.onSuccess(aVoid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -50,21 +79,20 @@ public abstract class Model {
      * @param dbResponse an Abstract class that dictates what to do upon a success or a failure.
      *                  Passes in the appropriate values provided by the addOnSuccessListener/addOnFailureListener
      */
-    public void delete(final String document, final DBResponse dbResponse) {
-        this.collection()
-                .document(document)
+    public void delete(final DBResponse dbResponse) {
+        this.mDocRef
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Destroyed " + document);
+                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Destroyed " + Model.this.mDocRef);
                         dbResponse.onSuccess(aVoid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Failed to Destroy " + document + " because " + e);
+                        Log.d(this.getClass().getName().toUpperCase(), "Failed to Destroy " + Model.this.mDocRef + " because " + e);
                         dbResponse.onFailure(e);
                     }
                 });
@@ -97,22 +125,21 @@ public abstract class Model {
      * @param dbResponse an Abstract class that dictates what to do upon a success or a failure.
      *                  Passes in the appropriate values provided by the addOnSuccessListener/addOnFailureListener
      */
-    public void update(final String document, final DBResponse dbResponse) {
+    public void update(final DBResponse dbResponse) {
         final Map<String, Object> map = this.toMap();
-        this.collection()
-                .document(document)
+        this.mDocRef
                 .set(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Updated " + document + " with " + map);
+                        Log.d(this.getClass().getName().toUpperCase(), "Updated " + Model.this.mDocRef + " with " + map);
                         dbResponse.onSuccess(aVoid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(this.getClass().getName().toUpperCase(), "Failed to update " + document + " with " + map + " because " + e);
+                        Log.w(this.getClass().getName().toUpperCase(), "Failed to update " + Model.this.mDocRef + " with " + map + " because " + e);
                         dbResponse.onSuccess(e);
                     }
                 });
@@ -124,7 +151,7 @@ public abstract class Model {
      * @return CollectionReference that aligns with the name of this
      */
     private CollectionReference collection() {
-        return FirebaseFirestore.getInstance().collection(this.getClass().getName());
+        return FirebaseFirestore.getInstance().collection(this.getClass().getSimpleName());
     }
 
     /**
