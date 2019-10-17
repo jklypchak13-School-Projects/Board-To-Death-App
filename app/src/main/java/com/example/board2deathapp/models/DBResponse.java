@@ -20,7 +20,7 @@ public abstract class DBResponse {
      * @param t the response from a CRUD operation
      * @param <T> The type of response from a CRUD operation
      */
-    public abstract <T> void onSuccess(T t);
+    public abstract <T> void onSuccess(T t, Model m);
 
     /**
      * Handles the case where the DB Request/Operation was unsuccessful,
