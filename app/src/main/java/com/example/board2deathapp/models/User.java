@@ -37,18 +37,6 @@ public class User extends Model {
         this.mIsAdmin = false;
     }
 
-    public String getUserName() {
-        return this.mUserName;
-    }
-
-    public String getEmail() {
-        return this.mEmail;
-    }
-
-    public boolean isAdmin() {
-        return this.mIsAdmin;
-    }
-
     public void signUp(final Activity activ, final String password) {
         if (!this.mEmail.isEmpty() && !this.mUserName.isEmpty() && !password.isEmpty()) {
             Query q = this.collection().whereEqualTo("email", this.mEmail);
@@ -103,18 +91,20 @@ public class User extends Model {
                         Query q = User.this.collection().whereEqualTo("email", email);
                         User.this.read(q, new DBResponse(activ) {
                             @Override
-                            public <T> void onSuccess(T t) {
+                            public <T> void onSuccess(T t, Model m) {
+                                User user = (User)m;
                                 QuerySnapshot snapShot = (QuerySnapshot) t;
                                 if (snapShot == null || snapShot.size() != 1) {
                                     Log.e(TAG, "Store in invalid state, there isn't exactly one user associated with the email " + email);
                                 } else {
-                                    User.this.mDocRef = snapShot.getDocuments().get(0).getReference();
-                                    User.this.fromMap(snapShot.getDocuments().get(0).getData());
+                                    Log.d(TAG, "Are we getting here");
+                                    user.setID(snapShot.getDocuments().get(0).getReference());
+                                    user.fromMap(snapShot.getDocuments().get(0).getData());
                                     // Pass into Main activity
                                     Intent landing_activity = new Intent(this.mActiv.getApplicationContext(), LandingActivity.class);
-                                    activ.startActivity(landing_activity);
+                                    this.mActiv.startActivity(landing_activity);
                                     // Just for testing
-                                    User.this.del(this.mActiv);
+                                    user.del(this.mActiv);
                                 }
                             }
                         });
@@ -130,7 +120,7 @@ public class User extends Model {
     public void del(Activity activ) {
         this.delete(new DBResponse(activ) {
             @Override
-            public <T> void onSuccess(T t) {
+            public <T> void onSuccess(T t, Model m) {
                 Log.d(TAG, "Successfully deleted User from Store" + User.this.mEmail);
                 FirebaseAuth.getInstance().getCurrentUser().delete();
                 Log.d(TAG, "Successfully deleted User from FirebaseAuth" + User.this.mEmail);
@@ -139,7 +129,7 @@ public class User extends Model {
             }
 
             @Override
-            public <T> void onFailure(T t) {
+            public <T> void onFailure(T t, Model m) {
                 Toast.makeText(this.mActiv, "Failed to Delete user, try again later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -148,8 +138,9 @@ public class User extends Model {
     public void up(Activity activ, final String password) {
         this.update(new DBResponse(activ) {
             @Override
-            public <T> void onSuccess(T t) {
-                Log.d(TAG, "Successfully updated User" + User.this.mEmail);
+            public <T> void onSuccess(T t, Model m) {
+                User user = (User)m;
+                Log.d(TAG, "Successfully updated User" + user.mEmail);
             }
         });
         FirebaseAuth.getInstance().getCurrentUser().updateEmail(this.mEmail);

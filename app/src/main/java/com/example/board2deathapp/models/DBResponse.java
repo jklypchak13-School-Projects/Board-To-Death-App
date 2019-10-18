@@ -21,8 +21,30 @@ public abstract class DBResponse {
      * @param t the response from a CRUD operation
      * @param <T> The type of response from a CRUD operation
      */
+    public <T> void onSuccess(T t, Model m) {
+        Log.d("UNIMPLEMENTED", "DBResponse onSuccess was called with " + t + ", but was unimplemented");
+    }
+
+    /**
+     * Handles the case where the DB Request/Operation was successful,
+     * have access to the current activity via this.mActiv.
+     *
+     * @param t the response from a CRUD operation
+     * @param <T> The type of response from a CRUD operation
+     */
     public <T> void onSuccess(T t) {
         Log.d("UNIMPLEMENTED", "DBResponse onSuccess was called with " + t + ", but was unimplemented");
+    }
+
+    /**
+     * Handles the case where the DB Request/Operation was unsuccessful,
+     * have access to the current activity via this.mActiv.
+     *
+     * @param t the response from a CRUD operation
+     * @param <T> The type of response from a CRUD operation
+     */
+    public <T> void onFailure(T t, Model m) {
+        Log.d("UNIMPLEMENTED", "DBResponse onFailure was called with " + t + ", but was unimplemented");
     }
 
     /**

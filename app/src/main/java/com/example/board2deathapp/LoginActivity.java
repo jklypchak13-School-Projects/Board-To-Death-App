@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.ui.login.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
+
 
     private static final String tag = "LOGIN";
     @Override
@@ -20,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.login_fragment_container);
-
         if(frag == null){
             frag = new LoginFragment();
             fm.beginTransaction().add(R.id.login_fragment_container, frag).commit();
@@ -35,5 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(tag, "Navigating to the Landing Page");
         Intent land_activity = new Intent(getApplicationContext(), LandingActivity.class);
         startActivity(land_activity);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 }
