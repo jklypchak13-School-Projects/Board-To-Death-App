@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment {
                 // Read the Username and Password
                 String name = ((EditText) root.findViewById(R.id.etUserName)).getText().toString();
                 String password = ((EditText) root.findViewById(R.id.etPassword)).getText().toString();
-                new User().login(getActivity(), name, password);
+                new User(name).signIn(getActivity(), password);
             }
         });
         Log.d("CHECKPOINT","Login Fragment Created");
