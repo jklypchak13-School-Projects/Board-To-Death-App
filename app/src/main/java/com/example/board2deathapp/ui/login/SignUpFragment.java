@@ -1,6 +1,8 @@
 package com.example.board2deathapp.ui.login;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,82 +14,102 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.board2deathapp.models.DBResponse;
+import com.example.board2deathapp.models.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpFragment extends Fragment {
 
-    private static String tag = "SIGNUP";
+    private static String TAG = "SIGNUP";
+    // TODO: better solution! This is bad, but suitable for the time being
+    private boolean canSignUp = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_signup, container, false);
         Log.d("CHECKPOINT", "Sign up fragment created.");
 
-        Button sign_up = root.findViewById(R.id.btnSignup);
-        sign_up.setOnClickListener(new View.OnClickListener() {
+        EditText usernameField = (EditText)root.findViewById(R.id.etUserName);
+        usernameField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                User.uniqueUsername(editable.toString(), new DBResponse(getActivity()) {
+                    @Override
+                    public <T> void onSuccess(T t) {
+                        Log.d(TAG, "Username is valid");
+                        canSignUp = true;
+                    }
+
+                    @Override
+                    public <T> void onFailure(T t) {
+                        Log.d(TAG, "Username is already taken");
+                        canSignUp = false;
+                    }
+                });
+            }
+        });
+        EditText emailField = (EditText)root.findViewById(R.id.ediEmail);
+        emailField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                User.uniqueEmail(editable.toString(), new DBResponse(getActivity()) {
+                    @Override
+                    public <T> void onSuccess(T t) {
+                        Log.d(TAG, "Email is valid");
+                        canSignUp = true;
+                    }
+
+                    @Override
+                    public <T> void onFailure(T t) {
+                        Log.d(TAG, "Email is already taken");
+                        canSignUp = false;
+                    }
+                });
+            }
+        });
+
+        final EditText passwordField = (EditText)root.findViewById(R.id.etPassword);
+        passwordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Log.d(TAG, "password is " + isValidPassword(passwordField.toString()));
+                canSignUp = isValidPassword(passwordField.toString());
+            }
+        });
+        Button signUp = root.findViewById(R.id.btnSignup);
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String user_name = ((EditText)root.findViewById(R.id.etUserName)).getText().toString();
 
-                if (user_name.isEmpty()) {
-                    return;
-                }
-
                 String password = ((EditText)root.findViewById(R.id.etPassword)).getText().toString();
-
-                if (!isValidPassword(password)) {
-                    return;
-                }
                 String email = ((EditText)root.findViewById(R.id.ediEmail)).getText().toString();
-
-                if(registerInDatabase(user_name,password,email)){
-
-                    //TODO Add code to get user instance
-                    LoginActivity current_activity = (LoginActivity) getActivity();
-                    if(current_activity != null){
-                        current_activity.navigateToLanding();
-                    }
+                User user = new User(email, user_name);
+                if (canSignUp) {
+                    user.signUp(getActivity(), password);
                 }
             }
         });
         return root;
-    }
-
-    private boolean registerInDatabase(String user_name, final String password, String email){
-        Log.d(SignUpFragment.tag, "USER:"+user_name+" PASS:" +password+ " EMAIL:"+email);
-        final FirebaseAuth fba = FirebaseAuth.getInstance();
-        LoginActivity current_activity = (LoginActivity)getActivity();
-        if(current_activity != null) {
-            fba.createUserWithEmailAndPassword(user_name, password)
-                    .addOnCompleteListener(current_activity, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = fba.getCurrentUser();
-                                if(user != null) {
-                                    Log.d(tag, user.toString());
-                                }
-                                Toast.makeText(getActivity(), "Creation of account successful",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                Exception error = task.getException();
-                                if(error != null){
-                                    Log.d("Sign up Error", error.toString());
-                                    Toast.makeText(getActivity(), "Create Account Failed, try again later",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        }
-                    });
-        }
-        return true;
     }
 
     /**

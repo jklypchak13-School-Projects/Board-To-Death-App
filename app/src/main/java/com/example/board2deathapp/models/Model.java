@@ -17,7 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Map;
 
 public abstract class Model {
-    private DocumentReference mDocRef;
+    protected DocumentReference mDocRef;
 
     /**
      * Performs the CRUD operation Create, using a randomly generated ID
@@ -150,8 +150,8 @@ public abstract class Model {
      *
      * @return CollectionReference that aligns with the name of this
      */
-    private CollectionReference collection() {
-        return FirebaseFirestore.getInstance().collection(this.getClass().getSimpleName());
+    protected CollectionReference collection() {
+        return FirebaseFirestore.getInstance().collection(this.getClass().getSimpleName().toLowerCase());
     }
 
     /**
@@ -160,4 +160,6 @@ public abstract class Model {
      * @return Map<String, Object> that can be given to Firebase
      */
     abstract Map<String, Object> toMap();
+
+    abstract void fromMap(Map<String, Object> map);
 }

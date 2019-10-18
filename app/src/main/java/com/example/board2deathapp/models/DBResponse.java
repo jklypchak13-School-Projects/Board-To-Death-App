@@ -1,9 +1,10 @@
 package com.example.board2deathapp.models;
 
 import android.app.Activity;
+import android.util.Log;
 
 public abstract class DBResponse {
-    private Activity mActiv;
+    protected Activity mActiv;
 
     /**
      * Constructs a DBResponse given an Activity
@@ -20,7 +21,9 @@ public abstract class DBResponse {
      * @param t the response from a CRUD operation
      * @param <T> The type of response from a CRUD operation
      */
-    public abstract <T> void onSuccess(T t);
+    public <T> void onSuccess(T t) {
+        Log.d("UNIMPLEMENTED", "DBResponse onSuccess was called with " + t + ", but was unimplemented");
+    }
 
     /**
      * Handles the case where the DB Request/Operation was unsuccessful,
@@ -29,5 +32,7 @@ public abstract class DBResponse {
      * @param t the response from a CRUD operation
      * @param <T> The type of response from a CRUD operation
      */
-    public abstract <T> void onFailure(T t);
+    public <T> void onFailure(T t) {
+        Log.d("UNIMPLEMENTED", "DBResponse onFailure was called with " + t + ", but was unimplemented");
+    }
 }

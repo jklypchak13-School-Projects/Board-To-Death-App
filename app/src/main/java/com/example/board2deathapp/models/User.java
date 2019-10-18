@@ -8,12 +8,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.board2deathapp.LandingActivity;
+import com.example.board2deathapp.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class User {
+import java.util.HashMap;
+import java.util.Map;
+
+public class User extends Model {
     private static String TAG = "USER";
 
     private String mUserName;
@@ -22,12 +31,56 @@ public class User {
 
     public User() {}
 
+    public User(String email, String username) {
+        this.mEmail = email;
+        this.mUserName = username;
+        this.mIsAdmin = false;
+    }
+
     public String getUserName() {
         return this.mUserName;
     }
 
     public String getEmail() {
         return this.mEmail;
+    }
+
+    public boolean isAdmin() {
+        return this.mIsAdmin;
+    }
+
+    public void signUp(final Activity activ, final String password) {
+        if (!this.mEmail.isEmpty() && !this.mUserName.isEmpty() && !password.isEmpty()) {
+            Query q = this.collection().whereEqualTo("email", this.mEmail);
+            this.read(q, new DBResponse(activ) {
+                @Override
+                public <T> void onSuccess(T t) {
+                    if (t != null) {
+                        QuerySnapshot snap = (QuerySnapshot) t;
+                        if (snap.isEmpty()) {
+                            User.this.create(new DBResponse(activ) {
+                                @Override
+                                public <T> void onSuccess(T t) {
+                                    User.this.mDocRef = (DocumentReference) t;
+                                    FirebaseAuth.getInstance().
+                                            createUserWithEmailAndPassword(User.this.mEmail, password).
+                                            addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                                @Override
+                                                public void onSuccess(AuthResult authResult) {
+                                                    // Pass User instance here
+                                                    Intent landing_activity = new Intent(activ.getApplicationContext(), LandingActivity.class);
+                                                    activ.startActivity(landing_activity);
+                                                }
+                                            });
+                                }
+                            });
+                        } else {
+                            Toast.makeText(this.mActiv, "Email is already taken", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -47,8 +100,24 @@ public class User {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "Successfully Logged in User with email " + email);
-                        Intent landing_activity = new Intent(activ.getApplicationContext(), LandingActivity.class);
-                        activ.startActivity(landing_activity);
+                        Query q = User.this.collection().whereEqualTo("email", email);
+                        User.this.read(q, new DBResponse(activ) {
+                            @Override
+                            public <T> void onSuccess(T t) {
+                                QuerySnapshot snapShot = (QuerySnapshot) t;
+                                if (snapShot == null || snapShot.size() != 1) {
+                                    Log.e(TAG, "Store in invalid state, there isn't exactly one user associated with the email " + email);
+                                } else {
+                                    User.this.mDocRef = snapShot.getDocuments().get(0).getReference();
+                                    User.this.fromMap(snapShot.getDocuments().get(0).getData());
+                                    // Pass into Main activity
+                                    Intent landing_activity = new Intent(this.mActiv.getApplicationContext(), LandingActivity.class);
+                                    activ.startActivity(landing_activity);
+                                    // Just for testing
+                                    User.this.del(this.mActiv);
+                                }
+                            }
+                        });
                     } else {
                         Toast.makeText(activ, "Invalid Username and/or Password", Toast.LENGTH_LONG).show();
                         Log.d(TAG, "Failed to login in User with email " + email);
@@ -56,5 +125,97 @@ public class User {
                 }
             });
         }
+    }
+
+    public void del(Activity activ) {
+        this.delete(new DBResponse(activ) {
+            @Override
+            public <T> void onSuccess(T t) {
+                Log.d(TAG, "Successfully deleted User from Store" + User.this.mEmail);
+                FirebaseAuth.getInstance().getCurrentUser().delete();
+                Log.d(TAG, "Successfully deleted User from FirebaseAuth" + User.this.mEmail);
+                Intent signInActivity = new Intent(this.mActiv.getApplicationContext(), LoginActivity.class);
+                this.mActiv.startActivity(signInActivity);
+            }
+
+            @Override
+            public <T> void onFailure(T t) {
+                Toast.makeText(this.mActiv, "Failed to Delete user, try again later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void up(Activity activ, final String password) {
+        this.update(new DBResponse(activ) {
+            @Override
+            public <T> void onSuccess(T t) {
+                Log.d(TAG, "Successfully updated User" + User.this.mEmail);
+            }
+        });
+        FirebaseAuth.getInstance().getCurrentUser().updateEmail(this.mEmail);
+        FirebaseAuth.getInstance().getCurrentUser().updatePassword(password);
+        Log.d(TAG, "Updated User in FirebaseAuth " + User.this.mEmail);
+    }
+
+    public static void uniqueEmail(final String email, final DBResponse dbResponse) {
+        FirebaseFirestore.getInstance()
+                .collection("user")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult() != null && task.getResult().isEmpty()) {
+                                Log.d(TAG, "Email is unique " + email);
+                                dbResponse.onSuccess(null);
+                            } else {
+                                Log.d(TAG, "Email is not unique " + email);
+                                dbResponse.onFailure(null);
+                            }
+                        } else {
+                            Log.d(TAG, "Failed to Query FireStore for Email " + email);
+                        }
+                    }
+                });
+    }
+
+    public static void uniqueUsername(final String username, final DBResponse dbResponse) {
+        FirebaseFirestore.getInstance()
+                .collection("user")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult() != null && task.getResult().isEmpty()) {
+                                Log.d(TAG, "Username is unique " + username);
+                                dbResponse.onSuccess(null);
+                            } else {
+                                Log.d(TAG, "Username is not unique " + username);
+                                dbResponse.onFailure(null);
+                            }
+                        } else {
+                            Log.d(TAG, "Failed to Query FireStore for Username " + username);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", this.mUserName);
+        map.put("email", this.mEmail);
+        map.put("isAdmin", this.mIsAdmin);
+        return map;
+    }
+
+    @Override
+    public void fromMap(@NonNull Map<String, Object> map) {
+        this.mIsAdmin = (boolean)map.get("isAdmin");
+        this.mUserName = (String)map.get("username");
+        this.mEmail = (String)map.get("email");
     }
 }
