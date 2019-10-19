@@ -1,9 +1,13 @@
 package com.example.board2deathapp.ui.boardgame;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +23,7 @@ import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Model;
 import com.example.board2deathapp.models.ModelCollection;
+import com.example.board2deathapp.ui.login.LoginFragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -64,8 +69,12 @@ public class BoardGameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        BoardGame temp = new BoardGame("Catan", "A game", "jklypchak13", 5, 3, getActivity());
+        Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("name", "Flatline");
+
+
         ITEMS = new ModelCollection<BoardGame>(BoardGame.class);
-        adpt = new MyBoardGameRecyclerViewAdapter(this.ITEMS.getItems(),mListener);
+        this.adpt = new MyBoardGameRecyclerViewAdapter(this.ITEMS.getItems(),mListener);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -78,15 +87,16 @@ public class BoardGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_boardgame_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        View rview = view.findViewById(R.id.list);
+        if (rview instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            RecyclerView recyclerView = (RecyclerView) rview;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(adpt);
+            recyclerView.setAdapter(this.adpt);
             Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", "jklypchak13");
             this.ITEMS.read(q, new DBResponse(getActivity()) {
                 @Override
@@ -100,7 +110,17 @@ public class BoardGameFragment extends Fragment {
                     Log.d(TAG, "Failed to read Board Game List");
                 }
             });
-
+            view.findViewById(R.id.add_game).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    Fragment frag = fm.findFragmentById(R.id.nav_host_fragment);
+                    if(frag == null){
+                        frag = new LoginFragment();
+                        fm.beginTransaction().add(R.id.nav_host_fragment, frag).commit();
+                    }
+                }
+            });
         }
         return view;
     }
@@ -137,4 +157,5 @@ public class BoardGameFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(BoardGame item);
     }
+
 }
