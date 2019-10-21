@@ -4,9 +4,12 @@ import android.util.Log;
 import android.view.Display;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -15,11 +18,11 @@ import java.util.List;
 
 public class ModelCollection<T extends Model> {
 
-    private List<T> data;
+    private List<Model> data;
     private Class clazz;
     public ModelCollection(Class clazz){
         this.clazz = clazz;
-        this.data = new ArrayList<T>();
+        this.data = new ArrayList();
 
     }
 
@@ -46,5 +49,21 @@ public class ModelCollection<T extends Model> {
                 }
             }
         });
+    }
+
+    public void read_current(final Query q, final DBResponse dbResponse){
+        q.addSnapshotListener(
+                new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        data.clear();
+                        data.addAll((List<BoardGame>)queryDocumentSnapshots.toObjects(BoardGame.class));
+
+                        if(dbResponse != null){
+                            dbResponse.onSuccess(queryDocumentSnapshots, null);
+                        }
+                    }
+                }
+        );
     }
 }
