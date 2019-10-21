@@ -35,9 +35,9 @@ public class LoginFragment extends Fragment {
                     transaction.commit();
                     Log.d("CHECKPOINT", "switched fragments");
                 }
+
             }
         });
-
         final Button login = root.findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
             @Override

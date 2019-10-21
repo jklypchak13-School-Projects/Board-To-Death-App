@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.board2deathapp.ui.dashboard.DashboardFragment"
+        android:name="com.example.board2deathapp.ui.boardgame.BoardGameFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
@@ -22,4 +22,9 @@
         android:name="com.example.board2deathapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <activity
+        android:id="@+id/postActivity2"
+        android:name="com.example.board2deathapp.PostActivity"
+        android:label="activity_post"
+        tools:layout="@layout/activity_post" />
 </navigation>

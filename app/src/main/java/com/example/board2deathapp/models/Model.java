@@ -14,10 +14,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Document;
+
 import java.util.Map;
 
 public abstract class Model {
 
+    private DocumentReference id;
     /**
      * Performs the CRUD operation Create
      *
@@ -32,7 +35,7 @@ public abstract class Model {
                     @Override
                     public void onSuccess(DocumentReference docRef) {
                         Log.d(this.getClass().getName().toUpperCase(), "Successfully Created " + docRef);
-                        dbResponse.onSuccess(docRef);
+                        dbResponse.onSuccess(docRef, Model.this);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -58,7 +61,7 @@ public abstract class Model {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(this.getClass().getName().toUpperCase(), "Successfully Destroyed " + document);
-                        dbResponse.onSuccess(aVoid);
+                        dbResponse.onSuccess(aVoid, Model.this);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -82,7 +85,7 @@ public abstract class Model {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Log.d(this.getClass().getName().toUpperCase(), "Successfully acquired" + q);
-                    dbResponse.onSuccess(task.getResult());
+                    dbResponse.onSuccess(task.getResult(), Model.this);
                 } else {
                     Log.d(this.getClass().getName().toUpperCase(), "Failed to get" + q);
                     dbResponse.onFailure(null);
@@ -106,14 +109,14 @@ public abstract class Model {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(this.getClass().getName().toUpperCase(), "Updated " + document + " with " + map);
-                        dbResponse.onSuccess(aVoid);
+                        dbResponse.onSuccess(aVoid, Model.this);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(this.getClass().getName().toUpperCase(), "Failed to update " + document + " with " + map + " because " + e);
-                        dbResponse.onSuccess(e);
+                        dbResponse.onFailure(e);
                     }
                 });
     }
@@ -124,7 +127,7 @@ public abstract class Model {
      * @return CollectionReference that aligns with the name of this
      */
     private CollectionReference collection() {
-        return FirebaseFirestore.getInstance().collection(this.getClass().getName());
+        return FirebaseFirestore.getInstance().collection(this.getClass().getSimpleName().toLowerCase());
     }
 
     /**
@@ -133,4 +136,7 @@ public abstract class Model {
      * @return Map<String, Object> that can be given to Firebase
      */
     abstract Map<String, Object> toMap();
+    public void setID(DocumentReference r){
+        this.id = r;
+    }
 }
