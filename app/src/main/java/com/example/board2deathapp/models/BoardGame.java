@@ -59,4 +59,12 @@ public class BoardGame extends Model {
         return attrs;
     }
 
+    public void fromMap(Map<String, Object> map) {
+        this.description = (String)map.get("description");
+        this.name = (String)map.get("name");
+        this.owner = (String)map.get("owner");
+        this.player_count = (int)map.get("player_count");
+        this.play_time = (double)map.get("play_time");
+    }
+
 }
