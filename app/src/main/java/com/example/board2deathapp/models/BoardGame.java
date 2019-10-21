@@ -28,13 +28,17 @@ public class BoardGame extends Model {
             @Override
             public <T> void onSuccess(T t, Model m) {
                 Log.d(TAG, t.toString());
-                m.setID((DocumentReference)t);
-                Toast.makeText(a.getApplicationContext(),"Successfully Created your Game",Toast.LENGTH_SHORT).show();
+                m.setID((DocumentReference) t);
+                if (a != null) {
+                    Toast.makeText(a.getApplicationContext(), "Successfully Created your Game", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public <T> void onFailure(T t) {
-                Toast.makeText(a.getApplicationContext(), "There was an issue created your game.", Toast.LENGTH_SHORT).show();
+                if (a != null) {
+                    Toast.makeText(a.getApplicationContext(), "There was an issue created your game.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

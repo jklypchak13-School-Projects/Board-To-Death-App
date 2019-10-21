@@ -1,6 +1,8 @@
 package com.example.board2deathapp;
 
 import android.os.Bundle;
+
+import com.example.board2deathapp.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -11,6 +13,7 @@ import android.util.Log;
 
 public class LandingActivity extends AppCompatActivity {
 
+    private User current_user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,5 +64,9 @@ public class LandingActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         Log.d("CHECKPOINT", "Successfully destroyed the activity.");
+    }
+
+    public User getUser(){
+        return current_user;
     }
 }
