@@ -145,6 +145,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -164,7 +165,11 @@ import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Model;
 import com.example.board2deathapp.models.ModelCollection;
 import com.example.board2deathapp.ui.login.LoginFragment;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -239,24 +244,23 @@ public class BoardGameFragment extends Fragment {
             }
             recyclerView.setAdapter(this.adpt);
             Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
-            this.ITEMS.read(q, new DBResponse(getActivity()) {
-                @Override
-                public <T> void onSuccess(T t, Model m) {
-                    adpt.notifyDataSetChanged();
-                    Log.d(TAG, "Successfully read Board Game list");
-                }
+            q.addSnapshotListener(
+                    new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            ITEMS.getItems().clear();
+                            ITEMS.getItems().addAll(queryDocumentSnapshots.toObjects(BoardGame.class));
+                            adpt.notifyDataSetChanged();
+                        }
+                    }
+            );
 
-                @Override
-                public <T> void onFailure(T t) {
-                    Log.d(TAG, "Failed to read Board Game List");
-                }
-            });
             view.findViewById(R.id.add_game).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DialogFragment temp = new AddBoardGameFragment();
-                    temp.show(fm,"hello?");
+                    temp.show(fm,"ADD_BOARDGAME");
                 }
             });
         }
