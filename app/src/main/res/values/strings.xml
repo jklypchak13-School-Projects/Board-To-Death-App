@@ -10,6 +10,7 @@
     <string name="login">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="add_game_button">Add New Game</string>
+    <string name ="title_boardgame">Board Games</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="reAuthenticate">Re-Authenticate</string>

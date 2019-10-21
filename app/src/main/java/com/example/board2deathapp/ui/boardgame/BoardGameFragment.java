@@ -145,6 +145,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -186,7 +187,7 @@ public class BoardGameFragment extends Fragment {
     private ModelCollection<BoardGame> ITEMS;
     private OnListFragmentInteractionListener mListener;
     private MyBoardGameRecyclerViewAdapter adpt;
-
+    private String current_user;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -208,7 +209,8 @@ public class BoardGameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BoardGame temp = new BoardGame("Catan", "A game", "jklypchak13", 5, 3, getActivity());
+        //TODO Replace with actual reference to the current username
+        current_user = "jklypchak13";
         Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("name", "Flatline");
 
 
@@ -236,7 +238,7 @@ public class BoardGameFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-            Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", "jklypchak13");
+            Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
             this.ITEMS.read(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t, Model m) {
@@ -253,11 +255,8 @@ public class BoardGameFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
-                    Fragment frag = fm.findFragmentById(R.id.nav_host_fragment);
-                    if(frag == null){
-                        frag = new LoginFragment();
-                        fm.beginTransaction().add(R.id.nav_host_fragment, frag).commit();
-                    }
+                    DialogFragment temp = new AddBoardGameFragment();
+                    temp.show(fm,"hello?");
                 }
             });
         }
@@ -296,5 +295,6 @@ public class BoardGameFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(BoardGame item);
     }
+
 
 }
