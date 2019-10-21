@@ -244,16 +244,17 @@ public class BoardGameFragment extends Fragment {
             }
             recyclerView.setAdapter(this.adpt);
             Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
-            q.addSnapshotListener(
-                    new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            ITEMS.getItems().clear();
-                            ITEMS.getItems().addAll(queryDocumentSnapshots.toObjects(BoardGame.class));
-                            adpt.notifyDataSetChanged();
-                        }
-                    }
-            );
+            ITEMS.read_current(q, new DBResponse(getActivity()) {
+                @Override
+                public <T> void onSuccess(T t, Model m) {
+                    adpt.notifyDataSetChanged();
+                }
+                @Override
+                public <T> void onFailure(T t){
+
+                }
+
+            });
 
             view.findViewById(R.id.add_game).setOnClickListener(new View.OnClickListener() {
                 @Override
