@@ -22,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignUpFragment extends Fragment {
 
     private static String TAG = "SIGNUP";
-    // TODO: better solution! This is bad, but suitable for the time being
-    private boolean canSignUp = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,42 +42,16 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public <T> void onSuccess(T t) {
                         Log.d(TAG, "Username is valid");
-                        canSignUp = true;
                     }
 
                     @Override
                     public <T> void onFailure(T t) {
                         Log.d(TAG, "Username is already taken");
-                        canSignUp = false;
                     }
                 });
             }
         });
         EditText emailField = (EditText)root.findViewById(R.id.ediEmail);
-        emailField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                User.uniqueEmail(editable.toString(), new DBResponse(getActivity()) {
-                    @Override
-                    public <T> void onSuccess(T t) {
-                        Log.d(TAG, "Email is valid");
-                        canSignUp = true;
-                    }
-
-                    @Override
-                    public <T> void onFailure(T t) {
-                        Log.d(TAG, "Email is already taken");
-                        canSignUp = false;
-                    }
-                });
-            }
-        });
 
         final EditText passwordField = (EditText)root.findViewById(R.id.etPassword);
         passwordField.addTextChangedListener(new TextWatcher() {
@@ -92,7 +64,6 @@ public class SignUpFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 Log.d(TAG, "password is " + isValidPassword(passwordField.toString()));
-                canSignUp = isValidPassword(passwordField.toString());
             }
         });
         Button signUp = root.findViewById(R.id.btnSignup);
@@ -103,10 +74,7 @@ public class SignUpFragment extends Fragment {
 
                 String password = ((EditText)root.findViewById(R.id.etPassword)).getText().toString();
                 String email = ((EditText)root.findViewById(R.id.ediEmail)).getText().toString();
-                User user = new User(email, user_name);
-                if (canSignUp) {
-                    user.signUp(getActivity(), password);
-                }
+                new User(user_name).signUp(getActivity(), email, password);
             }
         });
         return root;

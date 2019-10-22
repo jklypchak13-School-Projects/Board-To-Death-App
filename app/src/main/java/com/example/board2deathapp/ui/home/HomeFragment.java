@@ -1,9 +1,11 @@
 package com.example.board2deathapp.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.User;
 
 public class HomeFragment extends Fragment {
 
@@ -28,6 +32,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+            }
+        });
+        Button deleteButton = root.findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user = ((LandingActivity)getActivity()).getUser();
+               Log.d("HOME", "" + user.getUsername());
+               user.delete(getActivity());
             }
         });
         return root;
