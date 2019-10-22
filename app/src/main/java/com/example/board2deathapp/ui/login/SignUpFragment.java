@@ -17,9 +17,11 @@ import androidx.fragment.app.Fragment;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.User;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpFragment extends Fragment {
+
+    private boolean isValidUsername;
+    private boolean isValidPassword;
 
     private static String TAG = "SIGNUP";
 
@@ -41,12 +43,14 @@ public class SignUpFragment extends Fragment {
                 User.uniqueUsername(editable.toString(), new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
+                        isValidUsername = true;
                         Log.d(TAG, "Username is valid");
                     }
 
                     @Override
                     public <T> void onFailure(T t) {
-                        Log.d(TAG, "Username is already taken");
+                        isValidUsername = false;
+                        Toast.makeText(this.mActiv, "Username is already taken", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -59,12 +63,19 @@ public class SignUpFragment extends Fragment {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    if (User.isValidPassword(charSequence.toString())) {
+                        isValidPassword = true;
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Invalid Password: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    isValidPassword = false;
+                }
+            }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-                Log.d(TAG, "password is " + isValidPassword(passwordField.toString()));
-            }
+            public void afterTextChanged(Editable editable) {}
         });
         Button signUp = root.findViewById(R.id.btnSignup);
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -74,37 +85,11 @@ public class SignUpFragment extends Fragment {
 
                 String password = ((EditText)root.findViewById(R.id.etPassword)).getText().toString();
                 String email = ((EditText)root.findViewById(R.id.ediEmail)).getText().toString();
-                new User(user_name).signUp(getActivity(), email, password);
+                if (isValidPassword && isValidUsername) {
+                    new User(user_name).signUp(getActivity(), email, password);
+                }
             }
         });
         return root;
-    }
-
-    /**
-     * Determines if a password is valid
-     * Requirements:
-     *  password.length >= 8
-     *  password has at least one number
-     *  password has at least one upper and lowercase letter
-     *
-     * @param password the password to be checked
-     * @return Whether or not the password is valid
-     */
-    private boolean isValidPassword(String password) {
-        String err_msg = "";
-        if (password.length() < 8) {
-            err_msg = "Password length must be at least 8 characters, but was " + password.length();
-        } else if (!password.matches(".*\\d.*")) {
-            err_msg = "Password must contain at least one digit";
-        } else if (!password.matches(".*[a-z].*")) {
-            err_msg = "Password must contain at least one lowercase character";
-        } else if (!password.matches(".*[A-Z].*")) {
-            err_msg = "Password must contain at least one uppercase character";
-        }
-        if (!err_msg.isEmpty()) {
-            Log.w("LOGIN ERROR", err_msg);
-            Toast.makeText(getActivity(), err_msg, Toast.LENGTH_SHORT).show();
-        }
-        return err_msg.isEmpty();
     }
 }
