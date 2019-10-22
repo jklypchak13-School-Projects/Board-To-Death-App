@@ -122,8 +122,7 @@ public class User extends Model {
                 if (authResult.getUser() != null) {
                     final FirebaseUser fbUser = authResult.getUser();
                     User.this.setID(fbUser.getUid());
-                    Query query = User.this.collection().whereEqualTo(FieldPath.documentId(), fbUser.getUid());
-                    User.this.read(query, new DBResponse(activity) {
+                    User.this.get(new DBResponse(activity) {
                         @Override
                         public <T> void onSuccess(T t) {
                             Log.d(TAG, "Successfully logged in with " + fbUser.getEmail() + " and Document ID of " + fbUser.getUid());
