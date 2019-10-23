@@ -9,6 +9,9 @@
     <string name="create_account">Create Account</string>
     <string name="login">Log In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="reAuthenticate">Re-Authenticate</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

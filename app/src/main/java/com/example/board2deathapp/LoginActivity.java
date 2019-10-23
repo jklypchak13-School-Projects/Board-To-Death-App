@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.board2deathapp.models.User;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import com.example.board2deathapp.ui.login.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,10 +31,11 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Creates an Intent, and starts the landing page activity.
      */
-    public void navigateToLanding(){
+    public void navigateToLanding(User user){
         Log.d(tag, "Navigating to the Landing Page");
-        Intent land_activity = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(land_activity);
+        Intent landActivity = new Intent(getApplicationContext(), LandingActivity.class);
+        landActivity.putExtra("user", user);
+        startActivity(landActivity);
     }
 
     @Override

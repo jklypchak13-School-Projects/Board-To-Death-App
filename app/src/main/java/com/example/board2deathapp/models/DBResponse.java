@@ -21,9 +21,9 @@ public abstract class DBResponse {
      * @param t the response from a CRUD operation
      * @param <T> The type of response from a CRUD operation
      */
-    public <T> void onSuccess(T t, Model m) {
-        Log.d("UNIMPLEMENTED", "DBResponse onSuccess was called with " + t + ", but was unimplemented");
-    }
+//    public <T> void onSuccess(T t, Model m) {
+//        Log.d("UNIMPLEMENTED", "DBResponse onSuccess was called with " + t + ", but was unimplemented with Model");
+//    }
 
     /**
      * Handles the case where the DB Request/Operation was successful,
@@ -43,9 +43,9 @@ public abstract class DBResponse {
      * @param t the response from a CRUD operation
      * @param <T> The type of response from a CRUD operation
      */
-    public <T> void onFailure(T t, Model m) {
-        Log.d("UNIMPLEMENTED", "DBResponse onFailure was called with " + t + ", but was unimplemented");
-    }
+//    public <T> void onFailure(T t, Model m) {
+//        Log.d("UNIMPLEMENTED", "DBResponse onFailure was called with " + t + ", but was unimplemented with Model");
+//    }
 
     /**
      * Handles the case where the DB Request/Operation was unsuccessful,

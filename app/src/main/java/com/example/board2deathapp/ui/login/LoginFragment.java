@@ -1,5 +1,7 @@
 package com.example.board2deathapp.ui.login;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,14 +15,52 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.board2deathapp.LandingActivity;
+import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.internal.FederatedSignInActivity;
 
 public class LoginFragment extends Fragment {
+
+    @Override
+    public void onStart() {
+       super.onStart();
+       alreadySignedInRedirect();
+    }
+
+    /**
+     * Redirects the User to the LandingActivity, if they are already signed in
+     */
+    private void alreadySignedInRedirect() {
+        final FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+        if (fbAuth.getCurrentUser() != null) {
+            FirebaseUser fbUser = fbAuth.getCurrentUser();
+            User user = new User(fbUser.getEmail());
+            user.get(new DBResponse(getActivity()) {
+                @Override
+                public <T> void onSuccess(T t) {
+                    User user = (User)t;
+                    LoginActivity loginActivity = getActivity() instanceof LoginActivity ? ((LoginActivity) getActivity()) : null;
+                    if (loginActivity != null) {
+                        loginActivity.navigateToLanding(user);
+                    }
+                }
+                @Override
+                public <T> void onFailure(T t) {
+                    fbAuth.signOut();
+                }
+            });
+        }
+    }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
+        alreadySignedInRedirect();
         final View root = inflater.inflate(R.layout.fragment_login, container, false);
         final Button sign_up = root.findViewById(R.id.btnSignup);
         sign_up.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +85,7 @@ public class LoginFragment extends Fragment {
                 // Read the Username and Password
                 String name = ((EditText) root.findViewById(R.id.etUserName)).getText().toString();
                 String password = ((EditText) root.findViewById(R.id.etPassword)).getText().toString();
-                new User(name).signIn(getActivity(), password);
+                new User().signIn(getActivity(), name, password);
             }
         });
         Log.d("CHECKPOINT","Login Fragment Created");

@@ -35,7 +35,7 @@ public class ModelCollection<T extends Model> {
                     ModelCollection.this.data.clear();
                     ModelCollection.this.data.addAll(task.getResult().toObjects(clazz));
                     if(dbResponse != null){
-                        dbResponse.onSuccess(task.getResult(), null);
+                        dbResponse.onSuccess(task.getResult());
                     }
 
                 } else {

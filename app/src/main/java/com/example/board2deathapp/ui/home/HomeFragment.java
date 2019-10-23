@@ -1,9 +1,12 @@
 package com.example.board2deathapp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.board2deathapp.LandingActivity;
+import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment {
 
@@ -28,6 +36,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+            }
+        });
+        Button signOutButton = root.findViewById(R.id.signOutButton);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                getActivity().startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
             }
         });
         return root;

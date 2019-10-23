@@ -1,5 +1,7 @@
 package com.example.board2deathapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,8 +18,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Map;
 
-public abstract class Model {
-    protected DocumentReference mDocRef;
+public abstract class Model implements Parcelable {
+    protected String mDocID;
 
     /**
      * Performs the CRUD operation Create
@@ -33,14 +35,42 @@ public abstract class Model {
                     @Override
                     public void onSuccess(DocumentReference docRef) {
                         Log.d(this.getClass().getName().toUpperCase(), "Successfully Created " + docRef);
-                        dbResponse.onSuccess(docRef, Model.this);
+                        dbResponse.onSuccess(docRef);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d(this.getClass().getName().toUpperCase(), "Failed to create" + map + " because " + e);
-                        dbResponse.onFailure(e, Model.this);
+                        dbResponse.onFailure(e);
+                    }
+                });
+    }
+
+    /**
+     * Performs the CRUD operation Create
+     *
+     * @param doc Document to create
+     * @param dbResponse an Abstract class that dictates what to do upon a success or a failure.
+     *                  Passes in the appropriate values provided by the addOnSuccessListener/addOnFailureListener
+     */
+    public void create(final String doc, final DBResponse dbResponse) {
+        final Map<String, Object> map = this.toMap();
+        this.collection()
+                .document(doc)
+                .set(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Created Document " + doc + " with " + map);
+                        dbResponse.onSuccess(aVoid);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(this.getClass().getName().toUpperCase(), "Failed to create" + map + " because " + e);
+                        dbResponse.onFailure(e);
                     }
                 });
     }
@@ -53,20 +83,20 @@ public abstract class Model {
      */
     public void delete(final DBResponse dbResponse) {
         this.collection()
-                .document(this.mDocRef.getId())
+                .document(this.mDocID)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Destroyed " + Model.this.mDocRef);
-                        dbResponse.onSuccess(aVoid, Model.this);
+                        Log.d(this.getClass().getName().toUpperCase(), "Successfully Destroyed " + Model.this.mDocID);
+                        dbResponse.onSuccess(aVoid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Failed to Destroy " + Model.this.mDocRef + " because " + e);
-                        dbResponse.onFailure(e, Model.this);
+                        Log.d(this.getClass().getName().toUpperCase(), "Failed to Destroy " + Model.this.mDocID + " because " + e);
+                        dbResponse.onFailure(e);
                     }
                 });
     }
@@ -83,10 +113,10 @@ public abstract class Model {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Log.d(this.getClass().getName().toUpperCase(), "Successfully acquired" + q);
-                    dbResponse.onSuccess(task.getResult(), Model.this);
+                    dbResponse.onSuccess(task.getResult());
                 } else {
                     Log.d(this.getClass().getName().toUpperCase(), "Failed to get" + q);
-                    dbResponse.onFailure(null, Model.this);
+                    dbResponse.onFailure(null);
                 }
             }
         });
@@ -101,20 +131,20 @@ public abstract class Model {
     public void update(final DBResponse dbResponse) {
         final Map<String, Object> map = this.toMap();
         this.collection()
-                .document(this.mDocRef.getId())
+                .document(this.mDocID)
                 .set(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(this.getClass().getName().toUpperCase(), "Updated " + Model.this.mDocRef + " with " + map);
-                        dbResponse.onSuccess(aVoid, Model.this);
+                        Log.d(this.getClass().getName().toUpperCase(), "Updated " + Model.this.mDocID + " with " + map);
+                        dbResponse.onSuccess(aVoid);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(this.getClass().getName().toUpperCase(), "Failed to update " + Model.this.mDocRef + " with " + map + " because " + e);
-                        dbResponse.onFailure(e, Model.this);
+                        Log.w(this.getClass().getName().toUpperCase(), "Failed to update " + Model.this.mDocID + " with " + map + " because " + e);
+                        dbResponse.onFailure(e);
                     }
                 });
     }
@@ -138,7 +168,7 @@ public abstract class Model {
 
     abstract void fromMap(Map<String, Object> map);
 
-    public void setID(DocumentReference r){
-        this.mDocRef = r;
+    public void setID(String id){
+        this.mDocID = id;
     }
 }
