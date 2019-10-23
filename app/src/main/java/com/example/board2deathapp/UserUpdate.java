@@ -2,7 +2,6 @@ package com.example.board2deathapp;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,9 +34,6 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
 
 
     private UserUpdateViewModel mViewModel;
-
-    private Button mUpdateButton;
-    private Button mDeleteButton;
 
     private TextView mUpdateView;
 
@@ -93,26 +89,26 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final String newPassword = editable.toString();
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                final String newPassword = charSequence.toString();
                 final String passwordConfirm = UserUpdate.this.mPasswordEditTextConfirm.getText().toString();
                 checkPassword(newPassword, passwordConfirm);
             }
+            @Override
+            public void afterTextChanged(Editable editable) {}
         });
         this.mPasswordEditTextConfirm = root.findViewById(R.id.editTextPasswordConfirm);
         this.mPasswordEditTextConfirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final String passwordConfirm = editable.toString();
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                final String passwordConfirm = charSequence.toString();
                 final String newPassword = UserUpdate.this.mPasswordEditText.getText().toString();
                 checkPassword(newPassword, passwordConfirm);
             }
+            @Override
+            public void afterTextChanged(Editable editable) {}
         });
         this.mUsernameEditText = root.findViewById(R.id.editTextUsername);
         this.mUsernameEditText.setText(this.mUser.getUsername());
@@ -121,11 +117,8 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                final String newUsername = editable.toString();
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                final String newUsername = charSequence.toString();
                 User.uniqueUsername(newUsername, new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
@@ -133,15 +126,19 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
                     }
                     @Override
                     public <T> void onFailure(T t) {
+                        Toast.makeText(getActivity(), "Username is not unique", Toast.LENGTH_SHORT);
                         UserUpdate.this.isValidUsername = false;
                     }
                 });
+
             }
+            @Override
+            public void afterTextChanged(Editable editable) {}
         });
-        this.mUpdateButton = root.findViewById(R.id.buttonUpdate);
-        this.mUpdateButton.setOnClickListener(this);
-        this.mDeleteButton = root.findViewById(R.id.buttonDelete);
-        this.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+        final Button updateButton = root.findViewById(R.id.buttonUpdate);
+        updateButton.setOnClickListener(this);
+        final Button deleteButton = root.findViewById(R.id.buttonDelete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 authenticateUser(new DBResponse(getActivity()) {
@@ -171,7 +168,9 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
             final String updateMsg = "Update " + this.mUser.getUsername();
             this.mUpdateView.setText(updateMsg);
         } else {
-            getActivity().startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
+            if (activity != null) {
+                activity.startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
+            }
         }
     }
 
@@ -221,7 +220,6 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
         FragmentManager fragMan = getActivity().getSupportFragmentManager();
         DialogFragment dialogFragment = new AuthenticateUserDialog(dbResponse);
         dialogFragment.show(fragMan, "AUTHENTICATE_USER");
-
     }
 
     @Override
