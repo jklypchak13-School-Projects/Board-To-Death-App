@@ -116,28 +116,33 @@ public class User extends Model {
             Log.d(TAG, "User.signIn was called with empty email or password");
             return;
         }
-        fbAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onSuccess(AuthResult authResult) {
-                if (authResult.getUser() != null) {
-                    final FirebaseUser fbUser = authResult.getUser();
-                    User.this.setID(fbUser.getUid());
-                    User.this.get(new DBResponse(activity) {
-                        @Override
-                        public <T> void onSuccess(T t) {
-                            Log.d(TAG, "Successfully logged in with " + fbUser.getEmail() + " and Document ID of " + fbUser.getUid());
-                            Intent landingActivity = new Intent(activity.getApplicationContext(), LandingActivity.class);
-                            landingActivity.putExtra("user", User.this);
-                            activity.startActivity(landingActivity);
-                        }
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful() && task.getResult() != null) {
+                   final FirebaseUser fbUser = task.getResult().getUser();
+                   if (fbUser != null) {
+                       User.this.setID(fbUser.getUid());
+                       User.this.get(new DBResponse(activity) {
+                           @Override
+                           public <T> void onSuccess(T t) {
+                               Log.d(TAG, "Successfully logged in with " + fbUser.getEmail() + " and Document ID of " + fbUser.getUid());
+                               Intent landingActivity = new Intent(activity.getApplicationContext(), LandingActivity.class);
+                               landingActivity.putExtra("user", User.this);
+                               activity.startActivity(landingActivity);
+                           }
 
-                        @Override
-                        public <T> void onFailure(T t) {
-                            Log.e(TAG, "Succeeded in signing in with Firebase Auth, but failed to Query Firebase Firestore for User with Document ID " + fbUser.getUid());
-                            Toast.makeText(activity, "Failed to login, try again later", Toast.LENGTH_SHORT).show();
-                            fbAuth.signOut();
-                        }
-                    });
+                           @Override
+                           public <T> void onFailure(T t) {
+                               Log.e(TAG, "Succeeded in signing in with Firebase Auth, but failed to Query Firebase Firestore for User with Document ID " + fbUser.getUid());
+                               Toast.makeText(activity, "Failed to login, try again later", Toast.LENGTH_SHORT).show();
+                               fbAuth.signOut();
+                           }
+                       });
+                   } else {
+                       Log.d(TAG, "Failed to login with email: " + email);
+                       Toast.makeText(activity, "Failed to login invalid username and/or password", Toast.LENGTH_LONG).show();
+                   }
                 } else {
                     Log.d(TAG, "Failed to login with email: " + email);
                     Toast.makeText(activity, "Failed to login invalid username and/or password", Toast.LENGTH_LONG).show();
