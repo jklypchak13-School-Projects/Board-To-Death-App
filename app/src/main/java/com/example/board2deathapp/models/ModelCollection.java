@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -57,7 +58,12 @@ public class ModelCollection<T extends Model> {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         data.clear();
-                        data.addAll((List<BoardGame>)queryDocumentSnapshots.toObjects(BoardGame.class));
+                        List<DocumentSnapshot> t = queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot doc:t){
+                            Model m = (Model) doc.toObject(clazz);
+                            m.setID(doc.getReference());
+                            data.add(m);
+                        }
 
                         if(dbResponse != null){
                             dbResponse.onSuccess(queryDocumentSnapshots, null);

@@ -243,6 +243,7 @@ public class BoardGameFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
+
             Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
             ITEMS.read_current(q, new DBResponse(getActivity()) {
                 @Override
@@ -272,12 +273,15 @@ public class BoardGameFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-/*        if (context instanceof OnListFragmentInteractionListener) {
+        /*
+        if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
-        }*/
+        }
+
+         */
     }
 
     @Override
