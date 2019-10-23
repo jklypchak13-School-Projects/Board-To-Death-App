@@ -77,7 +77,6 @@ public class BoardGameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO Replace with actual reference to the current username
         current_user = ((LandingActivity)getActivity()).getUser().getUsername();
         Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("name", "Flatline");
 
