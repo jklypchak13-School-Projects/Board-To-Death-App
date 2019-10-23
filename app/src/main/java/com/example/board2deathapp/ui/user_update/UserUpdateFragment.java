@@ -130,7 +130,7 @@ public class UserUpdateFragment extends Fragment implements View.OnClickListener
                     }
                     @Override
                     public <T> void onFailure(T t) {
-                        Toast.makeText(getActivity(), "Username is not unique", Toast.LENGTH_SHORT);
+                        Toast.makeText(getActivity(), "Username is not unique", Toast.LENGTH_SHORT).show();
                         UserUpdateFragment.this.isValidUsername = false;
                     }
                 });
