@@ -139,4 +139,5 @@ public abstract class Model {
     public void setID(DocumentReference r){
         this.id = r;
     }
+    public DocumentReference getID(){return this.id;}
 }

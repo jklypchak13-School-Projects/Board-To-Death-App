@@ -53,6 +53,18 @@ public class BoardGame extends Model {
     public String getOwner(){
         return this.owner;
     }
+
+    public double getTime(){
+        return this.play_time;
+    }
+
+    public String getDescription(){
+        return this.description;
+    }
+
+    public int getCount(){
+        return this.player_count;
+    }
     public Map<String, Object> toMap(){
         Map<String, Object> attrs = new HashMap<String,Object>();
         attrs.put("name", this.name);
@@ -63,4 +75,13 @@ public class BoardGame extends Model {
         return attrs;
     }
 
+    public void fromMap(Map<String,Object> data){
+        this.name = (String)data.get("name");
+        this.description = (String)data.get("description");
+        this.owner = (String)data.get("owner");
+        this.player_count = (int)data.get("player_count");
+        this.play_time = (double)data.get("play_time");
+
+
+    }
 }

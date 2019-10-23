@@ -1,10 +1,16 @@
 package com.example.board2deathapp.ui.boardgame;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.board2deathapp.R;
@@ -12,6 +18,8 @@ import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link BoardGame} and makes a call to the
@@ -22,6 +30,7 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
 
     private final List<BoardGame> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private Context c;
 
     public MyBoardGameRecyclerViewAdapter(List<BoardGame> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -30,9 +39,12 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_boardgame, parent, false);
-        return new ViewHolder(view);
+        c = view.getContext();
+        ViewHolder v = new ViewHolder(view);
+        return v;
     }
 
     @Override
@@ -58,7 +70,7 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -69,11 +81,22 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
+            Button b = view.findViewById(R.id.edit_game);
+            b.setOnClickListener(this);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+
+        @Override
+        public void onClick(View v) {
+            FragmentManager fm = ((AppCompatActivity)c).getSupportFragmentManager();
+            EditBoardGameFragment temp = new EditBoardGameFragment();
+            temp.setGame(this.mItem);
+            temp.show(fm,"ADD_BOARDGAME");
+        }
+
     }
 }

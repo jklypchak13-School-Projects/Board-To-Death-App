@@ -51,7 +51,7 @@ public class AddBoardGameFragment extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         final View v = inflater.inflate(R.layout.fragment_add_board_game_dialog,null);
         final EditText name_field = v.findViewById(R.id.a_game_name);
-        final EditText description_field= v.findViewById(R.id.a_game_name);
+        final EditText description_field= v.findViewById(R.id.a_game_desc);
         final EditText time_field= v.findViewById(R.id.a_game_time);
         final EditText player_count_field= v.findViewById(R.id.a_game_count);
         builder.setView(v);
