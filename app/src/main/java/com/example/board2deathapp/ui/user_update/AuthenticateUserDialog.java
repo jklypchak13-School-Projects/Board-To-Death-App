@@ -1,4 +1,4 @@
-package com.example.board2deathapp;
+package com.example.board2deathapp.ui.user_update;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.DBResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

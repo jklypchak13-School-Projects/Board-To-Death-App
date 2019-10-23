@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_user"
-        android:name="com.example.board2deathapp.UserUpdate"
+        android:name="com.example.board2deathapp.ui.user_update.UserUpdateFragment"
         android:label="Settings"
-        tools:layout="@layout/user_update_fragment" />
+        tools:layout="@layout/fragment_update_user" />
 </navigation>

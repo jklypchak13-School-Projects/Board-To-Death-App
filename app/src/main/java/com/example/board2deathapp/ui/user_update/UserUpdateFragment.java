@@ -1,4 +1,4 @@
-package com.example.board2deathapp;
+package com.example.board2deathapp.ui.user_update;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -22,6 +22,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.board2deathapp.AuthenticateUserDialog;
+import com.example.board2deathapp.LandingActivity;
+import com.example.board2deathapp.LoginActivity;
+import com.example.board2deathapp.R;
+import com.example.board2deathapp.UserUpdateViewModel;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +34,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class UserUpdate extends Fragment implements View.OnClickListener {
+public class UserUpdateFragment extends Fragment implements View.OnClickListener {
     private static String TAG = "USER_UPDATE_FRAGMENT";
 
 
@@ -46,8 +51,8 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
     private boolean isValidUsername;
     private User mUser;
 
-    public static UserUpdate newInstance() {
-        return new UserUpdate();
+    public static UserUpdateFragment newInstance() {
+        return new UserUpdateFragment();
     }
 
     /**
@@ -75,7 +80,7 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        View root = inflater.inflate(R.layout.user_update_fragment, container, false);
+        View root = inflater.inflate(R.layout.fragment_update_user, container, false);
         if (fbUser == null) {
             getActivity().startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
             return root;
@@ -91,7 +96,7 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 final String newPassword = charSequence.toString();
-                final String passwordConfirm = UserUpdate.this.mPasswordEditTextConfirm.getText().toString();
+                final String passwordConfirm = UserUpdateFragment.this.mPasswordEditTextConfirm.getText().toString();
                 checkPassword(newPassword, passwordConfirm);
             }
             @Override
@@ -104,7 +109,7 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 final String passwordConfirm = charSequence.toString();
-                final String newPassword = UserUpdate.this.mPasswordEditText.getText().toString();
+                final String newPassword = UserUpdateFragment.this.mPasswordEditText.getText().toString();
                 checkPassword(newPassword, passwordConfirm);
             }
             @Override
@@ -122,12 +127,12 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
                 User.uniqueUsername(newUsername, new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
-                        UserUpdate.this.isValidUsername = true;
+                        UserUpdateFragment.this.isValidUsername = true;
                     }
                     @Override
                     public <T> void onFailure(T t) {
                         Toast.makeText(getActivity(), "Username is not unique", Toast.LENGTH_SHORT);
-                        UserUpdate.this.isValidUsername = false;
+                        UserUpdateFragment.this.isValidUsername = false;
                     }
                 });
 
@@ -249,7 +254,7 @@ public class UserUpdate extends Fragment implements View.OnClickListener {
                 mUser.update(new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
-                        Toast.makeText(this.mActiv, "Successfully Updated " + UserUpdate.this.mUser.getUsername(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this.mActiv, "Successfully Updated " + UserUpdateFragment.this.mUser.getUsername(), Toast.LENGTH_LONG).show();
                         setUsernameInUpdateText();
                         Log.d(TAG, "Successfully updated User");
                     }
