@@ -33,7 +33,7 @@ public class EditBoardGameFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "Creating Dialog");
-        final View v = inflater.inflate(R.layout.fragment_add_board_game_dialog, container, false);
+        final View v = inflater.inflate(R.layout.fragment_add_board_game, container, false);
 
         return v;
     }
@@ -46,7 +46,7 @@ public class EditBoardGameFragment extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        final View v = inflater.inflate(R.layout.fragment_edit_board_game_dialog,null);
+        final View v = inflater.inflate(R.layout.fragment_edit_board_game,null);
         final EditText name_field = v.findViewById(R.id.e_game_name);
         final EditText description_field= v.findViewById(R.id.e_game_desc);
         final EditText time_field= v.findViewById(R.id.e_game_time);

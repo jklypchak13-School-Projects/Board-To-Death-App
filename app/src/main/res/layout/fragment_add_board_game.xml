@@ -11,6 +11,7 @@
         android:text="Add Board Game"
         android:textAlignment="center"
         android:textFontWeight="2"
+        android:layout_marginTop="20dp"
         android:textSize="24sp"
         android:textStyle="bold" />
 

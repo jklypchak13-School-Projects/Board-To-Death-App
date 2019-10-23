@@ -2,22 +2,17 @@ package com.example.board2deathapp.ui.boardgame;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
 
@@ -36,7 +31,7 @@ public class AddBoardGameFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "Creating Dialog");
-        final View v = inflater.inflate(R.layout.fragment_add_board_game_dialog, container, false);
+        final View v = inflater.inflate(R.layout.fragment_add_board_game, container, false);
 
         return v;
     }
@@ -49,7 +44,7 @@ public class AddBoardGameFragment extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        final View v = inflater.inflate(R.layout.fragment_add_board_game_dialog,null);
+        final View v = inflater.inflate(R.layout.fragment_add_board_game,null);
         final EditText name_field = v.findViewById(R.id.a_game_name);
         final EditText description_field= v.findViewById(R.id.a_game_desc);
         final EditText time_field= v.findViewById(R.id.a_game_time);
