@@ -1,14 +1,13 @@
 package com.example.board2deathapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.board2deathapp.models.User;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import com.example.board2deathapp.ui.login.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
