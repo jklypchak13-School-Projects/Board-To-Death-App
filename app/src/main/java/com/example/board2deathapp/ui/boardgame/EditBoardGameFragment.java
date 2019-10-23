@@ -55,9 +55,9 @@ public class EditBoardGameFragment extends DialogFragment {
         delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.delete(game.getID().getId(), new DBResponse(getActivity()) {
+                game.delete(new DBResponse(getActivity()) {
                     @Override
-                    public <T> void onSuccess(T t, Model m) {
+                    public <T> void onSuccess(T t) {
                         Log.d("TOAST", "TOAST");
                         EditBoardGameFragment.this.getDialog().cancel();
                     }
@@ -86,9 +86,9 @@ public class EditBoardGameFragment extends DialogFragment {
                         game.description = description;
                         game.player_count=player_count;
                         game.play_time = play_time;
-                        game.update(game.getID().getId(), new DBResponse(getActivity()) {
+                        game.update(new DBResponse(getActivity()) {
                             @Override
-                            public <T> void onSuccess(T t, Model m) {
+                            public <T> void onSuccess(T t) {
                                 Log.d("EDIT", "Editted the game!");
                             }
 

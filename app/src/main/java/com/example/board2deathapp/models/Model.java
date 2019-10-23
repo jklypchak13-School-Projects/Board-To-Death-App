@@ -171,5 +171,5 @@ public abstract class Model implements Parcelable {
     public void setID(String id){
         this.mDocID = id;
     }
-    public DocumentReference getID(){return this.id;}
+    public String getID(){return this.mDocID;}
 }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
 
@@ -58,7 +59,7 @@ public class AddBoardGameFragment extends DialogFragment {
                         String players = player_count_field.getText().toString();
                         int player_count  = Integer.parseInt(players);
                         double play_time = Double.parseDouble(time_field.getText().toString());
-                        new BoardGame(name,description,/*((LandingActivity)getActivity()).getUser().getUserName()*/"jklypchak13",player_count,play_time,getActivity());
+                        new BoardGame(name,description,((LandingActivity)getActivity()).getUser().getUsername(),player_count,play_time,getActivity());
                     }
                 });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

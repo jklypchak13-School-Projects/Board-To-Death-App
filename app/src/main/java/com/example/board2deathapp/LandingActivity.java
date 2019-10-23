@@ -77,9 +77,4 @@ public class LandingActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("CHECKPOINT", "Successfully destroyed the activity.");
     }
-
-
-    public User getUser(){
-        return current_user;
-    }
 }

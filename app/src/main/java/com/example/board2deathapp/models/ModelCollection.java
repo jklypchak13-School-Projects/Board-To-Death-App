@@ -61,12 +61,12 @@ public class ModelCollection<T extends Model> {
                         List<DocumentSnapshot> t = queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot doc:t){
                             Model m = (Model) doc.toObject(clazz);
-                            m.setID(doc.getReference());
+                            m.setID(doc.getReference().getId());
                             data.add(m);
                         }
 
                         if(dbResponse != null){
-                            dbResponse.onSuccess(queryDocumentSnapshots, null);
+                            dbResponse.onSuccess(queryDocumentSnapshots);
                         }
                     }
                 }
