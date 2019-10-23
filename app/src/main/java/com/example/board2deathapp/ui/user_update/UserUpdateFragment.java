@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.board2deathapp.AuthenticateUserDialog;
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
