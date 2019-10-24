@@ -1,4 +1,4 @@
-package com.example.board2deathapp;
+package com.example.board2deathapp.ui.login;
 
 
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.board2deathapp.ui.login.LoginFragment;
+import com.example.board2deathapp.R;
 
 
 public class StartFragment extends Fragment {
@@ -29,6 +29,18 @@ public class StartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         final Button signUpButton = view.findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragMan = getFragmentManager();
+                if (fragMan != null) {
+                    Fragment frag = new SignUpFragment();
+                    FragmentTransaction fragTrans = fragMan.beginTransaction();
+                    fragTrans.addToBackStack(null);
+                    fragTrans.replace(R.id.login_fragment_container, frag).commit();
+                }
+            }
+        });
         final Button loginButton = view.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
