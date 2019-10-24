@@ -54,13 +54,17 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             if (isValid && password.equals(passwordConfirm)) {
                 mPasswordImg.setImageResource(CHECK);
                 mPasswordConfirmImg.setImageResource(CHECK);
+                mPasswordConfirmImg.setTooltipText("Confirm password is valid");
             } else if (isValid) {
                 mPasswordImg.setImageResource(CHECK);
             }
+            mPasswordImg.setTooltipText("Password is valid");
             isValidPassword = User.isValidPassword(password) && password.equals(passwordConfirm);
         } catch (Exception e) {
             mPasswordImg.setImageResource(CROSS);
+            mPasswordImg.setTooltipText(e.getMessage());
             mPasswordConfirmImg.setImageResource(CROSS);
+            mPasswordConfirmImg.setTooltipText("Password Confirmation must match Password");
         }
         mPasswordImg.setVisibility(View.VISIBLE);
         mPasswordConfirmImg.setVisibility(View.VISIBLE);
@@ -103,18 +107,21 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 if (charSequence.length() == 0) {
                     isValidUsername = false;
                     mUsernameImg.setImageResource(CROSS);
+                    mUsernameImg.setTooltipText("Must not be empty");
                 } else {
                     User.uniqueUsername(charSequence.toString(), new DBResponse(getActivity()) {
                         @Override
                         public <T> void onSuccess(T t) {
                             isValidUsername = true;
                             mUsernameImg.setImageResource(CHECK);
+                            mUsernameImg.setTooltipText("Username is Valid");
                         }
 
                         @Override
                         public <T> void onFailure(T t) {
                             isValidUsername = false;
                             mUsernameImg.setImageResource(CROSS);
+                            mUsernameImg.setTooltipText("Username is already taken");
                         }
                     });
                 }
