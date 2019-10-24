@@ -11,6 +11,10 @@
     <string name="sign_up">Sign Up</string>
     <string name="add_game_button">Add New Game</string>
     <string name="title_boardgame">Board Games</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_groups">Groups</string>
+    <string name="title_newsletter">Newsletter</string>
+    <string name="title_calendar">Calendar</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="forgot_password">Forgot your password?</string>

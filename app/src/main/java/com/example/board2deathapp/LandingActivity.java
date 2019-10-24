@@ -68,16 +68,27 @@ public class LandingActivity extends AppCompatActivity {
                     case R.id.navigation_user:
                         frag = new UserUpdateFragment();
                         break;
-                    case R.id.navigation_home:
-                        frag = new HomeFragment();
+                    case R.id.navigation_chat:
+                        Log.d("LANDING","Pressed Chat");
                         break;
                     case R.id.navigation_boardgame:
                         frag = new BoardGameFragment();
+                        break;
+                    case R.id.navigation_newsletter:
+                        Log.d("LANDING","Pressed Newsletter");
+                        break;
+                    case R.id.navigation_groups:
+                        Log.d("LANDING","Pressed Group");
+                        break;
+                    case R.id.navigation_title_calendar:
+                        Log.d("LANDING","Pressed Calendar");
                         break;
                 }
                 if (frag != null) {
                     fragTrans.replace(R.id.nav_host_fragment, frag);
                     fragTrans.commit();
+                }else{
+                    Log.d("LANDING", "Pressed on Supported tab.");
                 }
                 return true;
             }
