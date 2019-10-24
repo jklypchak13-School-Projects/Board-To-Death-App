@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.login_fragment_container);
         if (frag == null) {
-            frag = new LoginFragment();
+            frag = new StartFragment();
             fm.beginTransaction().add(R.id.login_fragment_container, frag).commit();
         }
     }
