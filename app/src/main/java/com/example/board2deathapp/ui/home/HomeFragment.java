@@ -38,14 +38,6 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        Button signOutButton = root.findViewById(R.id.signOutButton);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                getActivity().startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
-            }
-        });
         return root;
     }
 }

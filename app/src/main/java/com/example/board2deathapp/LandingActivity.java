@@ -4,13 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.board2deathapp.models.User;
+import com.example.board2deathapp.ui.dashboard.DashboardFragment;
+import com.example.board2deathapp.ui.home.HomeFragment;
+import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -23,22 +31,58 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_landing);
         Intent intent = getIntent();
         if (intent.hasExtra("user")) {
             this.mUser = intent.getParcelableExtra("user");
         } else {
             this.startActivity(new Intent(this.getApplicationContext(), LoginActivity.class));
         }
-        setContentView(R.layout.activity_landing);
+        final ImageButton signOutButton = findViewById(R.id.signOutButton);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+                fbAuth.signOut();
+                LandingActivity.this.startActivity(new Intent(LandingActivity.this, LoginActivity.class));
+            }
+        });
+        final ImageButton userUpdateButton = findViewById(R.id.updateUserButton);
+        userUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragMan = getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragMan.beginTransaction();
+                fragTrans.replace(R.id.nav_host_fragment, new UserUpdateFragment());
+                fragTrans.commit();
+            }
+        });
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_user)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                FragmentManager fragMan = getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragMan.beginTransaction();
+                Fragment frag = null;
+                switch(menuItem.getItemId()) {
+                    case R.id.navigation_user:
+                        frag = new UserUpdateFragment();
+                        break;
+                    case R.id.navigation_home:
+                        frag = new HomeFragment();
+                        Log.d("Landing", "In home");
+                        break;
+                    case R.id.navigation_dashboard:
+                        frag = new DashboardFragment();
+                        break;
+                }
+                if (frag != null) {
+                    fragTrans.replace(R.id.nav_host_fragment, frag);
+                    fragTrans.commit();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
