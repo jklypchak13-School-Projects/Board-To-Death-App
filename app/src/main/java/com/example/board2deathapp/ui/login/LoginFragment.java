@@ -29,38 +29,11 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
        super.onStart();
-       alreadySignedInRedirect();
-    }
-
-    /**
-     * Redirects the User to the LandingActivity, if they are already signed in
-     */
-    private void alreadySignedInRedirect() {
-        final FirebaseAuth fbAuth = FirebaseAuth.getInstance();
-        if (fbAuth.getCurrentUser() != null) {
-            FirebaseUser fbUser = fbAuth.getCurrentUser();
-            User user = new User(fbUser.getEmail());
-            user.get(new DBResponse(getActivity()) {
-                @Override
-                public <T> void onSuccess(T t) {
-                    User user = (User)t;
-                    LoginActivity loginActivity = getActivity() instanceof LoginActivity ? ((LoginActivity) getActivity()) : null;
-                    if (loginActivity != null) {
-                        loginActivity.navigateToLanding(user);
-                    }
-                }
-                @Override
-                public <T> void onFailure(T t) {
-                    fbAuth.signOut();
-                }
-            });
-        }
     }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        alreadySignedInRedirect();
         final View root = inflater.inflate(R.layout.fragment_login, container, false);
         final Button sign_up = root.findViewById(R.id.btnSignup);
         sign_up.setOnClickListener(new View.OnClickListener() {
