@@ -121,4 +121,5 @@ public class LandingActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("CHECKPOINT", "Successfully destroyed the activity.");
     }
+    
 }
