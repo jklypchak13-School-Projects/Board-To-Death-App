@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment.OnListFragmentInteractionListener;
@@ -65,6 +66,10 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
                 }
             }
         });
+        CardView card = holder.mView.findViewById(R.id.game_card);
+        if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
+            card.setOnLongClickListener(holder);
+        }
     }
 
     @Override
@@ -87,8 +92,10 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
             descriptionView = view.findViewById(R.id.game_description);
             countView = view.findViewById(R.id.game_count);
             timeView = view.findViewById(R.id.game_time);
-            CardView card = view.findViewById(R.id.game_card);
-            card.setOnLongClickListener(this);
+
+
+
+
         }
 
         @Override
