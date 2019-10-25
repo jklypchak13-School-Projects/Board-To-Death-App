@@ -22,17 +22,17 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="672dp"
+        android:layout_marginBottom="676dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
+            android:id="@+id/backImgButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:id="@+id/backImgButton"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@+string/Back Button"
             android:src="@drawable/ic_arrow_back_white_24dp" />
