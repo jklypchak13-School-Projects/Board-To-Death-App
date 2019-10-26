@@ -101,7 +101,7 @@ public class NewsletterFragment extends Fragment implements View.OnClickListener
                 final String newdate = mdate.getText().toString();
                 final String newUsername = mUsername.getText().toString();
                 final FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-
+                new Newsletter(newDescription,newdate,newUsername, new Activity());
 
     }
 }

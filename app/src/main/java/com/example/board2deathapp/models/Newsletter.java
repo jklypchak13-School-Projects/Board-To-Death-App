@@ -23,9 +23,9 @@ public class Newsletter extends Model{
 
     public Newsletter(String Description, String date, String Username, final Activity a){
 
-        this.description=description;
+        this.description=Description;
         this.date=date;
-        this.username=username;
+        this.username=Username;
 
         this.create(new DBResponse(a) {
             @Override
