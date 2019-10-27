@@ -23,7 +23,7 @@ public class ModelCollection<T extends Model> {
     private Class clazz;
     public ModelCollection(Class clazz){
         this.clazz = clazz;
-        this.data = new ArrayList();
+        this.data = new ArrayList<>();
 
     }
 

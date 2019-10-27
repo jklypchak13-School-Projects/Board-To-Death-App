@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.board2deathapp.models.User;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
-import com.example.board2deathapp.ui.home.HomeFragment;
+import com.example.board2deathapp.ui.groups.GroupFragment;
 import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,7 +78,7 @@ public class LandingActivity extends AppCompatActivity {
                         Log.d("LANDING","Pressed Newsletter");
                         break;
                     case R.id.navigation_groups:
-                        Log.d("LANDING","Pressed Group");
+                        frag = new GroupFragment();
                         break;
                     case R.id.navigation_title_calendar:
                         Log.d("LANDING","Pressed Calendar");
