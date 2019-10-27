@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
     }
 
     private static boolean isWellFormedEmail(final String email) {
-       return email.matches("[\\w\\d]+@[\\w\\d]+\\.[a-zA-Z]+");
+       return email.matches("[\\w\\\\.\\d]+@[\\w\\d]+\\.[a-zA-Z]+");
     }
 
     @Override
