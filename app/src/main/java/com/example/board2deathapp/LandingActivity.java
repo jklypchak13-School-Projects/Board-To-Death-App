@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.board2deathapp.models.User;
+import com.example.board2deathapp.ui.Newsletter.NewsletterFragment;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
 import com.example.board2deathapp.ui.home.HomeFragment;
 import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
@@ -75,7 +76,7 @@ public class LandingActivity extends AppCompatActivity {
                         frag = new BoardGameFragment();
                         break;
                     case R.id.navigation_newsletter:
-                        Log.d("LANDING","Pressed Newsletter");
+                        frag = new NewsletterFragment();
                         break;
                     case R.id.navigation_groups:
                         Log.d("LANDING","Pressed Group");

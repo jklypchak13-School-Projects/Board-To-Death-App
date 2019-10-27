@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/navigation_newsletter"
-        android:icon="@drawable/ic_mail_black_24dp"
-        android:title="@string/title_newsletter"/>
+        android:icon="@drawable/ic_local_library_black_24dp"
+        android:title="@string/title_newsletter" />
 
     <item
         android:id="@+id/navigation_boardgame"

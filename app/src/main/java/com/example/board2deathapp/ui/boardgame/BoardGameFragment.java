@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
@@ -36,10 +37,14 @@ public class BoardGameFragment extends Fragment {
     private static final String TAG = "BOARDGAME";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private ModelCollection<BoardGame> ITEMS;
+    private ModelCollection<BoardGame> user_games;
+    private ModelCollection<BoardGame> club_games;
+    private ModelCollection<BoardGame> all_games;
     private OnListFragmentInteractionListener mListener;
     private MyBoardGameRecyclerViewAdapter adpt;
+    private RecyclerView recycleView;
     private String current_user;
+    private static String CLUB_USER = "Board2Death";
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -65,8 +70,10 @@ public class BoardGameFragment extends Fragment {
         Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("name", "Flatline");
 
 
-        ITEMS = new ModelCollection<BoardGame>(BoardGame.class);
-        this.adpt = new MyBoardGameRecyclerViewAdapter(this.ITEMS.getItems(),mListener);
+        user_games = new ModelCollection<BoardGame>(BoardGame.class);
+        all_games = new ModelCollection<BoardGame>(BoardGame.class);
+        club_games = new ModelCollection<BoardGame>(BoardGame.class);
+        this.adpt = new MyBoardGameRecyclerViewAdapter(this.user_games.getItems(),mListener);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -89,9 +96,8 @@ public class BoardGameFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-
             Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
-            ITEMS.read_current(q, new DBResponse(getActivity()) {
+            user_games.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
                     adpt.notifyDataSetChanged();
@@ -102,13 +108,77 @@ public class BoardGameFragment extends Fragment {
                 }
 
             });
-
+            recycleView = recyclerView;
             view.findViewById(R.id.add_game).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DialogFragment temp = new AddBoardGameFragment();
                     temp.show(fm,"ADD_BOARDGAME");
+                }
+            });
+
+            Button my_games_b = view.findViewById(R.id.user_games);
+            Button all_games_b = view.findViewById(R.id.all_games);
+            Button club_games_b = view.findViewById(R.id.club_games);
+
+            all_games_b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.all_games.getItems(),mListener);
+                    recycleView.setAdapter(BoardGameFragment.this.adpt);
+                    Query q = FirebaseFirestore.getInstance().collection("boardgame").orderBy("owner");
+                    all_games.read_current(q, new DBResponse(getActivity()) {
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            adpt.notifyDataSetChanged();
+                        }
+                        @Override
+                        public <T> void onFailure(T t){
+
+                        }
+
+                    });
+                }
+            });
+
+            my_games_b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.user_games.getItems(),mListener);
+                    recycleView.setAdapter(BoardGameFragment.this.adpt);
+                    Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
+                    user_games.read_current(q, new DBResponse(getActivity()) {
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            adpt.notifyDataSetChanged();
+                        }
+                        @Override
+                        public <T> void onFailure(T t){
+
+                        }
+
+                    });
+                }
+            });
+
+            club_games_b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.club_games.getItems(),mListener);
+                    recycleView.setAdapter(BoardGameFragment.this.adpt);
+                    Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", CLUB_USER);
+                    club_games.read_current(q, new DBResponse(getActivity()) {
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            adpt.notifyDataSetChanged();
+                        }
+                        @Override
+                        public <T> void onFailure(T t){
+
+                        }
+
+                    });
                 }
             });
         }

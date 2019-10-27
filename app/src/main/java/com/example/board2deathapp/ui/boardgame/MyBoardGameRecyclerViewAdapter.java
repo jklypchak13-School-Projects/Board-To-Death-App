@@ -1,6 +1,7 @@
 package com.example.board2deathapp.ui.boardgame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment.OnListFragmentInteractionListener;
@@ -50,9 +52,10 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getOwner());
-        holder.mContentView.setText(mValues.get(position).getTitle());
-
+        holder.nameView.setText(mValues.get(position).getTitle());
+        holder.descriptionView.setText(mValues.get(position).getDescription());
+        holder.countView.setText(Integer.toString(mValues.get(position).getCount()));
+        holder.timeView.setText(Double.toString(mValues.get(position).getTime()));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +66,10 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
                 }
             }
         });
+        CardView card = holder.mView.findViewById(R.id.game_card);
+        if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
+            card.setOnLongClickListener(holder);
+        }
     }
 
     @Override
@@ -70,32 +77,39 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView nameView;
+        public final TextView descriptionView;
+        public final TextView countView;
+        public final TextView timeView;
         public BoardGame mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
-            Button b = view.findViewById(R.id.edit_game);
-            b.setOnClickListener(this);
+            nameView = view.findViewById(R.id.game_name);
+            descriptionView = view.findViewById(R.id.game_description);
+            countView = view.findViewById(R.id.game_count);
+            timeView = view.findViewById(R.id.game_time);
+
+
+
+
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + nameView.getText() + "'";
         }
 
         @Override
-        public void onClick(View v) {
+        public boolean onLongClick(View v) {
             FragmentManager fm = ((AppCompatActivity)c).getSupportFragmentManager();
             EditBoardGameFragment temp = new EditBoardGameFragment();
             temp.setGame(this.mItem);
             temp.show(fm,"ADD_BOARDGAME");
+            return true;
         }
 
     }
