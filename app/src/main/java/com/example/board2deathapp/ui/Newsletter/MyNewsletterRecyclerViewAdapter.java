@@ -64,7 +64,7 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
             }
         });
 
-        if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
+        if(holder.mItem.getUsername().equals(((LandingActivity)c).getUser().getUsername())){
             CardView card = holder.mView.findViewById(R.id.newsletter_card);
             card.setOnLongClickListener(holder);
         }
@@ -88,7 +88,7 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
             mView = view;
             nameView = view.findViewById(R.id.newsletter_name);
             descriptionView = view.findViewById(R.id.newsletter_description);
-            dateView = view.findViewById(R.id.dateview);
+            dateView = view.findViewById(R.id.date);
 
 
 

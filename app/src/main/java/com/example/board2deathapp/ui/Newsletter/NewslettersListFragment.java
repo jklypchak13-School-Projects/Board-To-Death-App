@@ -89,7 +89,7 @@ public class NewslettersListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-            Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("owner", current_user);
+            Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("username", current_user);
             My_Newsletters.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
@@ -119,7 +119,7 @@ public class NewslettersListFragment extends Fragment {
                 public void onClick(View v) {
                     adpt = new MyNewsletterRecyclerViewAdapter(NewslettersListFragment.this.All_Newsletters.getItems(),mListener);
                     recycleView.setAdapter(NewslettersListFragment.this.adpt);
-                    Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("owner");
+                    Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("username");
                     All_Newsletters.read_current(q, new DBResponse(getActivity()) {
                         @Override
                         public <T> void onSuccess(T t) {
@@ -139,7 +139,7 @@ public class NewslettersListFragment extends Fragment {
                 public void onClick(View v) {
                     adpt = new MyNewsletterRecyclerViewAdapter(NewslettersListFragment.this.My_Newsletters.getItems(),mListener);
                     recycleView.setAdapter(NewslettersListFragment.this.adpt);
-                    Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("owner", current_user);
+                    Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("username", current_user);
                     My_Newsletters.read_current(q, new DBResponse(getActivity()) {
                         @Override
                         public <T> void onSuccess(T t) {
