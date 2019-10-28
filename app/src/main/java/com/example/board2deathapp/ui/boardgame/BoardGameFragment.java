@@ -70,9 +70,9 @@ public class BoardGameFragment extends Fragment {
         Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("name", "Flatline");
 
 
-        user_games = new ModelCollection<BoardGame>(BoardGame.class);
-        all_games = new ModelCollection<BoardGame>(BoardGame.class);
-        club_games = new ModelCollection<BoardGame>(BoardGame.class);
+        user_games = new ModelCollection<>(BoardGame.class);
+        all_games = new ModelCollection<>(BoardGame.class);
+        club_games = new ModelCollection<>(BoardGame.class);
         this.adpt = new MyBoardGameRecyclerViewAdapter(this.user_games.getItems(),mListener);
 
         if (getArguments() != null) {
@@ -217,7 +217,6 @@ public class BoardGameFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(BoardGame item);
     }
 

@@ -2,16 +2,13 @@ package com.example.board2deathapp.ui.boardgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.board2deathapp.LandingActivity;
@@ -21,17 +18,18 @@ import com.example.board2deathapp.ui.boardgame.BoardGameFragment.OnListFragmentI
 
 import java.util.List;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link BoardGame} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoardGameRecyclerViewAdapter.ViewHolder> {
 
+    //The values the being displayed
     private final List<BoardGame> mValues;
     private final OnListFragmentInteractionListener mListener;
+
+    //The lists context
     private Context c;
 
     public MyBoardGameRecyclerViewAdapter(List<BoardGame> items, OnListFragmentInteractionListener listener) {
@@ -51,6 +49,9 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        /*
+         * Sets Up the values being displayed in the individual card
+         */
         holder.mItem = mValues.get(position);
         holder.nameView.setText(mValues.get(position).getTitle());
         holder.descriptionView.setText(mValues.get(position).getDescription());
@@ -66,8 +67,12 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
                 }
             }
         });
-        CardView card = holder.mView.findViewById(R.id.game_card);
+
+        /*
+         * Set the edit game page only accessible in the current user.
+         */
         if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
+            CardView card = holder.mView.findViewById(R.id.game_card);
             card.setOnLongClickListener(holder);
         }
     }
@@ -78,12 +83,12 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        public final View mView;
-        public final TextView nameView;
-        public final TextView descriptionView;
-        public final TextView countView;
-        public final TextView timeView;
-        public BoardGame mItem;
+        private final View mView;
+        private final TextView nameView;
+        private final TextView descriptionView;
+        private final TextView countView;
+        private final TextView timeView;
+        private BoardGame mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -92,9 +97,6 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
             descriptionView = view.findViewById(R.id.game_description);
             countView = view.findViewById(R.id.game_count);
             timeView = view.findViewById(R.id.game_time);
-
-
-
 
         }
 
@@ -105,10 +107,13 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
 
         @Override
         public boolean onLongClick(View v) {
+            /*
+            Navigate to the edit board game button.
+             */
             FragmentManager fm = ((AppCompatActivity)c).getSupportFragmentManager();
             EditBoardGameFragment temp = new EditBoardGameFragment();
             temp.setGame(this.mItem);
-            temp.show(fm,"ADD_BOARDGAME");
+            temp.show(fm,"Edit Boardgame");
             return true;
         }
 
