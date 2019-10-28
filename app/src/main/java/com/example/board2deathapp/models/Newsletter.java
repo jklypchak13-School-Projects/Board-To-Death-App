@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.board2deathapp.models.DBResponse;
+import com.example.board2deathapp.models.Model;
+
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.firebase.firestore.DocumentReference;
@@ -85,9 +88,10 @@ public class Newsletter extends Model{
         return null;
     }
 
-    public Newsletter(String name, String description, String username, int reader_count, double newsletter_time, FragmentActivity activity){
+    public Newsletter(){
 
     }
+
 
 
     public String getDescription(){
@@ -107,8 +111,6 @@ public class Newsletter extends Model{
     }
 
     public void writeToParcel(Parcel out, int flags) {
-
-
         out.writeString(description);
         out.writeString(date);
         out.writeString(username);
