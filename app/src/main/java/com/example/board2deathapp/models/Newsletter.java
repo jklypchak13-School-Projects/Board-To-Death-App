@@ -25,6 +25,7 @@ public class Newsletter extends Model{
     public String description;
     public String date;
     public String username;
+    public String owner;
 
     public Newsletter(String Description, String date, String Username, final Activity a){
 
@@ -91,6 +92,10 @@ public class Newsletter extends Model{
 
     public String getUsername(){
         return this.username;
+    }
+
+    public String getOwner(){
+        return this.owner;
     }
 
     public int describeContents() {

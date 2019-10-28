@@ -20,7 +20,7 @@ import com.example.board2deathapp.models.Model;
 
 public class EditNewsletterFragment extends DialogFragment {
 
-    private static String TAG = "EDITNEWSLETTER";
+    private static String TAG = "EDIT_NEWSLETTER";
 
     private DialogInterface something;
     private Newsletter newsletter;
@@ -100,7 +100,7 @@ public class EditNewsletterFragment extends DialogFragment {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                com.example.board2deathapp.ui.Newsletter.EditNewsletterFragment.this.getDialog().cancel();
+                EditNewsletterFragment.this.getDialog().cancel();
             }
         });
         return builder.create();

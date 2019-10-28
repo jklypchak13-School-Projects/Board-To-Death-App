@@ -35,12 +35,12 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
     }
 
     @Override
-    public com.example.board2deathapp.ui.Newsletter.MyNewsletterRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_newsletter, parent, false);
         c = view.getContext();
-        com.example.board2deathapp.ui.Newsletter.MyNewsletterRecyclerViewAdapter.ViewHolder v = new com.example.board2deathapp.ui.Newsletter.MyNewsletterRecyclerViewAdapter.ViewHolder(view);
+        ViewHolder v = new ViewHolder(view);
         return v;
     }
 
@@ -51,8 +51,8 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
         holder.mItem = mValues.get(position);
         holder.nameView.setText(mValues.get(position).getUsername());
         holder.descriptionView.setText(mValues.get(position).getDescription());
-        holder.countView.setText(Integer.toString(mValues.get(position).getCount()));
-        holder.timeView.setText(Double.toString(mValues.get(position).getTime()));
+        holder.dateView.setText(mValues.get(position).getdate());
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,8 +63,9 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
                 }
             }
         });
-        CardView card = holder.mView.findViewById(R.id.newsletter_card);
+
         if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
+            CardView card = holder.mView.findViewById(R.id.newsletter_card);
             card.setOnLongClickListener(holder);
         }
     }
@@ -78,8 +79,8 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
         public final View mView;
         public final TextView nameView;
         public final TextView descriptionView;
-        public final TextView countView;
-        public final TextView timeView;
+        public final TextView dateView;
+
         public Newsletter mItem;
 
         public ViewHolder(View view) {
@@ -87,8 +88,8 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
             mView = view;
             nameView = view.findViewById(R.id.newsletter_name);
             descriptionView = view.findViewById(R.id.newsletter_description);
-            countView = view.findViewById(R.id.reader_count);
-            timeView = view.findViewById(R.id.Newsletter_time);
+            dateView = view.findViewById(R.id.dateview);
+
 
 
 
@@ -105,7 +106,7 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
             FragmentManager fm = ((AppCompatActivity)c).getSupportFragmentManager();
             EditNewsletterFragment temp = new EditNewsletterFragment();
             temp.setNewsletter(this.mItem);
-            temp.show(fm,"ADD_NEWSLETTER");
+            temp.show(fm,"EDIT_NEWSLETTER");
             return true;
         }
 

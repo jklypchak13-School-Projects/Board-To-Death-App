@@ -32,18 +32,7 @@
                     android:orientation="horizontal"
                     android:layout_gravity="right"
                     android:gravity="right">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_group_white_24dp"
-                        android:contentDescription="Reader Count"
-                        />
-                    <TextView
-                        android:id="@+id/reader_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/text_margin"
-                        android:textAppearance="?attr/textAppearanceListItem"/>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -55,10 +44,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_access_time_white_24dp"
-                        android:contentDescription="Newsletter Time"
+                        android:contentDescription="Date"
                         />
                     <TextView
-                        android:id="@+id/Newsletter_time"
+                        android:id="@+id/dateview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/text_margin"
