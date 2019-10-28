@@ -73,20 +73,7 @@ public class Newsletter extends Model{
 
     }
 
-    @Override
-    public double getTime() {
-        return 0;
-    }
 
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getOwner() {
-        return null;
-    }
 
     public Newsletter(){
 
