@@ -172,4 +172,10 @@ public abstract class Model implements Parcelable {
         this.mDocID = id;
     }
     public String getID(){return this.mDocID;}
+
+    public abstract double getTime();
+
+    public abstract int getCount();
+
+    public abstract Object getOwner();
 }

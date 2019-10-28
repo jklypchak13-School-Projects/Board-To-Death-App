@@ -284,6 +284,21 @@ public class User extends Model {
         this.mUsername = (String) map.get("username");
     }
 
+    @Override
+    public double getTime() {
+        return 0;
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public Object getOwner() {
+        return null;
+    }
+
     public int describeContents() {
         return 0;
     }

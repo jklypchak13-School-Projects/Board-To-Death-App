@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
@@ -67,7 +69,23 @@ public class Newsletter extends Model{
 
 
     }
-    public Newsletter(){
+
+    @Override
+    public double getTime() {
+        return 0;
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public Object getOwner() {
+        return null;
+    }
+
+    public Newsletter(String name, String description, String username, int reader_count, double newsletter_time, FragmentActivity activity){
 
     }
 
