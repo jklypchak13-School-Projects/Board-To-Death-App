@@ -95,6 +95,11 @@ public class LandingActivity extends AppCompatActivity {
                 return true;
             }
         });
+        FragmentManager fragMan = getSupportFragmentManager();
+        FragmentTransaction fragTrans = fragMan.beginTransaction();
+        Fragment frag = new NewslettersListFragment();
+        fragTrans.replace(R.id.nav_host_fragment, frag);
+        fragTrans.commit();
     }
 
     @Override
