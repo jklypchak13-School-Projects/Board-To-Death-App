@@ -5,9 +5,10 @@ import android.os.Bundle;
 
 import com.example.board2deathapp.models.User;
 import com.example.board2deathapp.ui.Newsletter.NewsletterFragment;
+import com.example.board2deathapp.ui.Newsletter.NewslettersListFragment;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
 import com.example.board2deathapp.ui.calendar.CalendarFragment;
-import com.example.board2deathapp.ui.home.HomeFragment;
+import com.example.board2deathapp.ui.groups.GroupFragment;
 import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -77,10 +78,10 @@ public class LandingActivity extends AppCompatActivity {
                         frag = new BoardGameFragment();
                         break;
                     case R.id.navigation_newsletter:
-                        frag = new NewsletterFragment();
+                        frag = new NewslettersListFragment();
                         break;
                     case R.id.navigation_groups:
-                        Log.d("LANDING","Pressed Group");
+                        frag = new GroupFragment();
                         break;
                     case R.id.navigation_calendar:
                         frag = new CalendarFragment();
@@ -95,6 +96,11 @@ public class LandingActivity extends AppCompatActivity {
                 return true;
             }
         });
+        FragmentManager fragMan = getSupportFragmentManager();
+        FragmentTransaction fragTrans = fragMan.beginTransaction();
+        Fragment frag = new NewslettersListFragment();
+        fragTrans.replace(R.id.nav_host_fragment, frag);
+        fragTrans.commit();
     }
 
     @Override

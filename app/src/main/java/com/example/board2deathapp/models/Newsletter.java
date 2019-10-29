@@ -6,26 +6,31 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.board2deathapp.models.DBResponse;
+import com.example.board2deathapp.models.Model;
+
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-
-public class Newsletter extends Model{
+public class Newsletter extends Model {
 
     private static String TAG = "NEWSLETTER";
 
     public String description;
     public String date;
     public String username;
+    public String owner;
 
-    public Newsletter(String Description, String date, String Username, final Activity a){
+    public Newsletter(String Description, String date, String Username, final Activity a) {
 
-        this.description=Description;
-        this.date=date;
-        this.username=Username;
+        this.description = Description;
+        this.date = date;
+        this.username = Username;
 
         this.create(new DBResponse(a) {
             @Override
@@ -47,8 +52,8 @@ public class Newsletter extends Model{
     }
 
     @Override
-    public Map<String, Object> toMap(){
-        Map<String, Object> attrs = new HashMap<String,Object>();
+    public Map<String, Object> toMap() {
+        Map<String, Object> attrs = new HashMap<String, Object>();
 
 
         attrs.put("description", this.description);
@@ -58,29 +63,31 @@ public class Newsletter extends Model{
     }
 
     @Override
-    public void fromMap(Map<String,Object> data){
+    public void fromMap(Map<String, Object> data) {
 
 
-        this.description = (String)data.get("description");
-        this.date = (String)data.get("date");
-        this.username = (String)data.get("username");
+        this.description = (String) data.get("description");
+        this.date = (String) data.get("date");
+        this.username = (String) data.get("username");
 
-
-    }
-    public Newsletter(){
 
     }
 
 
-    public String getDescription(){
+    public Newsletter() {
+
+    }
+
+
+    public String getDescription() {
         return this.description;
     }
 
-    public String getdate(){
+    public String getdate() {
         return this.date;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
 }

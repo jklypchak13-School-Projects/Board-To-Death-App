@@ -284,6 +284,8 @@ public class User extends Model implements Parcelable {
         this.mUsername = (String) map.get("username");
     }
 
+
+
     public int describeContents() {
         return 0;
     }
