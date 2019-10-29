@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User extends Model {
+public class User extends Model implements Parcelable {
     private static String TAG = "USER";
 
     private String mUsername;

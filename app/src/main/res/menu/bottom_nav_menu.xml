@@ -13,7 +13,7 @@
         android:title="@string/title_boardgame"/>
 
     <item
-        android:id="@+id/navigation_title_calendar"
+        android:id="@+id/navigation_calendar"
         android:icon="@drawable/ic_event_note_black_24dp"
         android:title="@string/title_calendar"/>
 

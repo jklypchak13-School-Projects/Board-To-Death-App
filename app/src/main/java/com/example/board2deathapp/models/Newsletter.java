@@ -83,36 +83,4 @@ public class Newsletter extends Model{
     public String getUsername(){
         return this.username;
     }
-
-    public int describeContents() {
-        return 0;
-    }
-
-    public void writeToParcel(Parcel out, int flags) {
-
-
-        out.writeString(description);
-        out.writeString(date);
-        out.writeString(username);
-    }
-
-    public static final Parcelable.Creator<Newsletter> CREATOR
-            = new Parcelable.Creator<Newsletter>() {
-        public Newsletter createFromParcel(Parcel in) {
-            return new Newsletter(in);
-        }
-
-        @Override
-        public Newsletter[] newArray(int i) {
-            return new Newsletter[0];
-        }
-
-
-    };
-
-    private Newsletter(Parcel in) {
-        description= in.readString();
-        date=in.readString();
-        username=in.readString();
-    }
 }

@@ -10,6 +10,8 @@
     <string name="create_account">Create Account</string>
     <string name="login">Log In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="add_title">Add title</string>
+    <string name="description">Description</string>
     <string name="add_game_button">+</string>
     <string name="title_boardgame">Board Games</string>
     <string name="title_chat">Chat</string>

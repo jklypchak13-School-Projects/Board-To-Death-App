@@ -92,34 +92,4 @@ public class BoardGame extends Model {
         return this.player_count;
     }
 
-    public int describeContents() {
-        return 0;
-    }
-
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(name);
-        out.writeString(description);
-        out.writeString(owner);
-        out.writeInt(player_count);
-        out.writeDouble(play_time);
-    }
-
-    public static final Parcelable.Creator<BoardGame> CREATOR
-            = new Parcelable.Creator<BoardGame>() {
-        public BoardGame createFromParcel(Parcel in) {
-            return new BoardGame(in);
-        }
-
-        public BoardGame[] newArray(int size) {
-            return new BoardGame[size];
-        }
-    };
-
-    private BoardGame(Parcel in) {
-        name= in.readString();
-        description = in.readString();
-        owner = in.readString();
-        player_count = in.readInt();
-        play_time = in.readDouble();
-    }
 }

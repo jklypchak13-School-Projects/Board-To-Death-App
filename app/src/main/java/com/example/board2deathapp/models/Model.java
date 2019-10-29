@@ -18,7 +18,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Map;
 
-public abstract class Model implements Parcelable {
+public abstract class Model {
     protected String mDocID;
 
     /**

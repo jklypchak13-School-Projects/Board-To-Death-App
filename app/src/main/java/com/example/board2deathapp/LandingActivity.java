@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.board2deathapp.models.User;
 import com.example.board2deathapp.ui.Newsletter.NewsletterFragment;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
+import com.example.board2deathapp.ui.calendar.CalendarFragment;
 import com.example.board2deathapp.ui.home.HomeFragment;
 import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -81,8 +82,8 @@ public class LandingActivity extends AppCompatActivity {
                     case R.id.navigation_groups:
                         Log.d("LANDING","Pressed Group");
                         break;
-                    case R.id.navigation_title_calendar:
-                        Log.d("LANDING","Pressed Calendar");
+                    case R.id.navigation_calendar:
+                        frag = new CalendarFragment();
                         break;
                 }
                 if (frag != null) {
