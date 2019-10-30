@@ -82,10 +82,10 @@ public class EditBoardGameFragment extends DialogFragment {
                         String players = player_count_field.getText().toString();
                         int player_count  = Integer.parseInt(players);
                         double play_time = Double.parseDouble(time_field.getText().toString());
-                        game.name = name;
-                        game.description = description;
-                        game.player_count=player_count;
-                        game.play_time = play_time;
+                        game.setName(name);
+                        game.setDescription(description);
+                        game.setCount(player_count);
+                        game.setTime(play_time);
                         game.update(new DBResponse(getActivity()) {
                             @Override
                             public <T> void onSuccess(T t) {

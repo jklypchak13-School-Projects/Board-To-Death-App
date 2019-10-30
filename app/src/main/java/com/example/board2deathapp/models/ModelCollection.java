@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,14 @@ public class ModelCollection<T extends Model> {
                         data.clear();
                         List<DocumentSnapshot> t = queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot doc:t){
-                            Model m = (Model) doc.toObject(clazz);
+                            Model m;
+                            try{
+                                m =(Model) clazz.newInstance();
+                            }catch(Exception error){
+                                m= (Model) doc.toObject(clazz);
+                            }
+
+                            m.fromMap(doc.getData());
                             m.setID(doc.getReference().getId());
                             data.add(m);
                         }
