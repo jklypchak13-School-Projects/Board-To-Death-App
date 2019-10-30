@@ -14,13 +14,13 @@ import java.util.Map;
 
 
 public class Group extends Model {
-    public String groupName;
-    public String description;
-    public String date;
-    public int maxGroupSize;
-    public ArrayList<String> users;
-    public String game;
-    public String owner;
+    private String groupName;
+    private String description;
+    private String date;
+    private int maxGroupSize;
+    private ArrayList<String> users;
+    private String game;
+    private String owner;
 
     public Group(String name, String description, String date, int maxGroupSize, String game, String owner){
         this.groupName = name;
@@ -32,6 +32,9 @@ public class Group extends Model {
         this.users = new ArrayList<String>();
     }
 
+    public Group(){
+
+    }
     @Override
     public Map<String, Object> toMap(){
         Map<String, Object> attrs = new HashMap<String,Object>();
@@ -52,43 +55,13 @@ public class Group extends Model {
         this.owner = (String)data.get("owner");
         this.date = (String)data.get("date");
         this.game = (String)data.get("game");
-        this.maxGroupSize = (int)data.get("maxGroupSize");
+        this.maxGroupSize = Math.toIntExact((long)data.get("maxGroupSize"));
         this.users = (ArrayList<String>)data.get("users");
 
 
 
     }
-    public Group(){
 
-    }
-
-    public String getGameString(){
-        return game;
-    }
-
-    public String getGroupName(){
-        return groupName;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public String getDate(){
-        return date;
-    }
-
-    public String getOwner(){
-        return owner;
-    }
-
-    public String getPlayerString(){
-        String result = "";
-        for(String player:this.users){
-            result+=player+"\n";
-        }
-        return result;
-    }
 
     public void join(User u){
         users.add(u.getUsername());
@@ -104,22 +77,45 @@ public class Group extends Model {
         users.remove(u.getUsername());
     }
 
+    //Getter Functions
+    public String getGameString(){
+        return game;
+    }
+    public String getGroupName(){
+        return groupName;
+    }
+    public String getDescription(){
+        return description;
+    }
+    public String getDate(){
+        return date;
+    }
+    public String getMaxSize() { return this.maxGroupSize+"";}
+    public String getOwner(){
+        return owner;
+    }
+    public String getFractionString(){ return this.users.size()+"/"+this.maxGroupSize;}
+    public String getPlayerString(){
+        String result = "";
+        for(String player:this.users){
+            result+=player+"\n";
+        }
+        return result;
+    }
+
+    //Setter Functions
     public void setGroupName(String g){
         groupName = g;
     }
-
     public void setDescription(String g){
         description = g;
     }
-
     public void setGame(String g){
         game = g;
     }
-
     public void setCount(int i){
         maxGroupSize = i;
     }
-
     public void setDate(String g){
         date = g;
     }

@@ -67,7 +67,7 @@ public class DetailedGroupFragment extends DialogFragment {
 
         name.setText(group.getGroupName());
         description.setText(group.getDescription());
-        size.setText(group.users.size()+"/"+group.maxGroupSize);
+        size.setText(group.getFractionString());
         players.setText(group.getPlayerString());
         games.setText(group.getGameString());
         date.setText(group.getDate());

@@ -57,7 +57,7 @@ public class EditGroupFragment extends DialogFragment {
 
         name.setText(group.getGroupName());
         description.setText(group.getDescription());
-        count.setText(group.maxGroupSize+"");
+        count.setText(group.getMaxSize());
         game.setText(group.getGameString());
         date.setText(group.getDate());
         builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {

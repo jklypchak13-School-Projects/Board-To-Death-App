@@ -46,7 +46,7 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
         holder.gameView.setText("Games: "+current.getGameString());
         holder.dateView.setText(current.getDate());
         holder.ownerView.setText(current.getOwner());
-        holder.countView.setText(Integer.toString(current.users.size())+"/"+Integer.toString(current.maxGroupSize));
+        holder.countView.setText(current.getFractionString());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
