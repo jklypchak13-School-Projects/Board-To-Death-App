@@ -1,7 +1,16 @@
 package com.example.board2deathapp.models;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.board2deathapp.ui.calendar.MyEventRecyclerViewAdapter;
+
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Event extends Model {
@@ -17,6 +26,8 @@ public class Event extends Model {
         mStartDate = startDate;
         mEndDate = endDate;
     }
+
+    public Event() {}
 
     public void setName(String name) {
        mTitle = name;
@@ -34,12 +45,42 @@ public class Event extends Model {
        mEndDate = endDate;
     }
 
-    public String getName() {
+    public String getTitle() {
        return mTitle;
     }
 
     public String getDesc() {
        return mDesc;
+    }
+
+    private static boolean isDatesSameDay(Date start, Date end) {
+       return start.getYear() == end.getYear() && start.getMonth() == end.getMonth() && start.getDay() == end.getDay();
+    }
+
+    public String getDateDuration(Locale locale) {
+        if (mStartDate == null || mEndDate == null) {
+            return "";
+        }
+        DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+        if (isDatesSameDay(mStartDate, mEndDate)) {
+            return timeFormat.format(mStartDate) + " - " + timeFormat.format(mEndDate);
+        }
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        return dateFormat.format(mStartDate) + " " + timeFormat.format(mStartDate) + " - " + dateFormat.format(mEndDate) + " " + timeFormat.format(mEndDate);
+    }
+
+    public String getDescOneSentence() {
+        if (mDesc == null) {
+            return "";
+        }
+        StringBuilder strBuilder = new StringBuilder();
+        for (char c : mDesc.toCharArray()) {
+            if (c == '.' || c == '?' || c == '!') {
+                break;
+            }
+            strBuilder.append(c);
+        }
+        return strBuilder.toString();
     }
 
     public Date getStartDate() {
