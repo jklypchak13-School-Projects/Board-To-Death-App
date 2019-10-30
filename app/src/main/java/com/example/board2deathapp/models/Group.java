@@ -6,8 +6,10 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentReference;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -39,7 +41,7 @@ public class Group extends Model {
         attrs.put("date", this.date);
         attrs.put("game", this.game);
         attrs.put("maxGroupSize", this.maxGroupSize);
-        attrs.put("users", this.users.toArray());
+        attrs.put("users", this.users);
         return attrs;
     }
 
@@ -51,7 +53,7 @@ public class Group extends Model {
         this.date = (String)data.get("date");
         this.game = (String)data.get("game");
         this.maxGroupSize = (int)data.get("maxGroupSize");
-        this.users = new ArrayList<>();
+        this.users = (ArrayList<String>)data.get("users");
 
 
 
@@ -78,5 +80,27 @@ public class Group extends Model {
 
     public String getOwner(){
         return owner;
+    }
+
+    public String getPlayerString(){
+        String result = "";
+        for(String player:this.users){
+            result+=player+"\n";
+        }
+        return result;
+    }
+
+    public void join(User u){
+        users.add(u.getUsername());
+    }
+
+    public boolean canJoin(User u){
+        String username = u.getUsername();
+
+        return !users.contains(username) && users.size()<maxGroupSize;
+    }
+
+    public void leave(User u){
+        users.remove(u.getUsername());
     }
 }
