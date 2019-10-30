@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Group Game"
+        android:textAlignment="center"
+        android:textFontWeight="2"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+
+        android:id="@+id/group_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Group Name"
+        />
+    <EditText
+        android:id="@+id/group_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Description"
+        />
+    <EditText
+        android:id="@+id/group_count"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Group Size"/>
+    <EditText
+        android:id="@+id/group_date"
+        android:inputType="datetime"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Date"/>
+    <EditText
+        android:id="@+id/group_games"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Game"
+        />
+</LinearLayout>
