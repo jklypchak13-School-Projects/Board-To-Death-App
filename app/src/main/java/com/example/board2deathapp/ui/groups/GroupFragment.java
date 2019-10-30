@@ -3,7 +3,9 @@ package com.example.board2deathapp.ui.groups;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,11 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Group;
 import com.example.board2deathapp.models.ModelCollection;
+import com.example.board2deathapp.ui.boardgame.AddBoardGameFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -70,11 +75,10 @@ public class GroupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_list, container, false);
         Query q = FirebaseFirestore.getInstance().collection("group").orderBy("groupName");
 
-
+        RecyclerView recyclerView = view.findViewById(R.id.list);
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        if (recyclerView instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -89,6 +93,15 @@ public class GroupFragment extends Fragment {
                 }
             });
             recyclerView.setAdapter(adpt);
+            FloatingActionButton b = view.findViewById(R.id.addFab);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    DialogFragment temp = new AddGroupFragment();
+                    temp.show(fm,"ADD_GROUP");
+                }
+            });
         }
         return view;
     }

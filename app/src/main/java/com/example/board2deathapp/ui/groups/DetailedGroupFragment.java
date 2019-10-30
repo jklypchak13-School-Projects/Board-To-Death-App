@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,6 +91,7 @@ public class DetailedGroupFragment extends DialogFragment {
                 }else{
                     group.leave(current_user);
                     group.update(new DBResponse(getActivity()) {
+
                         @Override
                         public <T> void onSuccess(T t) {
                             super.onSuccess(t);
@@ -98,7 +100,19 @@ public class DetailedGroupFragment extends DialogFragment {
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+        if(group.getOwner().equals(current_user.getUsername())){
+            builder.setNegativeButton("Edit", new Dialog.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface d, int id) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    EditGroupFragment temp = new EditGroupFragment();
+                    temp.setGroup(group);
+                    temp.show(fm,"EDIT_GROUP");
+                }
+            });
+        }
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 DetailedGroupFragment.this.getDialog().cancel();
             }

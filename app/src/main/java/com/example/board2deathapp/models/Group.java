@@ -103,4 +103,24 @@ public class Group extends Model {
     public void leave(User u){
         users.remove(u.getUsername());
     }
+
+    public void setGroupName(String g){
+        groupName = g;
+    }
+
+    public void setDescription(String g){
+        description = g;
+    }
+
+    public void setGame(String g){
+        game = g;
+    }
+
+    public void setCount(int i){
+        maxGroupSize = i;
+    }
+
+    public void setDate(String g){
+        date = g;
+    }
 }

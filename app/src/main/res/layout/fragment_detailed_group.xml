@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:gravity="center"
     tools:context=".ui.groups.DetailedGroupFragment">
 
     <LinearLayout
@@ -131,8 +132,6 @@
                 android:textSize="24sp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-
-
 
 
     </LinearLayout>
