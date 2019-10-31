@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.Newsletter;
+import com.example.board2deathapp.models.User;
 
 public class AddNewsletterFragment extends DialogFragment {
 
@@ -42,26 +43,24 @@ public class AddNewsletterFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-
+        final User current_user = ((LandingActivity)getActivity()).getUser();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         final View v = inflater.inflate(R.layout.fragment_add_newsletter, null);
-        final EditText name_field = v.findViewById(R.id.a_newsletter_name);
+        final EditText name_field = v.findViewById(R.id.a_newsletter_title);
         final EditText description_field = v.findViewById(R.id.a_newsletter_desc);
-        final EditText date_field = v.findViewById(R.id.a_date);
 
         builder.setView(v);
         builder.setPositiveButton("Create Newsletter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                String name = name_field.getText().toString();
+                String title = name_field.getText().toString();
                 String description = description_field.getText().toString();
-                String date = date_field.getText().toString();
 
-                new Newsletter(description,date,name, getActivity());
+                new Newsletter(title, description, current_user.getUsername(), getActivity());
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 AddNewsletterFragment.this.getDialog().cancel();
             }

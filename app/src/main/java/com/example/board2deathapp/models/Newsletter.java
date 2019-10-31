@@ -11,32 +11,34 @@ import com.example.board2deathapp.models.Model;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Calendar;
 
 public class Newsletter extends Model {
 
     private static String TAG = "NEWSLETTER";
 
-    public String description;
-    public String date;
-    public String username;
-    public String owner;
+    private String description;
+    private Date date;
+    private String title;
+    private String username;
 
-    public Newsletter(String Description, String date, String Username, final Activity a) {
-
-        this.description = Description;
-        this.date = date;
-        this.username = Username;
+    public Newsletter(String title, String description, String username, final Activity a) {
+        this.title = title;
+        this.description = description;
+        this.date = Calendar.getInstance().getTime();
+        this.username = username;
 
         this.create(new DBResponse(a) {
             @Override
             public <T> void onSuccess(T t) {
                 Log.d(TAG, t.toString());
-                Newsletter.this.setID(((DocumentReference) t).getId());
                 if (a != null) {
                     Toast.makeText(a.getApplicationContext(), "Successfully Created a Newsletter", Toast.LENGTH_SHORT).show();
                 }
@@ -55,7 +57,7 @@ public class Newsletter extends Model {
     public Map<String, Object> toMap() {
         Map<String, Object> attrs = new HashMap<String, Object>();
 
-
+        attrs.put("title",this.title);
         attrs.put("description", this.description);
         attrs.put("date", this.date);
         attrs.put("username", this.username);
@@ -65,9 +67,12 @@ public class Newsletter extends Model {
     @Override
     public void fromMap(Map<String, Object> data) {
 
-
+        this.title = (String)data.get("title");
         this.description = (String) data.get("description");
-        this.date = (String) data.get("date");
+        Timestamp t = (Timestamp)data.get("date");
+        if(t != null){
+            date = t.toDate();
+        }
         this.username = (String) data.get("username");
 
 
@@ -82,12 +87,14 @@ public class Newsletter extends Model {
     public String getDescription() {
         return this.description;
     }
-
-    public String getdate() {
-        return this.date;
+    public String getDate() {
+        return DateFormat.getDateTimeInstance().format(this.date);
     }
-
     public String getUsername() {
         return this.username;
     }
+    public String getTitle(){return this.title;}
+
+    public void setTitle(String d){this.title = d;}
+    public void setDescription(String d){this.description=d;}
 }
