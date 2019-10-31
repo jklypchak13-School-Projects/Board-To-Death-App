@@ -30,9 +30,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     private EditText mTitleEditText;
     private EditText mDescriptionEditText;
 
-    private enum TIME {START, END}
-
-    ;
+    private enum TIME {START, END};
 
     public AddEventFragment() {
     }
