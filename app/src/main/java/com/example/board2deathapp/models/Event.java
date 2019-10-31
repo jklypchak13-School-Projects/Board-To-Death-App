@@ -36,6 +36,10 @@ public class Event extends Model {
         mDesc = desc;
     }
 
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
     public void setStartDate(Date startDate) {
         mStartDate = startDate;
     }

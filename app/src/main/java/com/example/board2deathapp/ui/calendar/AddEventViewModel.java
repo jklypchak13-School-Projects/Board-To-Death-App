@@ -26,9 +26,13 @@ public class AddEventViewModel extends ViewModel {
         return timeFormat.format(calendar.getTime());
     }
 
-    public AddEventViewModel() {
+    public AddEventViewModel(Date startDate, Date endDate) {
         startCalendar = Calendar.getInstance();
         endCalendar = Calendar.getInstance();
+        if (startDate != null && endDate != null) {
+            startCalendar.setTime(startDate);
+            endCalendar.setTime(endDate);
+        }
     }
 
     public Date getStartDate() {

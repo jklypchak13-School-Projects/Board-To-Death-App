@@ -104,7 +104,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             return;
         }
         FragmentTransaction fragTrans = fragMan.beginTransaction();
-        fragTrans.replace(R.id.nav_host_fragment, new AddEventFragment());
+        fragTrans.replace(R.id.nav_host_fragment, new AddEventFragment(null));
         fragTrans.commit();
     }
 

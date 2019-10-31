@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,12 @@ public class MainEventFragment extends Fragment implements View.OnClickListener 
         editImgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Move to Edit Fragment here!
+                FragmentManager fragMan = getFragmentManager();
+                if (fragMan != null) {
+                    FragmentTransaction fragTrans = fragMan.beginTransaction();
+                    fragTrans.replace(R.id.nav_host_fragment, new AddEventFragment(mEvent));
+                    fragTrans.commit();
+                }
             }
         });
         mUsername = user.getUsername();
