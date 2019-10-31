@@ -1,6 +1,7 @@
 package com.example.board2deathapp.ui.calendar;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +58,11 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         mEventCollection = new ModelCollection<>(Event.class);
+        mListener = new OnListFragmentInteractionListener();
         mEventRecyclerViewAdapter = new MyEventRecyclerViewAdapter(mEventCollection.getItems(), mListener);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,7 +71,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         LandingActivity landingActivity = (LandingActivity) getActivity();
         if (landingActivity != null) {
             User currentUser = landingActivity.getUser();
-            mAddFab.setEnabled(currentUser.isAdmin());
+            if (!currentUser.isAdmin()) {
+                mAddFab.setVisibility(View.INVISIBLE);
+            }
         }
         mAddFab.setOnClickListener(this);
         RecyclerView eventRecyclerView = view.findViewById(R.id.eventRecyclerView);
@@ -102,8 +108,14 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         fragTrans.commit();
     }
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Event item);
+    public class OnListFragmentInteractionListener {
+        void onListFragmentInteraction(Event item) {
+            FragmentManager fragMan = getFragmentManager();
+            if (fragMan != null) {
+                FragmentTransaction fragTrans = fragMan.beginTransaction();
+                fragTrans.replace(R.id.nav_host_fragment, new MainEventFragment(item));
+                fragTrans.commit();
+            }
+        }
     }
 }
