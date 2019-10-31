@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,9 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private Event mEvent;
 
-    private enum TIME {START, END};
+    private enum TIME {START, END}
+
+    ;
 
     public AddEventFragment(Event event) {
         mEvent = event;
@@ -121,6 +122,8 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
             mAddEventViewModel = new AddEventViewModel(mEvent.getStartDate(), mEvent.getEndDate());
             mDescriptionEditText.setText(mEvent.getDesc());
             mTitleEditText.setText(mEvent.getTitle());
+        } else {
+            mAddEventViewModel = new AddEventViewModel();
         }
         constructDateSelectorButton(startDateButton, TIME.START);
         constructDateSelectorButton(endDateButton, TIME.END);

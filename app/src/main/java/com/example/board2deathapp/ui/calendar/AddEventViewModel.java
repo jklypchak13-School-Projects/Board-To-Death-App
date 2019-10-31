@@ -35,6 +35,11 @@ public class AddEventViewModel extends ViewModel {
         }
     }
 
+    public AddEventViewModel() {
+        startCalendar = Calendar.getInstance();
+        endCalendar = Calendar.getInstance();
+    }
+
     public Date getStartDate() {
         return startCalendar.getTime();
     }
