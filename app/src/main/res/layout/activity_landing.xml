@@ -36,7 +36,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:contentDescription="@+string/User Update"
-                android:src="@drawable/ic_person_black_24dp" />
+                android:src="@drawable/ic_person_white_24dp" />
 
             <ImageButton
                 android:id="@+id/signOutButton"
@@ -46,7 +46,7 @@
                 android:layout_marginStart="10dp"
                 android:background="?attr/selectableItemBackground"
                 android:contentDescription="@+string/Sign Out"
-                android:src="@drawable/ic_exit_to_app_black_24dp" />
+                android:src="@drawable/ic_exit_to_app_white_24dp" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
