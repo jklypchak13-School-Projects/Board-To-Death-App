@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/eventRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/fragment_event"
+        tools:listitem="@layout/fragment_event_card"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

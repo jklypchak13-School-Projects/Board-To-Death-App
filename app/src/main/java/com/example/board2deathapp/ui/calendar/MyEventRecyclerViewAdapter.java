@@ -2,7 +2,6 @@ package com.example.board2deathapp.ui.calendar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.Event;
 import com.example.board2deathapp.ui.calendar.CalendarFragment.OnListFragmentInteractionListener;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,7 +32,7 @@ public class MyEventRecyclerViewAdapter extends RecyclerView.Adapter<MyEventRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_event, parent, false);
+                .inflate(R.layout.fragment_event_card, parent, false);
         return new ViewHolder(view);
     }
 

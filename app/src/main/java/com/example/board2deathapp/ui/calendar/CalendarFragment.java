@@ -21,14 +21,9 @@ import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Event;
 import com.example.board2deathapp.models.ModelCollection;
 import com.example.board2deathapp.models.User;
-import com.example.board2deathapp.ui.calendar.dummy.DummyContent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class CalendarFragment extends Fragment implements View.OnClickListener {

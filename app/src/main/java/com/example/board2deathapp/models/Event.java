@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.board2deathapp.ui.calendar.MyEventRecyclerViewAdapter;
+import com.google.firebase.Timestamp;
 
 import java.text.DateFormat;
 import java.text.FieldPosition;
@@ -58,15 +59,12 @@ public class Event extends Model {
     }
 
     public String getDateDuration(Locale locale) {
-        if (mStartDate == null || mEndDate == null) {
-            return "";
-        }
-        DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, locale);
         if (isDatesSameDay(mStartDate, mEndDate)) {
-            return timeFormat.format(mStartDate) + " - " + timeFormat.format(mEndDate);
+            DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+            return dateFormat.format(mStartDate) + " - " + timeFormat.format(mEndDate);
         }
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
-        return dateFormat.format(mStartDate) + " " + timeFormat.format(mStartDate) + " - " + dateFormat.format(mEndDate) + " " + timeFormat.format(mEndDate);
+        return dateFormat.format(mStartDate) + " - " + dateFormat.format(mEndDate);
     }
 
     public String getDescOneSentence() {
@@ -76,6 +74,7 @@ public class Event extends Model {
         StringBuilder strBuilder = new StringBuilder();
         for (char c : mDesc.toCharArray()) {
             if (c == '.' || c == '?' || c == '!') {
+                strBuilder.append(c);
                 break;
             }
             strBuilder.append(c);
@@ -105,7 +104,12 @@ public class Event extends Model {
     public void fromMap(Map<String, Object> map) {
         mTitle = (String)map.get("title");
         mDesc = (String)map.get("description");
-        mStartDate = (Date)map.get("start_date");
-        mEndDate = (Date)map.get("end_date");
+        Timestamp startDateTimestamp = (Timestamp)map.get("start_date");
+        Timestamp endDateTimestamp = (Timestamp)map.get("end_date");
+        if (startDateTimestamp == null || endDateTimestamp == null) {
+           return;
+        }
+        mStartDate = startDateTimestamp.toDate();
+        mEndDate = endDateTimestamp.toDate();
     }
 }
