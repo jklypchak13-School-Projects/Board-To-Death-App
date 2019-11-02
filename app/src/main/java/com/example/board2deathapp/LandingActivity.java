@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.board2deathapp.models.User;
-import com.example.board2deathapp.ui.Newsletter.NewsletterFragment;
 import com.example.board2deathapp.ui.Newsletter.NewslettersListFragment;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
 import com.example.board2deathapp.ui.calendar.CalendarFragment;
+import com.example.board2deathapp.ui.chat.chat_fragment;
 import com.example.board2deathapp.ui.groups.GroupFragment;
 import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+@SuppressWarnings("ALL")
 public class LandingActivity extends AppCompatActivity {
 
     private User mUser;
@@ -72,7 +73,7 @@ public class LandingActivity extends AppCompatActivity {
                         frag = new UserUpdateFragment();
                         break;
                     case R.id.navigation_chat:
-                        Log.d("LANDING","Pressed Chat");
+                        frag = new chat_fragment();
                         break;
                     case R.id.navigation_boardgame:
                         frag = new BoardGameFragment();
