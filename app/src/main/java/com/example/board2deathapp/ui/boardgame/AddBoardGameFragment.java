@@ -17,6 +17,7 @@ import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
 
+
 public class AddBoardGameFragment extends DialogFragment {
     private static String TAG = "ADDGAME";
 

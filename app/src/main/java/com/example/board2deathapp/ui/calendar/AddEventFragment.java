@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private AddEventViewModel mAddEventViewModel;

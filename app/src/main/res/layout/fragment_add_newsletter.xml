@@ -34,7 +34,7 @@
         />
     <EditText
         android:id="@+id/a_date"
-        android:inputType="number"
+        android:inputType="datetime"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
