@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context=".ui.groups.DetailedGroupFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="30dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Group Name: "/>
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Owner: "/>
+            <TextView
+                android:id="@+id/group_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Date: "/>
+            <TextView
+                android:id="@+id/group_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Group Size: "/>
+            <TextView
+                android:id="@+id/group_size"
+                android:layout_width="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Games: "/>
+            <TextView
+                android:id="@+id/group_games"
+                android:layout_width="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Description: "/>
+            <TextView
+                android:id="@+id/group_description"
+                android:layout_width="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Players: "/>
+            <TextView
+                android:id="@+id/group_players"
+                android:layout_width="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

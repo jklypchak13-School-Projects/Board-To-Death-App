@@ -22,7 +22,6 @@ public class EditNewsletterFragment extends DialogFragment {
 
     private static String TAG = "EDIT_NEWSLETTER";
 
-    private DialogInterface something;
     private Newsletter newsletter;
     public EditNewsletterFragment() {
         // Required empty public constructor
@@ -48,9 +47,8 @@ public class EditNewsletterFragment extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         final View v = inflater.inflate(R.layout.edit_newsletter,null);
-        final EditText Username = v.findViewById(R.id.eTextUsername);
-        final EditText Description= v.findViewById(R.id.eTextDesc);
-        final EditText Date= v.findViewById(R.id.eTextDate);
+        final EditText title = v.findViewById(R.id.post_title);
+        final EditText description= v.findViewById(R.id.post_description);
 
         final Button delete_button = v.findViewById(R.id.delete_game);
         delete_button.setOnClickListener(new View.OnClickListener() {
@@ -70,20 +68,17 @@ public class EditNewsletterFragment extends DialogFragment {
                 });
             }
         });
-        Username.setText(newsletter.getUsername());
-        Description.setText(newsletter.getDescription());
-        Date.setText(newsletter.getdate());
+        title.setText(newsletter.getTitle());
+        description.setText(newsletter.getDescription());
         builder.setView(v);
         builder.setPositiveButton("Edit Newsletter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                String username = Username.getText().toString();
-                String description = Description.getText().toString();
-                String date = Date.getText().toString();
+                String desc = description.getText().toString();
+                String new_title = title.getText().toString();
 
-                newsletter.username = username;
-                newsletter.description = description;
-                newsletter.date=date;
+                newsletter.setDescription(desc);
+                newsletter.setTitle(new_title);
 
                 newsletter.update(new DBResponse(getActivity()) {
                     @Override
@@ -98,7 +93,7 @@ public class EditNewsletterFragment extends DialogFragment {
                 });
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 EditNewsletterFragment.this.getDialog().cancel();
             }

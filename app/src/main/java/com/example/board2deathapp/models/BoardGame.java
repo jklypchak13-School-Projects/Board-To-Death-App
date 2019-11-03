@@ -15,11 +15,11 @@ import java.util.Map;
 
 public class BoardGame extends Model {
     private static String TAG = "BOARDGAME";
-    public String name;
-    public String description;
-    public String owner;
-    public int player_count;
-    public double play_time;
+    private String name;
+    private String description;
+    private String owner;
+    private int player_count;
+    private double play_time;
 
     public BoardGame(String name, String des, String owner, int players, double time, final Activity a){
         this.name = name;
@@ -63,7 +63,7 @@ public class BoardGame extends Model {
         this.name = (String)data.get("name");
         this.description = (String)data.get("description");
         this.owner = (String)data.get("owner");
-        this.player_count = (int)data.get("player_count");
+        this.player_count = Math.toIntExact((long)data.get("player_count"));
         this.play_time = (double)data.get("play_time");
 
 
@@ -75,21 +75,21 @@ public class BoardGame extends Model {
     public String getTitle(){
         return this.name;
     }
-
     public String getOwner(){
         return this.owner;
     }
-
-    public double getTime(){
-        return this.play_time;
-    }
-
+    public double getTime(){return this.play_time;}
     public String getDescription(){
         return this.description;
     }
-
     public int getCount(){
         return this.player_count;
     }
+
+    public void setName(String n ){name = n;}
+    public void setDescription(String d ){description = d;}
+    public void setTime(double t){play_time = t;}
+    public void setCount(int c){player_count = c;}
+
 
 }

@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +33,14 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     private EditText mTitleEditText;
     private EditText mDescriptionEditText;
 
+    private Event mEvent;
+
     private enum TIME {START, END}
 
     ;
 
-    public AddEventFragment() {
+    public AddEventFragment(Event event) {
+        mEvent = event;
     }
 
     /**
@@ -107,18 +112,24 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_event, container, false);
-        mAddEventViewModel = new AddEventViewModel();
         final Button startDateButton = view.findViewById(R.id.startDateButton);
-        constructDateSelectorButton(startDateButton, TIME.START);
         final Button endDateButton = view.findViewById(R.id.endDateButton);
-        constructDateSelectorButton(endDateButton, TIME.END);
         final Button startTimeButton = view.findViewById(R.id.startTimeButton);
-        constructTimeSelectorButton(startTimeButton, TIME.START);
         final Button endTimeButton = view.findViewById(R.id.endTimeButton);
-        constructTimeSelectorButton(endTimeButton, TIME.END);
         mDescriptionEditText = view.findViewById(R.id.descriptionEditText);
         mTitleEditText = view.findViewById(R.id.titleEditText);
         final FloatingActionButton saveButton = view.findViewById(R.id.saveEventButton);
+        if (mEvent != null) {
+            mAddEventViewModel = new AddEventViewModel(mEvent.getStartDate(), mEvent.getEndDate());
+            mDescriptionEditText.setText(mEvent.getDesc());
+            mTitleEditText.setText(mEvent.getTitle());
+        } else {
+            mAddEventViewModel = new AddEventViewModel();
+        }
+        constructDateSelectorButton(startDateButton, TIME.START);
+        constructDateSelectorButton(endDateButton, TIME.END);
+        constructTimeSelectorButton(startTimeButton, TIME.START);
+        constructTimeSelectorButton(endTimeButton, TIME.END);
         saveButton.setOnClickListener(this);
         return view;
     }
@@ -136,17 +147,31 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(), "Start Date must be before End date", Toast.LENGTH_SHORT).show();
             return;
         }
-        final Event event = new Event(title, description, startDate, endDate);
-        event.create(new DBResponse(getActivity()) {
+        DBResponse dbResponse = new DBResponse(getActivity()) {
             @Override
             public <T> void onSuccess(T t) {
-                Toast.makeText(getActivity(), "Successfully made event", Toast.LENGTH_SHORT).show();
+                FragmentManager fragMan = getFragmentManager();
+                if (fragMan != null) {
+                    FragmentTransaction fragTrans = fragMan.beginTransaction();
+                    fragTrans.replace(R.id.nav_host_fragment, new CalendarFragment());
+                    fragTrans.commit();
+                }
             }
 
             @Override
             public <T> void onFailure(T t) {
                 Toast.makeText(getActivity(), "Failed to create Event, try again later", Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+        if (mEvent == null) {
+            final Event event = new Event(title, description, startDate, endDate);
+            event.create(dbResponse);
+        } else {
+            mEvent.setTitle(title);
+            mEvent.setDesc(description);
+            mEvent.setStartDate(startDate);
+            mEvent.setEndDate(endDate);
+            mEvent.update(dbResponse);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.board2deathapp.ui.calendar;
 
 import android.icu.text.DateFormat;
+import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
@@ -23,6 +24,15 @@ public class AddEventViewModel extends ViewModel {
     private static String getTimeText(Calendar calendar) {
         DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
         return timeFormat.format(calendar.getTime());
+    }
+
+    public AddEventViewModel(Date startDate, Date endDate) {
+        startCalendar = Calendar.getInstance();
+        endCalendar = Calendar.getInstance();
+        if (startDate != null && endDate != null) {
+            startCalendar.setTime(startDate);
+            endCalendar.setTime(endDate);
+        }
     }
 
     public AddEventViewModel() {
@@ -63,12 +73,12 @@ public class AddEventViewModel extends ViewModel {
     }
 
     public void setStartTime(int hours, int minutes) {
-        startCalendar.add(Calendar.HOUR, hours);
-        startCalendar.add(Calendar.MINUTE, minutes);
+        startCalendar.set(Calendar.HOUR_OF_DAY, hours);
+        startCalendar.set(Calendar.MINUTE, minutes);
     }
 
     public void setEndTime(int hours, int minutes) {
-        endCalendar.set(Calendar.HOUR, hours);
+        endCalendar.set(Calendar.HOUR_OF_DAY, hours);
         endCalendar.set(Calendar.MINUTE, minutes);
     }
 }

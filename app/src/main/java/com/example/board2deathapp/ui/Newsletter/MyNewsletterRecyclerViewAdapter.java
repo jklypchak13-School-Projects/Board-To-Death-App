@@ -49,9 +49,10 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.nameView.setText(mValues.get(position).getUsername());
+        holder.authorView.setText(mValues.get(position).getUsername());
         holder.descriptionView.setText(mValues.get(position).getDescription());
-        holder.dateView.setText(mValues.get(position).getdate());
+        holder.dateView.setText(mValues.get(position).getDate());
+        holder.titleView.setText(mValues.get(position).getTitle());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +78,8 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         public final View mView;
-        public final TextView nameView;
+        public final TextView authorView;
+        public final TextView titleView;
         public final TextView descriptionView;
         public final TextView dateView;
 
@@ -86,7 +88,8 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            nameView = view.findViewById(R.id.newsletter_name);
+            authorView = view.findViewById(R.id.newsletter_author);
+            titleView = view.findViewById(R.id.newsletter_title);
             descriptionView = view.findViewById(R.id.newsletter_description);
             dateView = view.findViewById(R.id.date);
 
@@ -98,7 +101,7 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
 
         @Override
         public String toString() {
-            return super.toString() + " '" + nameView.getText() + "'";
+            return super.toString() + " '" + titleView.getText() + "'";
         }
 
         @Override
