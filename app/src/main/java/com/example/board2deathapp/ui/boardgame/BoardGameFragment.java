@@ -2,6 +2,7 @@ package com.example.board2deathapp.ui.boardgame;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -118,13 +119,17 @@ public class BoardGameFragment extends Fragment {
                 }
             });
 
-            Button my_games_b = view.findViewById(R.id.user_games);
-            Button all_games_b = view.findViewById(R.id.all_games);
-            Button club_games_b = view.findViewById(R.id.club_games);
+            final Button my_games_b = view.findViewById(R.id.user_games);
+            my_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            final Button all_games_b = view.findViewById(R.id.all_games);
+            final Button club_games_b = view.findViewById(R.id.club_games);
 
             all_games_b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    all_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    my_games_b.setBackgroundColor(Color.TRANSPARENT);
+                    club_games_b.setBackgroundColor(Color.TRANSPARENT);
                     adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.all_games.getItems(),mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").orderBy("owner");
@@ -145,6 +150,9 @@ public class BoardGameFragment extends Fragment {
             my_games_b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    all_games_b.setBackgroundColor(Color.TRANSPARENT);
+                    my_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    club_games_b.setBackgroundColor(Color.TRANSPARENT);
                     adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.user_games.getItems(),mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
@@ -165,6 +173,9 @@ public class BoardGameFragment extends Fragment {
             club_games_b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    all_games_b.setBackgroundColor(Color.TRANSPARENT);
+                    my_games_b.setBackgroundColor(Color.TRANSPARENT);
+                    club_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.club_games.getItems(),mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", CLUB_USER);
