@@ -15,30 +15,27 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/eTextDesc"
+        android:id="@+id/post_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Title"/>
+
+    <EditText
+<<<<<<< HEAD
+        android:id="@+id/eTextDate"
+        android:inputType="datetime"
+=======
+        android:id="@+id/post_description"
+>>>>>>> a764cc6dca4ecedf7240ac2c8b9cc547db102a23
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Description"
         />
-    <EditText
-        android:id="@+id/eTextDate"
-        android:inputType="datetime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Date"
-        />
-    <EditText
-        android:id="@+id/eTextUsername"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Username"/>
+
 
     <Button
         style="@style/MyButton"

@@ -17,12 +17,12 @@
 
     <EditText
 
-        android:id="@+id/a_newsletter_name"
+        android:id="@+id/a_newsletter_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="name"
+        android:hint="title"
         />
     <EditText
         android:id="@+id/a_newsletter_desc"
@@ -32,6 +32,7 @@
         android:layout_marginRight="20dp"
         android:hint="description"
         />
+<<<<<<< HEAD
     <EditText
         android:id="@+id/a_date"
         android:inputType="datetime"
@@ -40,5 +41,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="date"/>
+=======
+>>>>>>> a764cc6dca4ecedf7240ac2c8b9cc547db102a23
 
 </LinearLayout>

@@ -1,7 +1,9 @@
 package com.example.board2deathapp.ui.chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -13,22 +15,29 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.DBResponse;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.Firebase;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseError;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-@SuppressWarnings("ALL")
-public class chat_fragment extends AppCompatActivity{
 
+public class chat_fragment extends Fragment {
 
 
     LinearLayout layout;
@@ -39,17 +48,17 @@ public class chat_fragment extends AppCompatActivity{
     Firebase reference1, reference2;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_fragment);
 
-        layout = (LinearLayout) findViewById(R.id.layout1);
-        layout_2 = (RelativeLayout)findViewById(R.id.layout2);
-        sendButton = (ImageView)findViewById(R.id.sendButton);
-        messageArea = (EditText)findViewById(R.id.messageArea);
-        scrollView = (ScrollView)findViewById(R.id.scrollView);
 
-        Firebase.setAndroidContext(this);
+        layout = (LinearLayout) layout.findViewById(R.id.layout1);
+        layout_2 = (RelativeLayout) layout.findViewById(R.id.layout2);
+        sendButton = (ImageView) layout.findViewById(R.id.sendButton);
+        messageArea = (EditText) layout.findViewById(R.id.messageArea);
+        scrollView = (ScrollView) layout.findViewById(R.id.scrollView);
+
+        Firebase.setAndroidContext(getActivity());
         reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + Userdetails.username + "_" + Userdetails.chatWith);
         reference2 = new Firebase("https://board2death.firebaseio.com/Messages" + Userdetails.chatWith + "_" + Userdetails.username);
 
@@ -58,7 +67,7 @@ public class chat_fragment extends AppCompatActivity{
             public void onClick(View v) {
                 String messageText = messageArea.getText().toString();
 
-                if(!messageText.equals("")){
+                if (!messageText.equals("")) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
                     map.put("user", Userdetails.username);
@@ -69,20 +78,20 @@ public class chat_fragment extends AppCompatActivity{
             }
         });
 
+
         reference1.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
 
-                    Map map = dataSnapshot.getValue(Map.class);
-                    String message = map.get("message").toString();
-                    String userName = map.get("user").toString();
+                Map map = dataSnapshot.getValue(Map.class);
+                String message = map.get("message").toString();
+                String userName = map.get("user").toString();
 
-                    if(userName.equals(Userdetails.username)){
-                        addMessageBox("You:-\n" + message, 1);
-                    }
-                    else{
-                        addMessageBox(Userdetails.chatWith + ":-\n" + message, 2);
-                    }
+                if (userName.equals(Userdetails.username)) {
+                    addMessageBox("You:-\n" + message, 1);
+                } else {
+                    addMessageBox(Userdetails.chatWith + ":-\n" + message, 2);
+                }
 
             }
 
@@ -107,30 +116,34 @@ public class chat_fragment extends AppCompatActivity{
             }
 
 
-
-
-
-
         });
     }
 
-    public void addMessageBox(String message, int type){
-        TextView textView = new TextView(chat_fragment.this);
+    public void addMessageBox(String message, int type) {
+        TextView textView = new TextView(getActivity());
         textView.setText(message);
 
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp2.weight = 1.0f;
 
-        if(type == 1) {
+        if (type == 1) {
             lp2.gravity = Gravity.LEFT;
             textView.setBackgroundResource(R.drawable.bubble_in);
-        }
-        else{
+        } else {
             lp2.gravity = Gravity.RIGHT;
             textView.setBackgroundResource(R.drawable.bubble_out);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.chat_fragment, container, false);
+
+        return view;
+
+
     }
 }
