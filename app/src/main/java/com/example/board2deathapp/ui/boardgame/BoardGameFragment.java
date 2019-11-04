@@ -44,22 +44,29 @@ import java.util.Random;
  */
 public class BoardGameFragment extends Fragment implements SensorEventListener {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String TAG = "BOARDGAME";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+
+    //Data Collections
     private ModelCollection<BoardGame> user_games;
     private ModelCollection<BoardGame> club_games;
     private ModelCollection<BoardGame> all_games;
+    private ArrayList<BoardGame> current_items;
+
+    //Recycle View Data
     private OnListFragmentInteractionListener mListener;
     private MyBoardGameRecyclerViewAdapter adpt;
     private RecyclerView recycleView;
+
+    //Sensor Data
     private SensorManager manager;
+    public boolean displaying;
+
+    //User Data
     private String current_user;
     private static String CLUB_USER = "Board2Death";
-    private ArrayList<BoardGame> current_items;
-    public boolean displaying;
+
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -67,26 +74,22 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
     public BoardGameFragment() {
     }
 
-    public static BoardGameFragment newInstance(int columnCount) {
-
-
-        BoardGameFragment fragment = new BoardGameFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        current_user = ((LandingActivity)getActivity()).getUser().getUsername();
+        //Get Current User
+        LandingActivity  a = (LandingActivity) getActivity();
+        if(a != null){
+            current_user = a.getUser().getUsername();
+        }
 
-
+        //Declare Model Collections
         user_games = new ModelCollection<>(BoardGame.class);
         all_games = new ModelCollection<>(BoardGame.class);
         club_games = new ModelCollection<>(BoardGame.class);
+
+        //Set Up the Adapter
         this.adpt = new MyBoardGameRecyclerViewAdapter(this.user_games.getItems(),mListener);
 
         if (getArguments() != null) {
@@ -97,10 +100,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_boardgame_list, container, false);
 
-        // Set the adapter
-        displaying = false;
+
+        //Initialize the Sensor Event
         Activity a = getActivity();
         if(a != null) {
             manager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
@@ -109,19 +113,23 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
             Sensor s = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             manager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
         }
+        displaying = false;
 
 
+        View rView = view.findViewById(R.id.list);
+        if (rView instanceof RecyclerView) {
 
-        View rview = view.findViewById(R.id.list);
-        if (rview instanceof RecyclerView) {
+            //Set Up the Recycle View
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) rview;
+            RecyclerView recyclerView = (RecyclerView) rView;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
+
+            //Read Initial List as the current user's games
             Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
             user_games.read_current(q, new DBResponse(getActivity()) {
                 @Override
@@ -135,7 +143,10 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
 
             });
             current_items = (ArrayList<BoardGame>)user_games.getItems();
+
             recycleView = recyclerView;
+
+            //Set up OnClickListener for Adding Games
             view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -145,6 +156,8 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 }
             });
 
+
+            //Get Tab Buttons
             final Button my_games_b = view.findViewById(R.id.user_games);
             my_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             final Button all_games_b = view.findViewById(R.id.all_games);
