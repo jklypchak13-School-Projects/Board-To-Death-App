@@ -17,21 +17,30 @@
 
     <EditText
 
+<<<<<<< HEAD
         android:id="@+id/a_newsletter_title"
+=======
+        android:id="@+id/postTitle"
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+<<<<<<< HEAD
         android:hint="title"
+=======
+        android:hint="Title"
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543
         />
     <EditText
-        android:id="@+id/a_newsletter_desc"
+        android:id="@+id/postContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="description"
+        android:hint="Content"
         />
+<<<<<<< HEAD
 <<<<<<< HEAD
     <EditText
         android:id="@+id/a_date"
@@ -43,5 +52,7 @@
         android:hint="date"/>
 =======
 >>>>>>> a764cc6dca4ecedf7240ac2c8b9cc547db102a23
+=======
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543
 
 </LinearLayout>

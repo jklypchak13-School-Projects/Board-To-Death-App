@@ -88,10 +88,10 @@ public class MyNewsletterRecyclerViewAdapter extends RecyclerView.Adapter<MyNews
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            authorView = view.findViewById(R.id.newsletter_author);
-            titleView = view.findViewById(R.id.newsletter_title);
-            descriptionView = view.findViewById(R.id.newsletter_description);
-            dateView = view.findViewById(R.id.date);
+            authorView = view.findViewById(R.id.postAuthor);
+            titleView = view.findViewById(R.id.postTitle);
+            descriptionView = view.findViewById(R.id.postContent);
+            dateView = view.findViewById(R.id.postDate);
 
 
 

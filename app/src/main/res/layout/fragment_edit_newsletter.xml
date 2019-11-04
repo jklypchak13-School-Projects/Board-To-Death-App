@@ -15,16 +15,27 @@
         android:textStyle="bold" />
 
     <EditText
+<<<<<<< HEAD:app/src/main/res/layout/edit_newsletter.xml
         android:id="@+id/post_title"
+=======
+        android:id="@+id/postTitle"
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543:app/src/main/res/layout/fragment_edit_newsletter.xml
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+<<<<<<< HEAD:app/src/main/res/layout/edit_newsletter.xml
         android:hint="Title"/>
 
     <EditText
 <<<<<<< HEAD
         android:id="@+id/eTextDate"
+=======
+        android:hint="Title"
+        />
+    <EditText
+        android:id="@+id/postContent"
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543:app/src/main/res/layout/fragment_edit_newsletter.xml
         android:inputType="datetime"
 =======
         android:id="@+id/post_description"
@@ -33,13 +44,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+<<<<<<< HEAD:app/src/main/res/layout/edit_newsletter.xml
         android:hint="Description"
         />
 
+=======
+        android:hint="Content"
+        />
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543:app/src/main/res/layout/fragment_edit_newsletter.xml
 
     <Button
         style="@style/MyButton"
-        android:id="@+id/delete_game"
+        android:id="@+id/deletePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DELETE"

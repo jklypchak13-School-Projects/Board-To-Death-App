@@ -109,7 +109,7 @@ public class BoardGameFragment extends Fragment {
 
             });
             recycleView = recyclerView;
-            view.findViewById(R.id.add_game).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();

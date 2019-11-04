@@ -1,3 +1,4 @@
+/*
 package com.example.board2deathapp.ui.chat;
 
 import android.content.Context;
@@ -137,6 +138,7 @@ public class chat_fragment extends Fragment {
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
+<<<<<<< HEAD
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,3 +149,8 @@ public class chat_fragment extends Fragment {
 
     }
 }
+=======
+}
+
+*/
+>>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543

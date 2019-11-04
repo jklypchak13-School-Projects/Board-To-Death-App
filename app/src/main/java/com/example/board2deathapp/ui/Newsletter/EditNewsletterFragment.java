@@ -16,7 +16,6 @@ import androidx.fragment.app.DialogFragment;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.Newsletter;
 import com.example.board2deathapp.models.DBResponse;
-import com.example.board2deathapp.models.Model;
 
 public class EditNewsletterFragment extends DialogFragment {
 
@@ -33,7 +32,7 @@ public class EditNewsletterFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "Creating Dialog");
-        final View v = inflater.inflate(R.layout.edit_newsletter, container, false);
+        final View v = inflater.inflate(R.layout.fragment_edit_newsletter, container, false);
 
         return v;
     }
@@ -46,11 +45,11 @@ public class EditNewsletterFragment extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        final View v = inflater.inflate(R.layout.edit_newsletter,null);
-        final EditText title = v.findViewById(R.id.post_title);
-        final EditText description= v.findViewById(R.id.post_description);
+        final View v = inflater.inflate(R.layout.fragment_edit_newsletter,null);
+        final EditText title = v.findViewById(R.id.postTitle);
+        final EditText description= v.findViewById(R.id.postContent);
 
-        final Button delete_button = v.findViewById(R.id.delete_game);
+        final Button delete_button = v.findViewById(R.id.deletePost);
         delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
