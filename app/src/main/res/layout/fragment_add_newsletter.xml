@@ -17,28 +17,20 @@
 
     <EditText
 
-        android:id="@+id/a_newsletter_name"
+        android:id="@+id/postTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="name"
+        android:hint="Title"
         />
     <EditText
-        android:id="@+id/a_newsletter_desc"
+        android:id="@+id/postContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="description"
+        android:hint="Content"
         />
-    <EditText
-        android:id="@+id/a_date"
-        android:inputType="datetime"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="date"/>
 
 </LinearLayout>

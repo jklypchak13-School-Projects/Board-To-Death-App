@@ -1,3 +1,4 @@
+/*
 package com.example.board2deathapp.ui.chat;
 
 import android.os.Bundle;
@@ -134,3 +135,5 @@ public class chat_fragment extends AppCompatActivity{
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 }
+
+*/

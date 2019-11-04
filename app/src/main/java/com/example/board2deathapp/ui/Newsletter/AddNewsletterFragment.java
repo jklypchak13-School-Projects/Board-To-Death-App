@@ -47,8 +47,9 @@ public class AddNewsletterFragment extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         final View v = inflater.inflate(R.layout.fragment_add_newsletter, null);
-        final EditText name_field = v.findViewById(R.id.a_newsletter_title);
-        final EditText description_field = v.findViewById(R.id.a_newsletter_desc);
+        final EditText name_field = v.findViewById(R.id.postTitle);
+        final EditText description_field = v.findViewById(R.id.postContent
+        );
 
         builder.setView(v);
         builder.setPositiveButton("Create Newsletter", new DialogInterface.OnClickListener() {

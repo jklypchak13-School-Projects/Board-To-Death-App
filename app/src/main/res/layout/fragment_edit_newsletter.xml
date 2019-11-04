@@ -15,34 +15,26 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/eTextDesc"
+        android:id="@+id/postTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Description"
+        android:hint="Title"
         />
     <EditText
-        android:id="@+id/eTextDate"
+        android:id="@+id/postContent"
         android:inputType="datetime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Date"
+        android:hint="Content"
         />
-    <EditText
-        android:id="@+id/eTextUsername"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Username"/>
 
     <Button
         style="@style/MyButton"
-        android:id="@+id/delete_game"
+        android:id="@+id/deletePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DELETE"

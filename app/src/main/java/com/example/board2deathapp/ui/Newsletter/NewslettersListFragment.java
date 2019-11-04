@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -76,7 +75,7 @@ public class NewslettersListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.newsletters_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_newsletters_list, container, false);
 
         // Set the adapter
         View rview = view.findViewById(R.id.list);
@@ -89,7 +88,7 @@ public class NewslettersListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-            Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("username", current_user);
+            Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date");
             My_Newsletters.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
@@ -102,7 +101,7 @@ public class NewslettersListFragment extends Fragment {
 
             });
             recycleView = recyclerView;
-            view.findViewById(R.id.add_newsletter).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -111,48 +110,6 @@ public class NewslettersListFragment extends Fragment {
                 }
             });
 
-            Button my_newsletter_b = view.findViewById(R.id.My_Newsletters);
-            Button all_newsletters_b = view.findViewById(R.id.All_Newsletters);
-
-            all_newsletters_b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    adpt = new MyNewsletterRecyclerViewAdapter(NewslettersListFragment.this.All_Newsletters.getItems(),mListener);
-                    recycleView.setAdapter(NewslettersListFragment.this.adpt);
-                    Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("username");
-                    All_Newsletters.read_current(q, new DBResponse(getActivity()) {
-                        @Override
-                        public <T> void onSuccess(T t) {
-                            adpt.notifyDataSetChanged();
-                        }
-                        @Override
-                        public <T> void onFailure(T t){
-
-                        }
-
-                    });
-                }
-            });
-
-            my_newsletter_b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    adpt = new MyNewsletterRecyclerViewAdapter(NewslettersListFragment.this.My_Newsletters.getItems(),mListener);
-                    recycleView.setAdapter(NewslettersListFragment.this.adpt);
-                    Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("username", current_user);
-                    My_Newsletters.read_current(q, new DBResponse(getActivity()) {
-                        @Override
-                        public <T> void onSuccess(T t) {
-                            adpt.notifyDataSetChanged();
-                        }
-                        @Override
-                        public <T> void onFailure(T t){
-
-                        }
-
-                    });
-                }
-            });
 
 
         }
