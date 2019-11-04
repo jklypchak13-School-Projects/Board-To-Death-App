@@ -1,6 +1,7 @@
 package com.example.board2deathapp.ui.boardgame;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -78,10 +80,7 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        displaying = false;
-        manager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        Sensor s = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        manager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
+
         current_user = ((LandingActivity)getActivity()).getUser().getUsername();
 
 
@@ -101,6 +100,18 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
         View view = inflater.inflate(R.layout.fragment_boardgame_list, container, false);
 
         // Set the adapter
+        displaying = false;
+        Activity a = getActivity();
+        if(a != null) {
+            manager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
+        }
+        if(manager != null){
+            Sensor s = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            manager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
+        }
+
+
+
         View rview = view.findViewById(R.id.list);
         if (rview instanceof RecyclerView) {
             Context context = view.getContext();
@@ -269,12 +280,16 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 Random rand = new Random();
                 BoardGame g = current_items.get(rand.nextInt(current_items.size()));
 
+                Activity current_activity = getActivity();
+                if(current_activity != null){
+                    FragmentManager fm = ((FragmentActivity) current_activity).getSupportFragmentManager();
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                DetailedBoardgameFragment temp = new DetailedBoardgameFragment();
-                temp.setGame(g);
-                temp.setFragment(this);
-                temp.show(fm, "ADD_BOARDGAME");
+                    DetailedBoardgameFragment temp = new DetailedBoardgameFragment();
+                    temp.setGame(g);
+                    temp.setFragment(this);
+                    temp.show(fm, "ADD_BOARDGAME");
+                }
+
             }
         }
     }
