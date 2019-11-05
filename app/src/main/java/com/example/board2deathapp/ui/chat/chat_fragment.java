@@ -51,16 +51,27 @@ public class chat_fragment extends Fragment {
     Firebase reference1, reference2;
     private String current_user;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.chat_fragment, container, false);
         layout = (LinearLayout) layout.findViewById(R.id.layout1);
         layout_2 = (RelativeLayout) layout.findViewById(R.id.layout2);
         sendButton = (ImageView) layout.findViewById(R.id.sendButton);
         messageArea = (EditText) layout.findViewById(R.id.messageArea);
         scrollView = (ScrollView) layout.findViewById(R.id.scrollView);
+
+        return view;
+
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+
 
         Firebase.setAndroidContext(getActivity());
         reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + current_user );
@@ -93,7 +104,7 @@ public class chat_fragment extends Fragment {
 
                 if (userName.equals(current_user)) {
                     addMessageBox("You:-\n" + message, 1);
-                } 
+                }
 
             }
 
@@ -141,12 +152,5 @@ public class chat_fragment extends Fragment {
     }
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chat_fragment, container, false);
 
-        return view;
-
-
-    }
 }
