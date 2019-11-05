@@ -51,45 +51,15 @@ public class chat_fragment extends Fragment {
     Firebase reference1, reference2;
     private String current_user;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    public void addMessageBox(String message, int type) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(message);
-
-        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp2.weight = 1.0f;
-
-        if (type == 1) {
-            lp2.gravity = Gravity.LEFT;
-            textView.setBackgroundResource(R.drawable.bubble_in);
-        } else {
-            lp2.gravity = Gravity.RIGHT;
-            textView.setBackgroundResource(R.drawable.bubble_out);
-        }
-        textView.setLayoutParams(lp2);
-        layout.addView(textView);
-        scrollView.fullScroll(View.FOCUS_DOWN);
-    }
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_fragment, container, false);
+        layout = (LinearLayout) layout.findViewById(R.id.layout1);
+        layout_2 = (RelativeLayout) layout.findViewById(R.id.layout2);
+        sendButton = (ImageView) layout.findViewById(R.id.sendButton);
+        messageArea = (EditText) layout.findViewById(R.id.messageArea);
+        scrollView = (ScrollView) layout.findViewById(R.id.scrollView);
 
-
-        layout = (LinearLayout) view.findViewById(R.id.layout1);
-        layout_2 = (RelativeLayout) view.findViewById(R.id.layout2);
-        sendButton = (ImageView) view.findViewById(R.id.sendButton);
-        messageArea = (EditText) view.findViewById(R.id.messageArea);
-        scrollView = (ScrollView) view.findViewById(R.id.scrollView);
-
-        Firebase.setAndroidContext(getActivity());
-        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + current_user );
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +77,22 @@ public class chat_fragment extends Fragment {
                 }
             }
         });
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+
+
+        Firebase.setAndroidContext(getActivity());
+        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + current_user );
+
+
+
 
 
         reference1.addChildEventListener(new ChildEventListener() {
@@ -145,8 +131,27 @@ public class chat_fragment extends Fragment {
 
 
         });
-        return view;
-
-
     }
+
+    public void addMessageBox(String message, int type) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(message);
+
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp2.weight = 1.0f;
+
+        if (type == 1) {
+            lp2.gravity = Gravity.LEFT;
+            textView.setBackgroundResource(R.drawable.bubble_in);
+        } else {
+            lp2.gravity = Gravity.RIGHT;
+            textView.setBackgroundResource(R.drawable.bubble_out);
+        }
+        textView.setLayoutParams(lp2);
+        layout.addView(textView);
+        scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+
+
 }
