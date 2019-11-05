@@ -1,4 +1,4 @@
-/*
+
 package com.example.board2deathapp.ui.chat;
 
 import android.content.Context;
@@ -21,8 +21,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.DBResponse;
+import com.example.board2deathapp.models.User;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.Firebase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +49,7 @@ public class chat_fragment extends Fragment {
     EditText messageArea;
     ScrollView scrollView;
     Firebase reference1, reference2;
+    private String current_user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,20 +63,20 @@ public class chat_fragment extends Fragment {
         scrollView = (ScrollView) layout.findViewById(R.id.scrollView);
 
         Firebase.setAndroidContext(getActivity());
-        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + Userdetails.username + "_" + Userdetails.chatWith);
-        reference2 = new Firebase("https://board2death.firebaseio.com/Messages" + Userdetails.chatWith + "_" + Userdetails.username);
+        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + current_user );
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String messageText = messageArea.getText().toString();
-
+                current_user = ((LandingActivity)getActivity()).getUser().getUsername();
                 if (!messageText.equals("")) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
-                    map.put("user", Userdetails.username);
+                    map.put("user", current_user);
                     reference1.push().setValue(map);
-                    reference2.push().setValue(map);
+
                     messageArea.setText("");
                 }
             }
@@ -88,11 +91,9 @@ public class chat_fragment extends Fragment {
                 String message = map.get("message").toString();
                 String userName = map.get("user").toString();
 
-                if (userName.equals(Userdetails.username)) {
+                if (userName.equals(current_user)) {
                     addMessageBox("You:-\n" + message, 1);
-                } else {
-                    addMessageBox(Userdetails.chatWith + ":-\n" + message, 2);
-                }
+                } 
 
             }
 
@@ -138,7 +139,7 @@ public class chat_fragment extends Fragment {
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
-<<<<<<< HEAD
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,8 +150,3 @@ public class chat_fragment extends Fragment {
 
     }
 }
-=======
-}
-
-*/
->>>>>>> ebd0415ab755fc37b170b6bd657dfbce71419543
