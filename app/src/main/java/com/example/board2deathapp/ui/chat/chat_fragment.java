@@ -60,21 +60,6 @@ public class chat_fragment extends Fragment {
         messageArea = (EditText) layout.findViewById(R.id.messageArea);
         scrollView = (ScrollView) layout.findViewById(R.id.scrollView);
 
-        return view;
-
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
-
-
-        Firebase.setAndroidContext(getActivity());
-        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + current_user );
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +77,22 @@ public class chat_fragment extends Fragment {
                 }
             }
         });
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+
+
+        Firebase.setAndroidContext(getActivity());
+        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + current_user );
+
+
+
 
 
         reference1.addChildEventListener(new ChildEventListener() {
