@@ -18,16 +18,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
+import com.example.board2deathapp.models.Chat;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.ModelCollection;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -270,7 +269,9 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(BoardGame item);
+        void onListFragmentInteraction(Chat item);
+
+        void onListFragmentInteraction(BoardGame mItem);
     }
 
     @Override
