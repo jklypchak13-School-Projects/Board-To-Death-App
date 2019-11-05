@@ -5,7 +5,34 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".ui.calendar.CalendarFragment">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/myGroups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layoutDirection="inherit"
+            android:text="My Groups"
+            style="?android:attr/borderlessButtonStyle"
+            />
+        <Button
+            android:id="@+id/allGroups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layoutDirection="inherit"
+            android:text="All Groups"
+            style="?android:attr/borderlessButtonStyle"
+            />
+    </LinearLayout>
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_marginTop="5dp"
@@ -20,7 +47,7 @@ tools:context=".ui.calendar.CalendarFragment">
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.groups.GroupFragment"
     tools:listitem="@layout/fragment_group"/>
-
+    </LinearLayout>
 <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/addFab"
     android:layout_width="wrap_content"

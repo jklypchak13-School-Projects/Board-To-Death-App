@@ -18,7 +18,6 @@ import com.example.board2deathapp.ui.boardgame.EditBoardGameFragment;
 import com.example.board2deathapp.ui.groups.GroupFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
-
 public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecyclerViewAdapter.ViewHolder> {
 
     private final List<Group> mValues;
