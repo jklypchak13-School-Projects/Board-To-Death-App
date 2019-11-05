@@ -54,7 +54,7 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
          */
         holder.mItem = mValues.get(position);
         holder.nameView.setText(mValues.get(position).getTitle());
-        holder.descriptionView.setText(mValues.get(position).getDescription());
+        holder.descriptionView.setText(mValues.get(position).getDescriptionPreview());
         holder.countView.setText(Integer.toString(mValues.get(position).getCount()));
         holder.timeView.setText(Double.toString(mValues.get(position).getTime()));
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +74,18 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
         if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
             CardView card = holder.mView.findViewById(R.id.game_card);
             card.setOnLongClickListener(holder);
+        }else{
+            CardView card = holder.mView.findViewById(R.id.game_card);
+            card.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    FragmentManager fm = ((AppCompatActivity)c).getSupportFragmentManager();
+                    DetailedBoardgameFragment temp = new DetailedBoardgameFragment();
+                    temp.setGame(holder.mItem);
+                    temp.show(fm,"DetailedGame");
+                    return true;
+                }
+            });
         }
     }
 

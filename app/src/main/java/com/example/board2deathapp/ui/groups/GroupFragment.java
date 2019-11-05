@@ -1,6 +1,7 @@
 package com.example.board2deathapp.ui.groups;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -14,17 +15,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Group;
 import com.example.board2deathapp.models.ModelCollection;
 import com.example.board2deathapp.ui.boardgame.AddBoardGameFragment;
+import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
+import com.example.board2deathapp.ui.boardgame.MyBoardGameRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,8 +46,11 @@ public class GroupFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private MyGroupRecyclerViewAdapter adpt;
     private OnListFragmentInteractionListener mListener;
-    private ModelCollection<Group> GROUPS;
+    private ModelCollection<Group> all_groups;
+    private ModelCollection<Group> my_groups;
+    private RecyclerView recycleView;
     private static String TAG = "GROUPS";
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -63,7 +73,8 @@ public class GroupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GROUPS = new ModelCollection<>(Group.class);
+        all_groups = new ModelCollection<>(Group.class);
+        my_groups = new ModelCollection<>(Group.class);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -84,15 +95,16 @@ public class GroupFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            final MyGroupRecyclerViewAdapter adpt = new MyGroupRecyclerViewAdapter(GROUPS.getItems(), mListener);
-            GROUPS.read_current(q, new DBResponse(getActivity()) {
+            adpt = new MyGroupRecyclerViewAdapter(all_groups.getItems(), mListener);
+            all_groups.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
                     Log.d(TAG,"Reading Groups");
-                    adpt.notifyDataSetChanged();
+                    GroupFragment.this.adpt.notifyDataSetChanged();
                 }
             });
             recyclerView.setAdapter(adpt);
+            recycleView=recyclerView;
             FloatingActionButton b = view.findViewById(R.id.addFab);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,6 +112,55 @@ public class GroupFragment extends Fragment {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DialogFragment temp = new AddGroupFragment();
                     temp.show(fm,"ADD_GROUP");
+                }
+            });
+
+            final Button myGroupsButton = view.findViewById(R.id.myGroups);
+            myGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            final Button allGroupsButton = view.findViewById(R.id.allGroups);
+            final String current_user = ((LandingActivity)getActivity()).getUser().getUsername();
+            myGroupsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    allGroupsButton.setBackgroundColor(Color.TRANSPARENT);
+                    myGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    adpt = new MyGroupRecyclerViewAdapter(GroupFragment.this.my_groups.getItems(),mListener);
+                    recycleView.setAdapter(GroupFragment.this.adpt);
+                    Query q = FirebaseFirestore.getInstance().collection("group").whereArrayContains("users",current_user);
+                    my_groups.read_current(q, new DBResponse(getActivity()) {
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            adpt.notifyDataSetChanged();
+                        }
+                        @Override
+                        public <T> void onFailure(T t){
+
+                        }
+
+                    });
+                }
+            });
+            allGroupsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    myGroupsButton.setBackgroundColor(Color.TRANSPARENT);
+                    allGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    adpt = new MyGroupRecyclerViewAdapter(GroupFragment.this.all_groups.getItems(),mListener);
+                    recycleView.setAdapter(GroupFragment.this.adpt);
+                    Query q = FirebaseFirestore.getInstance().collection("group").orderBy("groupName");
+                    all_groups.read_current(q, new DBResponse(getActivity()) {
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            adpt.notifyDataSetChanged();
+                        }
+                        @Override
+                        public <T> void onFailure(T t){
+
+                        }
+
+                    });
                 }
             });
         }

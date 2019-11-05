@@ -14,6 +14,21 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Title"
+        android:id="@+id/postTitle"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Content"
+        android:id="@+id/postContent"/>
 
     <Button
         style="@style/MyButton"

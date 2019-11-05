@@ -20,7 +20,7 @@ public class BoardGame extends Model {
     private String owner;
     private int player_count;
     private double play_time;
-
+    private static int descriptionLength = 37;
     public BoardGame(String name, String des, String owner, int players, double time, final Activity a){
         this.name = name;
         this.description = des;
@@ -85,6 +85,12 @@ public class BoardGame extends Model {
     public int getCount(){
         return this.player_count;
     }
+    public String getDescriptionPreview(){
+        if(this.description.length()<descriptionLength){
+            return this.description;
+        }else{
+            return this.description.substring(0,descriptionLength)+"...";}
+        }
 
     public void setName(String n ){name = n;}
     public void setDescription(String d ){description = d;}

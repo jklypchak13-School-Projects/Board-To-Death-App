@@ -77,6 +77,9 @@ public class DetailedBoardgameFragment extends DialogFragment {
 
     public void onDismiss(DialogInterface dialogInterface)
     {
-        f.displaying = false;
+
+        if(f != null) {
+            f.displaying = false;
+        }
     }
 }
