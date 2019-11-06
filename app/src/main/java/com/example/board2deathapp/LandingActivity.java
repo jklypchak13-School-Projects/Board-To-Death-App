@@ -9,6 +9,7 @@ import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
 import com.example.board2deathapp.ui.calendar.CalendarFragment;
 //import com.example.board2deathapp.ui.chat.chat_fragment;
 import com.example.board2deathapp.ui.chat.AddChatFragment;
+import com.example.board2deathapp.ui.chat.chatListFragment;
 import com.example.board2deathapp.ui.groups.GroupFragment;
 import com.example.board2deathapp.ui.user_update.UserUpdateFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -74,7 +75,7 @@ public class LandingActivity extends AppCompatActivity {
                         frag = new UserUpdateFragment();
                         break;
                     case R.id.navigation_chat:
-                        frag = new AddChatFragment();
+                        frag = new chatListFragment();
                         break;
                     case R.id.navigation_boardgame:
                         frag = new BoardGameFragment();
