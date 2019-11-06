@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
@@ -15,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 
-import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.models.Newsletter;
-import com.example.board2deathapp.ui.Newsletter.NewslettersListFragment;
-import com.example.board2deathapp.ui.Newsletter.NewsletterFragment;
 
 import java.util.List;
 

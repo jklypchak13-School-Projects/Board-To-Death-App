@@ -48,4 +48,21 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="play time"/>
+    <LinearLayout
+        android:id="@+id/check_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/club_game"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is a club game?"/>
+    </LinearLayout>
 </LinearLayout>

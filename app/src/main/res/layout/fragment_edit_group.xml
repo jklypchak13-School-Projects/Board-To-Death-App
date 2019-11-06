@@ -41,6 +41,13 @@
         android:layout_marginRight="20dp"
         android:hint="Group Size"/>
     <EditText
+        android:id="@+id/group_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Location"/>
+    <EditText
         android:id="@+id/group_date"
         android:inputType="datetime"
         android:layout_width="match_parent"

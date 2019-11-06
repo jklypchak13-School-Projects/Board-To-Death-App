@@ -30,13 +30,9 @@ public class NewslettersListFragment extends Fragment {
     private static final String TAG = "NEWSLETTER";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private ModelCollection<Newsletter> My_Newsletters;
     private ModelCollection<Newsletter> All_Newsletters;
     private OnListFragmentInteractionListener mListener;
     private MyNewsletterRecyclerViewAdapter adpt;
-    private RecyclerView recycleView;
-    private String current_user;
-    private static String CLUB_USER = "Board2Death";
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -58,13 +54,9 @@ public class NewslettersListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        current_user = ((LandingActivity)getActivity()).getUser().getUsername();
-
-
-        My_Newsletters = new ModelCollection<Newsletter>(Newsletter.class);
         All_Newsletters = new ModelCollection<Newsletter>(Newsletter.class);
 
-        this.adpt = new MyNewsletterRecyclerViewAdapter(this.My_Newsletters.getItems(),mListener);
+        this.adpt = new MyNewsletterRecyclerViewAdapter(this.All_Newsletters.getItems(),mListener);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -88,7 +80,7 @@ public class NewslettersListFragment extends Fragment {
             }
             recyclerView.setAdapter(this.adpt);
             Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date",  Query.Direction.DESCENDING);
-            My_Newsletters.read_current(q, new DBResponse(getActivity()) {
+            All_Newsletters.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
                     adpt.notifyDataSetChanged();
@@ -99,7 +91,6 @@ public class NewslettersListFragment extends Fragment {
                 }
 
             });
-            recycleView = recyclerView;
             view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,37 +108,12 @@ public class NewslettersListFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        /*
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-
-         */
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Newsletter item);
     }
 
