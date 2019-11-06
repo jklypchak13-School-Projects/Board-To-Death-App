@@ -15,22 +15,20 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/postTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Title"
-        />
+        android:id="@+id/postTitle"/>
+
     <EditText
-        android:id="@+id/postContent"
-        android:inputType="datetime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Content"
-        />
+        android:id="@+id/postContent"/>
 
     <Button
         style="@style/MyButton"

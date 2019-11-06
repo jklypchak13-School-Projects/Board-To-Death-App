@@ -8,15 +8,15 @@
     <androidx.recyclerview.widget.RecyclerView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
-        android:name="com.example.board2deathapp.ui.boardgame.BoardGameFragment"
+        android:id="@+id/c_list"
+        android:name="com.example.board2deathapp.ui.chat.chat_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="5dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".ui.boardgame.BoardGameFragment"
+        tools:context=".ui.boardgame.ChatFragment"
         tools:listitem="@layout/fragment_boardgame" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

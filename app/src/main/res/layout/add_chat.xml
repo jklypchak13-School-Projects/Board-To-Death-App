@@ -8,27 +8,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Newsletter"
+        android:text="Add a Message"
         android:textAlignment="center"
         android:textFontWeight="2"
         android:layout_marginTop="20dp"
         android:textSize="24sp"
         android:textStyle="bold" />
 
+
     <EditText
-        android:id="@+id/postTitle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Title"/>
-    <EditText
-        android:id="@+id/postContent"
+        android:id="@+id/postMessage1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Content"
+        android:hint="Message"
         />
 
 

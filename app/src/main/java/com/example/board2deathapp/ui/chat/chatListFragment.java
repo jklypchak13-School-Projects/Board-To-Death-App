@@ -1,4 +1,4 @@
-package com.example.board2deathapp.ui.Newsletter;
+package com.example.board2deathapp.ui.chat;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,25 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
-import com.example.board2deathapp.models.Newsletter;
+import com.example.board2deathapp.models.Chat;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.ModelCollection;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class NewslettersListFragment extends Fragment {
+public class chatListFragment extends Fragment {
 
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String TAG = "NEWSLETTER";
+    private static final String TAG = "CHAT";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private ModelCollection<Newsletter> My_Newsletters;
-    private ModelCollection<Newsletter> All_Newsletters;
-    private OnListFragmentInteractionListener mListener;
-    private MyNewsletterRecyclerViewAdapter adpt;
+    private ModelCollection<Chat> My_Chat;
+
+    private com.example.board2deathapp.ui.chat.chatListFragment.OnListFragmentInteractionListener mListener;
+    private ChatRecyclerViewAdapter adpt;
     private RecyclerView recycleView;
     private String current_user;
     private static String CLUB_USER = "Board2Death";
@@ -41,13 +40,13 @@ public class NewslettersListFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public NewslettersListFragment() {
+    public chatListFragment() {
     }
 
-    public static NewslettersListFragment newInstance(int columnCount) {
+    public static com.example.board2deathapp.ui.chat.chatListFragment newInstance(int columnCount) {
 
 
-        NewslettersListFragment fragment = new NewslettersListFragment();
+        com.example.board2deathapp.ui.chat.chatListFragment fragment = new com.example.board2deathapp.ui.chat.chatListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -59,12 +58,13 @@ public class NewslettersListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         current_user = ((LandingActivity)getActivity()).getUser().getUsername();
+        Query q = FirebaseFirestore.getInstance().collection("chat").whereEqualTo("name", "Flatline");
 
 
-        My_Newsletters = new ModelCollection<Newsletter>(Newsletter.class);
-        All_Newsletters = new ModelCollection<Newsletter>(Newsletter.class);
+        My_Chat = new ModelCollection<Chat>(Chat.class);
 
-        this.adpt = new MyNewsletterRecyclerViewAdapter(this.My_Newsletters.getItems(),mListener);
+
+        this.adpt = new ChatRecyclerViewAdapter(this.My_Chat.getItems(),mListener);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -74,10 +74,10 @@ public class NewslettersListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_newsletters_list, container, false);
+        View view = inflater.inflate(R.layout.chat_list, container, false);
 
         // Set the adapter
-        View rview = view.findViewById(R.id.list);
+        View rview = view.findViewById(R.id.c_list);
         if (rview instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) rview;
@@ -87,8 +87,8 @@ public class NewslettersListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-            Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date",  Query.Direction.DESCENDING);
-            My_Newsletters.read_current(q, new DBResponse(getActivity()) {
+            Query q = FirebaseFirestore.getInstance().collection("chat").orderBy("date");
+            My_Chat.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
                     adpt.notifyDataSetChanged();
@@ -104,8 +104,8 @@ public class NewslettersListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
-                    DialogFragment temp = new AddNewsletterFragment();
-                    temp.show(fm,"ADD_NEWSLETTER");
+                    DialogFragment temp = new AddChatFragment();
+                    temp.show(fm,"ADD_CHAT");
                 }
             });
 
@@ -148,7 +148,7 @@ public class NewslettersListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Newsletter item);
+        void onListFragmentInteraction(Chat item);
     }
 
 

@@ -1,26 +1,30 @@
-package com.example.board2deathapp.ui.boardgame;
+package com.example.board2deathapp.ui.chat;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
+import com.example.board2deathapp.models.Chat;
+import com.example.board2deathapp.models.DBResponse;
+import com.example.board2deathapp.models.User;
 
+public class AddChatFragment extends DialogFragment {
+    private Chat ch;
 
-public class AddBoardGameFragment extends DialogFragment {
-
-    public AddBoardGameFragment() {
+    public AddChatFragment() {
         // Required empty public constructor
     }
 
@@ -30,7 +34,7 @@ public class AddBoardGameFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_board_game, container, false);
+        return inflater.inflate(R.layout.add_chat, container, false);
     }
 
     @Override @NonNull
@@ -40,29 +44,38 @@ public class AddBoardGameFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        final View v = inflater.inflate(R.layout.fragment_add_board_game, null);
+        final User current_user = ((LandingActivity)getActivity()).getUser();
+        final View v = inflater.inflate(R.layout.add_chat, null);
         builder.setView(v);
 
         //Get Various Text Fields
-        final EditText name_field = v.findViewById(R.id.a_game_name);
-        final EditText description_field = v.findViewById(R.id.a_game_desc);
-        final EditText time_field = v.findViewById(R.id.a_game_time);
-        final EditText player_count_field = v.findViewById(R.id.a_game_count);
+
+        final EditText chat_field = v.findViewById(R.id.postMessage1);
+        builder.setView(v);
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+                String chat = chat_field.getText().toString();
+
+                new Chat(chat, current_user.getUsername(), getActivity());
+            }
+        });
+
+
 
         //Set Positive Action Button
-        builder.setPositiveButton("Create Game", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Create chat", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 //Get Values from the Dialog
-                String name = name_field.getText().toString();
-                String description = description_field.getText().toString();
-                String players = player_count_field.getText().toString();
-                int player_count = Integer.parseInt(players);
-                double play_time = Double.parseDouble(time_field.getText().toString());
+
+                String chat = chat_field.getText().toString();
+
 
                 LandingActivity current_activity = (LandingActivity)getActivity();
                 if(current_activity != null){
-                    new BoardGame(name, description, current_activity.getUser().getUsername(), player_count, play_time, getActivity());
+                    new Chat(chat, current_activity.getUser().getUsername(), getActivity());
                 }
                 //Construct the new Object
 
@@ -72,10 +85,14 @@ public class AddBoardGameFragment extends DialogFragment {
         //Set Neutral Button to exit
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                AddBoardGameFragment.this.getDialog().cancel();
+                com.example.board2deathapp.ui.chat.AddChatFragment.this.getDialog().cancel();
             }
         });
         return builder.create();
+    }
+
+    public void setChat(Chat g){
+        this.ch = g;
     }
 
 

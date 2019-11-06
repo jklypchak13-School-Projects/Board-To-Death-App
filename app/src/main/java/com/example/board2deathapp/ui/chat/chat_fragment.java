@@ -1,139 +1,84 @@
-/*
 package com.example.board2deathapp.ui.chat;
 
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
+import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.Firebase;
-import com.google.firebase.FirebaseError;
+import com.example.board2deathapp.models.Chat;
+import com.example.board2deathapp.models.Newsletter;
+import com.example.board2deathapp.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-
-import java.util.HashMap;
-import java.util.Map;
+public class chat_fragment extends Fragment implements View.OnClickListener {
 
 
-@SuppressWarnings("ALL")
-public class chat_fragment extends AppCompatActivity{
+    private static String TAG = "CHAT_FRAGMENT";
+
+
+    private EditText mChat;
+    private String current_user;
 
 
 
-    LinearLayout layout;
-    RelativeLayout layout_2;
-    ImageView sendButton;
-    EditText messageArea;
-    ScrollView scrollView;
-    Firebase reference1, reference2;
+
+
+
+    public static com.example.board2deathapp.ui.chat.chat_fragment newInstance() {
+        return new com.example.board2deathapp.ui.chat.chat_fragment();
+    }
+
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_fragment);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        View root = inflater.inflate(R.layout.activity_chat, container, false);
 
-        layout = (LinearLayout) findViewById(R.id.layout1);
-        layout_2 = (RelativeLayout)findViewById(R.id.layout2);
-        sendButton = (ImageView)findViewById(R.id.sendButton);
-        messageArea = (EditText)findViewById(R.id.messageArea);
-        scrollView = (ScrollView)findViewById(R.id.scrollView);
+        LandingActivity a = (LandingActivity) getActivity();
+        if(a != null){
+            current_user = a.getUser().getUsername();
+        }
 
-        Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://board2death.firebaseio.com/Messages/" + Userdetails.username + "_" + Userdetails.chatWith);
-        reference2 = new Firebase("https://board2death.firebaseio.com/Messages" + Userdetails.chatWith + "_" + Userdetails.username);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String messageText = messageArea.getText().toString();
-
-                if(!messageText.equals("")){
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("message", messageText);
-                    map.put("user", Userdetails.username);
-                    reference1.push().setValue(map);
-                    reference2.push().setValue(map);
-                    messageArea.setText("");
-                }
-            }
-        });
-
-        reference1.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-
-                    Map map = dataSnapshot.getValue(Map.class);
-                    String message = map.get("message").toString();
-                    String userName = map.get("user").toString();
-
-                    if(userName.equals(Userdetails.username)){
-                        addMessageBox("You:-\n" + message, 1);
-                    }
-                    else{
-                        addMessageBox(Userdetails.chatWith + ":-\n" + message, 2);
-                    }
-
-            }
-
-            @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(com.firebase.client.FirebaseError firebaseError) {
-
-            }
+        this.mChat = root.findViewById(R.id.TextChat);
 
 
 
 
 
 
-        });
+        final Button CHATButton = root.findViewById(R.id.buttonCHAT);
+        CHATButton.setOnClickListener(this);
+        return root;
     }
 
-    public void addMessageBox(String message, int type){
-        TextView textView = new TextView(chat_fragment.this);
-        textView.setText(message);
 
-        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp2.weight = 1.0f;
 
-        if(type == 1) {
-            lp2.gravity = Gravity.LEFT;
-            textView.setBackgroundResource(R.drawable.bubble_in);
-        }
-        else{
-            lp2.gravity = Gravity.RIGHT;
-            textView.setBackgroundResource(R.drawable.bubble_out);
-        }
-        textView.setLayoutParams(lp2);
-        layout.addView(textView);
-        scrollView.fullScroll(View.FOCUS_DOWN);
+
+
+
+
+
+    @Override
+    public void onClick(View v) {
+
+
+        final String newChat = mChat.getText().toString();
+
+        final FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        new Chat(newChat,current_user, getActivity());
+
     }
 }
-
-*/
