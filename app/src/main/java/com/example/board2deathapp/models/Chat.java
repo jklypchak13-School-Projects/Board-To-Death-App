@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +19,14 @@ public class Chat extends Model {
 
     private String chat;
     private String owner;
+    private Date date;
 
 
     public Chat(String cha, String owner, final Activity a) {
 
         this.chat = cha;
         this.owner = owner;
+        this.date = Calendar.getInstance().getTime();
         //this.play_time = time;
 
         this.create(new DBResponse(a) {
@@ -48,6 +54,7 @@ public class Chat extends Model {
 
         attrs.put("chat", this.chat);
         attrs.put("owner", this.owner);
+        attrs.put("date", this.date);
 
         return attrs;
     }
@@ -56,7 +63,10 @@ public class Chat extends Model {
     public void fromMap(Map<String, Object> data) {
         this.chat = (String) data.get("chat");
         this.owner = (String) data.get("owner");
-
+        Timestamp t = (Timestamp)data.get("date");
+        if(t != null){
+            date = t.toDate();
+        }
 
 
     }
@@ -74,6 +84,10 @@ public class Chat extends Model {
 
     public String getChat() {
         return this.chat;
+    }
+
+    public String getDate() {
+        return DateFormat.getDateTimeInstance().format(this.date);
     }
 
 
