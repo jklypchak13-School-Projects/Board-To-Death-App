@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.ToggleButton;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
@@ -27,6 +30,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class CalendarFragment extends Fragment implements View.OnClickListener {
 
@@ -37,6 +43,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     private MyEventRecyclerViewAdapter mEventRecyclerViewAdapter;
 
     private FloatingActionButton mAddFab;
+    private CalendarView mCalendarView;
     private ModelCollection<Event> mEventCollection;
 
     public CalendarFragment() {
@@ -62,12 +69,37 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         mEventRecyclerViewAdapter = new MyEventRecyclerViewAdapter(mEventCollection.getItems(), mListener);
     }
 
+    private void updateWithDatesOnDay(Date day) {
+        Calendar calendarStartDay = Calendar.getInstance();
+        calendarStartDay.setTime(day);
+        calendarStartDay.set(Calendar.HOUR_OF_DAY, 0);
+        calendarStartDay.set(Calendar.MINUTE, 0);
+        Calendar calendarEndOfDay = Calendar.getInstance();
+        calendarEndOfDay.setTime(calendarStartDay.getTime());
+        calendarEndOfDay.add(Calendar.DAY_OF_MONTH, 1);
+        Query q = FirebaseFirestore.getInstance()
+                .collection("event")
+                .whereGreaterThanOrEqualTo("start_date", calendarStartDay.getTime())
+                .whereLessThanOrEqualTo("start_date", calendarEndOfDay.getTime()).orderBy("start_date", Query.Direction.DESCENDING);
+        mEventCollection.read_current(q, new DBResponse(getActivity()) {
+            @Override
+            public <T> void onSuccess(T t) {
+                mEventRecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public <T> void onFailure(T t) {
+            }
+        });
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         mAddFab = view.findViewById(R.id.addFab);
+        mCalendarView = view.findViewById(R.id.calendarView);
         LandingActivity landingActivity = (LandingActivity) getActivity();
         if (landingActivity != null) {
             User currentUser = landingActivity.getUser();
@@ -84,15 +116,14 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             eventRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
         eventRecyclerView.setAdapter(mEventRecyclerViewAdapter);
-        Query q = FirebaseFirestore.getInstance().collection("event").orderBy("start_date");
-        mEventCollection.read_current(q, new DBResponse(getActivity()) {
+        Date today = Calendar.getInstance().getTime();
+        updateWithDatesOnDay(today);
+        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public <T> void onSuccess(T t) {
-                mEventRecyclerViewAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public <T> void onFailure(T t) {
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+               Calendar calendar = Calendar.getInstance();
+               calendar.set(year, month, day);
+               updateWithDatesOnDay(calendar.getTime());
             }
         });
         return view;
