@@ -62,6 +62,7 @@ public class DetailedGroupFragment extends DialogFragment {
         final TextView games = v.findViewById(R.id.group_games);
         final TextView date = v.findViewById(R.id.group_date);
         final TextView owner = v.findViewById(R.id.group_owner);
+        final TextView location = v.findViewById(R.id.group_location);
         final boolean canJoin= group.canJoin(current_user);
 
 
@@ -72,6 +73,7 @@ public class DetailedGroupFragment extends DialogFragment {
         games.setText(group.getGameString());
         date.setText(group.getDate());
         owner.setText(group.getOwner());
+        location.setText(group.getLocation());
         builder.setView(v);
         String positiveMessage = "Leave";
         if(canJoin){

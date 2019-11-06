@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
+import com.example.board2deathapp.models.User;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
@@ -71,7 +72,12 @@ public class MyBoardGameRecyclerViewAdapter extends RecyclerView.Adapter<MyBoard
         /*
          * Set the edit game page only accessible in the current user.
          */
-        if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
+        User current_user = ((LandingActivity)c).getUser();
+
+        if(holder.mItem.getOwner().equals(current_user.getUsername())){
+            CardView card = holder.mView.findViewById(R.id.game_card);
+            card.setOnLongClickListener(holder);
+        }else if(current_user.isAdmin() && holder.mItem.getOwner().equals("Board2Death")) {
             CardView card = holder.mView.findViewById(R.id.game_card);
             card.setOnLongClickListener(holder);
         }else{

@@ -56,13 +56,7 @@ public class EditNewsletterFragment extends DialogFragment {
                 newsletter.delete(new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
-                        Log.d("TOAST", "TOAST");
                         EditNewsletterFragment.this.getDialog().cancel();
-                    }
-
-                    @Override
-                    public <T> void onFailure(T t) {
-                        Log.d("TOAST","BURN TOAST");
                     }
                 });
             }
@@ -82,7 +76,7 @@ public class EditNewsletterFragment extends DialogFragment {
                 newsletter.update(new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
-                        Log.d("EDIT", "Editted the Newsletter!");
+                        Log.d("EDIT", "Edited the Newsletter!");
                     }
 
                     @Override

@@ -20,19 +20,15 @@ import android.widget.Button;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
-import com.example.board2deathapp.models.BoardGame;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Group;
 import com.example.board2deathapp.models.ModelCollection;
-import com.example.board2deathapp.ui.boardgame.AddBoardGameFragment;
-import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
-import com.example.board2deathapp.ui.boardgame.MyBoardGameRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+
 
 /**
  * A fragment representing a list of Items.
@@ -42,9 +38,7 @@ import java.util.List;
  */
 public class GroupFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private MyGroupRecyclerViewAdapter adpt;
     private OnListFragmentInteractionListener mListener;
@@ -88,7 +82,7 @@ public class GroupFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.list);
         // Set the adapter
-        if (recyclerView instanceof RecyclerView) {
+        if (recyclerView != null) {
             Context context = view.getContext();
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -109,15 +103,15 @@ public class GroupFragment extends Fragment {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                     DialogFragment temp = new AddGroupFragment();
                     temp.show(fm,"ADD_GROUP");
                 }
             });
 
             final Button myGroupsButton = view.findViewById(R.id.myGroups);
-            myGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             final Button allGroupsButton = view.findViewById(R.id.allGroups);
+            allGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             final String current_user = ((LandingActivity)getActivity()).getUser().getUsername();
             myGroupsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -171,15 +165,6 @@ public class GroupFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-
-         */
     }
 
     @Override
@@ -188,18 +173,7 @@ public class GroupFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Group item);
     }
 }

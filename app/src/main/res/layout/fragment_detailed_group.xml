@@ -90,7 +90,24 @@
                 android:layout_height="wrap_content"
                 android:textFontWeight="2"
                 android:textSize="24sp"
-                android:text="Games: "/>
+                android:text="Group Location: "/>
+            <TextView
+                android:id="@+id/group_location"
+                android:layout_width="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="2"
+                android:textSize="24sp"
+                android:text="Game: "/>
             <TextView
                 android:id="@+id/group_games"
                 android:layout_width="wrap_content"

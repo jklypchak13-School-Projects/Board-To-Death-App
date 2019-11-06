@@ -21,8 +21,9 @@ public class Group extends Model {
     private ArrayList<String> users;
     private String game;
     private String owner;
+    private String location;
 
-    public Group(String name, String description, String date, int maxGroupSize, String game, String owner){
+    public Group(String name, String description, String date, int maxGroupSize, String game, String owner, String location){
         this.groupName = name;
         this.description = description;
         this.date = date;
@@ -30,6 +31,7 @@ public class Group extends Model {
         this.game = game;
         this.owner = owner;
         this.users = new ArrayList<String>();
+        this.location = location;
     }
 
     public Group(){
@@ -45,6 +47,7 @@ public class Group extends Model {
         attrs.put("game", this.game);
         attrs.put("maxGroupSize", this.maxGroupSize);
         attrs.put("users", this.users);
+        attrs.put("location", this.location);
         return attrs;
     }
 
@@ -57,6 +60,7 @@ public class Group extends Model {
         this.game = (String)data.get("game");
         this.maxGroupSize = Math.toIntExact((long)data.get("maxGroupSize"));
         this.users = (ArrayList<String>)data.get("users");
+        this.location = (String)data.get("location");
 
 
 
@@ -102,6 +106,7 @@ public class Group extends Model {
         }
         return result;
     }
+    public String getLocation(){return this.location;}
 
     //Setter Functions
     public void setGroupName(String g){
@@ -119,4 +124,5 @@ public class Group extends Model {
     public void setDate(String g){
         date = g;
     }
+    public void setLocation(String l){location = l;}
 }

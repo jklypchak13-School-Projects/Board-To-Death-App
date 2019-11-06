@@ -54,12 +54,14 @@ public class EditGroupFragment extends DialogFragment {
         final EditText count = v.findViewById(R.id.group_count);
         final EditText game = v.findViewById(R.id.group_games);
         final EditText date = v.findViewById(R.id.group_date);
+        final EditText location = v.findViewById(R.id.group_location);
 
         name.setText(group.getGroupName());
         description.setText(group.getDescription());
         count.setText(group.getMaxSize());
         game.setText(group.getGameString());
         date.setText(group.getDate());
+        location.setText(group.getLocation());
         builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -68,7 +70,7 @@ public class EditGroupFragment extends DialogFragment {
                 group.setCount(Integer.parseInt(count.getText().toString()));
                 group.setGame(game.getText().toString());
                 group.setDate(date.getText().toString());
-
+                group.setLocation(location.getText().toString());
                 final Context c= getActivity();
                 group.update(new DBResponse(getActivity()) {
                     @Override

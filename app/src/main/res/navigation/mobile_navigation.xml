@@ -2,35 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    android:id="@+id/mobile_navigation">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.board2deathapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_login" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.board2deathapp.ui.boardgame.BoardGameFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.board2deathapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.board2deathapp.ui.user_update.UserUpdateFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_update_user" />
-    <activity
-        android:id="@+id/postActivity2"
-        android:name="com.example.board2deathapp.PostActivity"
-        android:label="activity_post"
-        tools:layout="@layout/activity_post" />
 
 </navigation>

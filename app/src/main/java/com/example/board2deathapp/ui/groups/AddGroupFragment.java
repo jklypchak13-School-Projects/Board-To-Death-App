@@ -55,7 +55,7 @@ public class AddGroupFragment extends DialogFragment {
         final EditText count = v.findViewById(R.id.group_count);
         final EditText game = v.findViewById(R.id.group_games);
         final EditText date = v.findViewById(R.id.group_date);
-
+        final EditText location = v.findViewById(R.id.group_location);
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -64,8 +64,8 @@ public class AddGroupFragment extends DialogFragment {
                 int g_count = Integer.parseInt(count.getText().toString());
                 String g_game = game.getText().toString();
                 String g_date = date.getText().toString();
-
-                Group newGroup = new Group(g_name, g_description, g_date, g_count, g_game, current_user.getUsername());
+                String g_location = location.getText().toString();
+                Group newGroup = new Group(g_name, g_description, g_date, g_count, g_game, current_user.getUsername(),g_location);
                 final Context c= getActivity();
                 newGroup.create(new DBResponse(getActivity()) {
                     @Override

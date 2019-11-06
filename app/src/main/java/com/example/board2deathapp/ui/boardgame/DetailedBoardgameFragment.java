@@ -44,24 +44,27 @@ public class DetailedBoardgameFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
+
+        // Get the layout inflater and inflate the view
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        final User current_user = ((LandingActivity)getActivity()).getUser();
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         final View v = inflater.inflate(R.layout.fragment_detailed_boardgame,null);
+        builder.setView(v);
+
+        // Get Text Fields
         final TextView name = v.findViewById(R.id.gameName);
         final TextView description = v.findViewById(R.id.gameDescription);
         final TextView size = v.findViewById(R.id.gameCount);
         final TextView time = v.findViewById(R.id.gameTime);
         final TextView owner = v.findViewById(R.id.gameOwner);
 
-        builder.setView(v);
+        // Set Text fields to the current values of the game
         name.setText(game.getTitle());
         description.setText(game.getDescription());
         size.setText(game.getCount()+"");
         time.setText(Double.toString(game.getTime()));
         owner.setText(game.getOwner());
+
+        // Set Neutral Button to exit the dialog
         builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 DetailedBoardgameFragment.this.getDialog().cancel();
@@ -75,9 +78,8 @@ public class DetailedBoardgameFragment extends DialogFragment {
     }
     public void setFragment(BoardGameFragment fragment){this.f = fragment;}
 
-    public void onDismiss(DialogInterface dialogInterface)
-    {
-
+    public void onDismiss(DialogInterface dialogInterface){
+        // Inform the owning Fragment that the dialog has been dismissed.
         if(f != null) {
             f.displaying = false;
         }
