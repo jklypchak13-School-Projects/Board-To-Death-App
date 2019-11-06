@@ -94,7 +94,7 @@ public class LandingActivity extends AppCompatActivity {
                     fragTrans.replace(R.id.nav_host_fragment, frag);
                     fragTrans.commit();
                 }else{
-                    Log.d("LANDING", "Pressed on Supported tab.");
+                    Log.d("LANDING", "Pressed unsupported tab.");
                 }
                 return true;
             }
@@ -105,42 +105,4 @@ public class LandingActivity extends AppCompatActivity {
         fragTrans.replace(R.id.nav_host_fragment, frag);
         fragTrans.commit();
     }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        Log.d("CHECKPOINT", "Successfully started the activity");
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Log.d("CHECKPOINT", "Successfully Resumed the activity");
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.d("CHECKPOINT", "Successfully paused the activity");
-    }
-
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.d("CHECKPOINT", "Successfully stopped the activity.");
-    }
-
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        Log.d("CHECKPOINT", "Successfully restarted the activity.");
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Log.d("CHECKPOINT", "Successfully destroyed the activity.");
-    }
-    
 }
