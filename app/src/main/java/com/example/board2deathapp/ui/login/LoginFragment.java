@@ -25,8 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginFragment extends Fragment implements View.OnClickListener, TextWatcher {
 
     private Button mLoginButton;
-    private Button mForgotPasswordButton;
-    private ImageButton mBackButton;
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
@@ -46,8 +44,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         this.mLoginButton = view.findViewById(R.id.loginButton);
         this.mLoginButton.setOnClickListener(this);
-        this.mBackButton = view.findViewById(R.id.backImgButton);
-        this.mBackButton.setOnClickListener(new View.OnClickListener() {
+        final ImageButton backButton = view.findViewById(R.id.backImgButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragMan = getFragmentManager();
@@ -58,8 +56,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Tex
             }
         });
 
-        this.mForgotPasswordButton = view.findViewById(R.id.forgotPasswordButton);
-        this.mForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+        final Button forgotPasswordButton = view.findViewById(R.id.forgotPasswordButton);
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String email = mEmailEditText.getText().toString();

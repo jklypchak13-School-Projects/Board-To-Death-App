@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.LoginActivity;
 import com.example.board2deathapp.R;
-import com.example.board2deathapp.UserUpdateViewModel;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,8 +35,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserUpdateFragment extends Fragment implements View.OnClickListener {
     private static String TAG = "USER_UPDATE_FRAGMENT";
 
-
-    private UserUpdateViewModel mViewModel;
 
     private TextView mUpdateView;
 

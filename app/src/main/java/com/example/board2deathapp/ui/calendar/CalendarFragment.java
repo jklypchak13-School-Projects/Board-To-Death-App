@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.ToggleButton;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
@@ -39,11 +38,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
     private MyEventRecyclerViewAdapter mEventRecyclerViewAdapter;
 
-    private FloatingActionButton mAddFab;
-    private CalendarView mCalendarView;
     private ModelCollection<Event> mEventCollection;
 
     public CalendarFragment() {
@@ -65,8 +61,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         mEventCollection = new ModelCollection<>(Event.class);
-        mListener = new OnListFragmentInteractionListener();
-        mEventRecyclerViewAdapter = new MyEventRecyclerViewAdapter(mEventCollection.getItems(), mListener);
+        OnListFragmentInteractionListener listener = new OnListFragmentInteractionListener();
+        mEventRecyclerViewAdapter = new MyEventRecyclerViewAdapter(mEventCollection.getItems(), listener);
     }
 
     private void updateWithDatesOnDay(Date day) {
@@ -98,16 +94,16 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        mAddFab = view.findViewById(R.id.addFab);
-        mCalendarView = view.findViewById(R.id.calendarView);
+        final FloatingActionButton addFab = view.findViewById(R.id.addFab);
+        final CalendarView calendarView = view.findViewById(R.id.calendarView);
         LandingActivity landingActivity = (LandingActivity) getActivity();
         if (landingActivity != null) {
             User currentUser = landingActivity.getUser();
             if (!currentUser.isAdmin()) {
-                mAddFab.setVisibility(View.INVISIBLE);
+                addFab.setVisibility(View.INVISIBLE);
             }
         }
-        mAddFab.setOnClickListener(this);
+        addFab.setOnClickListener(this);
         RecyclerView eventRecyclerView = view.findViewById(R.id.eventRecyclerView);
         Context context = view.getContext();
         if (mColumnCount <= 1) {
@@ -118,7 +114,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         eventRecyclerView.setAdapter(mEventRecyclerViewAdapter);
         Date today = Calendar.getInstance().getTime();
         updateWithDatesOnDay(today);
-        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
                Calendar calendar = Calendar.getInstance();
