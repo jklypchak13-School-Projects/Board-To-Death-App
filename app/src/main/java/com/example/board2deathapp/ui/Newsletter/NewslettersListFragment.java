@@ -59,7 +59,6 @@ public class NewslettersListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         current_user = ((LandingActivity)getActivity()).getUser().getUsername();
-        Query q = FirebaseFirestore.getInstance().collection("newsletter").whereEqualTo("name", "Flatline");
 
 
         My_Newsletters = new ModelCollection<Newsletter>(Newsletter.class);
@@ -88,7 +87,7 @@ public class NewslettersListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-            Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date");
+            Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date",  Query.Direction.DESCENDING);
             My_Newsletters.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
