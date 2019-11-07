@@ -46,26 +46,12 @@ public class AddChatFragment extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         final User current_user = ((LandingActivity)getActivity()).getUser();
         final View v = inflater.inflate(R.layout.add_chat, null);
-        builder.setView(v);
-
-        //Get Various Text Fields
-
         final EditText chat_field = v.findViewById(R.id.postMessage1);
         builder.setView(v);
-        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-
-                String chat = chat_field.getText().toString();
-
-                new Chat(chat, current_user.getUsername(), getActivity());
-            }
-        });
-
 
 
         //Set Positive Action Button
-        builder.setPositiveButton("Create chat", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 //Get Values from the Dialog
@@ -75,25 +61,17 @@ public class AddChatFragment extends DialogFragment {
 
                 LandingActivity current_activity = (LandingActivity)getActivity();
                 if(current_activity != null){
-                    new Chat(chat, current_activity.getUser().getUsername(), getActivity());
+                    new Chat(chat, current_user.getUsername(), getActivity());
                 }
                 //Construct the new Object
 
             }
         });
 
-        //Set Neutral Button to exit
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                com.example.board2deathapp.ui.chat.AddChatFragment.this.getDialog().cancel();
-            }
-        });
+
         return builder.create();
     }
 
-    public void setChat(Chat g){
-        this.ch = g;
-    }
 
 
 }
