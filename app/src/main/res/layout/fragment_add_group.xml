@@ -3,12 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@color/colorAccent">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Group Game"
+        android:textColor="@color/colorPrimaryDark"
         android:textAlignment="center"
         android:textFontWeight="2"
         android:layout_marginTop="20dp"
@@ -23,6 +25,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Group Name"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         />
     <EditText
         android:id="@+id/group_description"
@@ -31,6 +36,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Description"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         />
     <EditText
         android:id="@+id/group_count"
@@ -39,6 +47,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:hint="Group Size"/>
     <EditText
         android:id="@+id/group_location"
@@ -46,6 +57,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:hint="Location"/>
     <EditText
         android:id="@+id/group_date"
@@ -54,6 +68,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:hint="Date"/>
     <EditText
         android:id="@+id/group_games"
@@ -61,6 +78,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:hint="Game"
         />
 </LinearLayout>

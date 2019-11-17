@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="?attr/textAppearanceListItem"
                     />
                 <TextView
@@ -29,6 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="?attr/textAppearanceListItem"
                     />
 
@@ -57,7 +60,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_access_time_white_24dp"
+                        android:src="@drawable/ic_access_time_black_24dp"
                         android:contentDescription="Date"
                         />
                     <TextView
@@ -65,6 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/text_margin"
+                        android:textColor="@color/colorPrimaryDark"
                         android:textAppearance="?attr/textAppearanceListItem"/>
                 </LinearLayout>
 
@@ -78,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
+                android:textColor="@color/colorPrimaryDark"
                 android:textAppearance="?attr/textAppearanceListItem"/>
 
         </LinearLayout>
