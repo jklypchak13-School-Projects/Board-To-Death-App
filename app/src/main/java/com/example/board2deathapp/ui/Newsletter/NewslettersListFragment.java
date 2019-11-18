@@ -1,5 +1,6 @@
 package com.example.board2deathapp.ui.Newsletter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.board2deathapp.models.Newsletter;
 import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.ModelCollection;
 
+import com.example.board2deathapp.models.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -91,14 +93,23 @@ public class NewslettersListFragment extends Fragment {
                 }
 
             });
-            view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    DialogFragment temp = new AddNewsletterFragment();
-                    temp.show(fm,"ADD_NEWSLETTER");
+            LandingActivity current_activity = (LandingActivity)getActivity();
+            if(current_activity != null){
+                User current = current_activity.getUser();
+                if(current.isAdmin()){
+                    view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            DialogFragment temp = new AddNewsletterFragment();
+                            temp.show(fm,"ADD_NEWSLETTER");
+                        }
+                    });
+                }else{
+                    view.findViewById(R.id.addFab).setVisibility(View.INVISIBLE);
                 }
-            });
+            }
+
 
 
 

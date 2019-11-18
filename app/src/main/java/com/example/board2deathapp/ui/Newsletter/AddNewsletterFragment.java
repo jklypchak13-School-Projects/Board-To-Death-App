@@ -33,7 +33,7 @@ public class AddNewsletterFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "Creating Dialog");
-        final View v = inflater.inflate(R.layout.fragment_add_newsletter, container, false);
+        final View v = inflater.inflate(R.layout.fragment_newsletter_dialog, container, false);
 
         return v;
     }
@@ -46,7 +46,7 @@ public class AddNewsletterFragment extends DialogFragment {
         final User current_user = ((LandingActivity)getActivity()).getUser();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        final View v = inflater.inflate(R.layout.fragment_add_newsletter, null);
+        final View v = inflater.inflate(R.layout.fragment_newsletter_dialog, null);
         final EditText name_field = v.findViewById(R.id.postTitle);
         final EditText description_field = v.findViewById(R.id.postContent
         );
