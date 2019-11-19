@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:textFontWeight="2"
                 android:textSize="24sp"
-                android:text="Name: "/>
+                android:text="@string/name_colon"/>
             <TextView
                 android:id="@+id/gameName"
                 android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textFontWeight="2"
                 android:textSize="24sp"
-                android:text="Owner: "/>
+                android:text="@string/owner_colon"/>
             <TextView
                 android:id="@+id/gameOwner"
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:textFontWeight="2"
                 android:textSize="24sp"
-                android:text="Player Count: "/>
+                android:text="@string/player_count_colon"/>
             <TextView
                 android:id="@+id/gameCount"
                 android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textFontWeight="2"
                 android:textSize="24sp"
-                android:text="Duration: "/>
+                android:text="@string/duration_colon"/>
             <TextView
                 android:id="@+id/gameTime"
                 android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:textFontWeight="2"
                 android:textSize="24sp"
-                android:text="Description: "/>
+                android:text="@string/description_colon"/>
             <TextView
                 android:id="@+id/gameDescription"
                 android:layout_width="wrap_content"

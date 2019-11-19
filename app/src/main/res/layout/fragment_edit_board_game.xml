@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update Board Game"
+        android:text="@string/update_boardgame"
         android:layout_marginTop="20dp"
         android:textAlignment="center"
         android:textFontWeight="2"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="name"
+        android:hint="@string/name"
         />
     <EditText
         android:id="@+id/e_game_desc"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="description"
+        android:hint="@string/description"
         />
     <EditText
         android:id="@+id/e_game_count"
@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="player count"/>
+        android:hint="@string/player_count"/>
     <EditText
         android:id="@+id/e_game_time"
         android:inputType="numberDecimal"
@@ -45,12 +45,12 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="play time"/>
+        android:hint="@string/playtime"/>
     <Button
         style="@style/MyButton"
         android:id="@+id/delete_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DELETE"
+        android:text="@string/delete"
         android:layout_gravity="center"/>
 </LinearLayout>

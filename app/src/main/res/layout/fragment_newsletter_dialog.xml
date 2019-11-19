@@ -21,14 +21,14 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Title"/>
+        android:hint="@string/title"/>
     <EditText
         android:id="@+id/postContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Content"
+        android:hint="@string/content"
         />
 
 

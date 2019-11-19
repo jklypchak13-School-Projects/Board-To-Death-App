@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layoutDirection="inherit"
-            android:text="My Games"
+            android:text="@string/my_games"
             style="?android:attr/borderlessButtonStyle"
             />
         <Button
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layoutDirection="inherit"
-            android:text="All Games"
+            android:text="@string/all_games"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layoutDirection="inherit"
-            android:text="Club Games"
+            android:text="@string/club_games"
             style="?android:attr/borderlessButtonStyle"
             />
     </LinearLayout>

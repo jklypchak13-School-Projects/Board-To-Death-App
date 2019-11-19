@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Board Game"
+        android:text="@string/add_boardgame"
         android:textAlignment="center"
         android:textFontWeight="2"
         android:layout_marginTop="20dp"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="name"
+        android:hint="@string/name"
         />
     <EditText
         android:id="@+id/a_game_desc"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="description"
+        android:hint="@string/description"
         />
     <EditText
         android:id="@+id/a_game_count"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="player count"/>
+        android:hint="@string/player_count"/>
     <EditText
         android:id="@+id/a_game_time"
         android:inputType="numberDecimal"
@@ -47,7 +47,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="play time"/>
+        android:hint="@string/playtime"/>
     <LinearLayout
         android:id="@+id/check_container"
         android:layout_width="match_parent"
@@ -63,6 +63,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Is a club game?"/>
+            android:text="@string/club_game"/>
     </LinearLayout>
 </LinearLayout>

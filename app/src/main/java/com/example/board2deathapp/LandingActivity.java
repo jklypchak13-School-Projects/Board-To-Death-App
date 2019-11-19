@@ -7,7 +7,7 @@ import com.example.board2deathapp.models.User;
 import com.example.board2deathapp.ui.Newsletter.NewslettersListFragment;
 import com.example.board2deathapp.ui.boardgame.BoardGameFragment;
 import com.example.board2deathapp.ui.calendar.CalendarFragment;
-//import com.example.board2deathapp.ui.chat.chat_fragment;
+
 import com.example.board2deathapp.ui.chat.AddChatFragment;
 import com.example.board2deathapp.ui.chat.chatListFragment;
 import com.example.board2deathapp.ui.groups.GroupFragment;

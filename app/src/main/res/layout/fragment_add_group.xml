@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Group Game"
+        android:text="@string/add_group"
         android:textAlignment="center"
         android:textFontWeight="2"
         android:layout_marginTop="20dp"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Group Name"
+        android:hint="@string/group_name"
         />
     <EditText
         android:id="@+id/group_description"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Description"
+        android:hint="@string/description"
         />
     <EditText
         android:id="@+id/group_count"
@@ -39,14 +39,14 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Group Size"/>
+        android:hint="@string/group_size"/>
     <EditText
         android:id="@+id/group_location"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Location"/>
+        android:hint="@string/location"/>
     <EditText
         android:id="@+id/group_date"
         android:inputType="datetime"
@@ -54,13 +54,13 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Date"/>
+        android:hint="@string/date"/>
     <EditText
         android:id="@+id/group_games"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Game"
+        android:hint="@string/game"
         />
 </LinearLayout>

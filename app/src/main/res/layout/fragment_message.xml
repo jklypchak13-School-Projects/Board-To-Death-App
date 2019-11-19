@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_access_time_white_24dp"
-                        android:contentDescription="Date"
+                        android:contentDescription="@string/date"
                         />
                     <TextView
                         android:id="@+id/postDate"

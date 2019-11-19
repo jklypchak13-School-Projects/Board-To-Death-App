@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update Newsletter"
+        android:text="@string/update_newsletter"
         android:layout_marginTop="20dp"
         android:textAlignment="center"
         android:textFontWeight="2"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Title"
+        android:hint="@string/title"
         android:id="@+id/postTitle"/>
 
     <EditText
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Content"
+        android:hint="@string/content"
         android:id="@+id/postContent"/>
 
     <Button
@@ -35,6 +35,6 @@
         android:id="@+id/deletePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DELETE"
+        android:text="@string/delete"
         android:layout_gravity="center"/>
 </LinearLayout>
