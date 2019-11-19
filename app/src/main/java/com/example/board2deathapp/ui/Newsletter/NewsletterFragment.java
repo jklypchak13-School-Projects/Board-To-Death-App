@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class NewsletterFragment extends Fragment implements View.OnClickListener{
+public class NewsletterFragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = "NEWSLETTER_FRAGMENT";
 
@@ -28,8 +28,6 @@ public class NewsletterFragment extends Fragment implements View.OnClickListener
     private EditText mUsername;
 
 
-
-
     private User mUser;
 
     public static com.example.board2deathapp.ui.Newsletter.NewsletterFragment newInstance() {
@@ -37,45 +35,27 @@ public class NewsletterFragment extends Fragment implements View.OnClickListener
     }
 
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
         View root = inflater.inflate(R.layout.activity_post, container, false);
-
-
-
         this.mDescription = root.findViewById(R.id.TextDesc);
         this.mdate = root.findViewById(R.id.TextDate);
         this.mUsername = root.findViewById(R.id.TextUsername);
-
-
-
-
-
         final Button POSTButton = root.findViewById(R.id.buttonPOST);
         POSTButton.setOnClickListener(this);
         return root;
     }
 
 
-
-
-
-
-
-
     @Override
     public void onClick(View v) {
-
-
-                final String newDescription = mDescription.getText().toString();
-                final String newdate = mdate.getText().toString();
-                final String newUsername = mUsername.getText().toString();
-                final FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                new Newsletter(newDescription,newdate,newUsername, getActivity());
+        final String newDescription = mDescription.getText().toString();
+        final String newdate = mdate.getText().toString();
+        final String newUsername = mUsername.getText().toString();
+        final FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        new Newsletter(newDescription, newdate, newUsername, getActivity());
 
     }
 }
