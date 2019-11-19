@@ -51,6 +51,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
          * Sets Up the values being displayed in the individual card
          */
         holder.mItem = mValues.get(position);
+        holder.authorView.setText(mValues.get(position).getOwner());
+
+        holder.dateView.setText(mValues.get(position).getDate());
+
 
         holder.chatView.setText(mValues.get(position).getChat());
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +71,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         /*
          * Set the edit game page only accessible in the current user.
          */
-        if(holder.mItem.getOwner().equals(((LandingActivity)c).getUser().getUsername())){
-            CardView card = holder.mView.findViewById(R.id.message_card);
-            card.setOnLongClickListener(holder);
-        }
+
     }
 
     @Override
@@ -82,6 +83,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         private final View mView;
 
         private final TextView chatView;
+        public final TextView authorView;
+
+        public final TextView dateView;
+
 
 
         private Chat mItem;
@@ -90,11 +95,17 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             super(view);
             mView = view;
 
-            chatView = view.findViewById(R.id.postMessage);
+            chatView = view.findViewById(R.id.postTitle);
+            authorView = view.findViewById(R.id.postAuthor);
+
+            dateView = view.findViewById(R.id.postDate);
 
 
         }
-
+        @Override
+        public String toString() {
+            return super.toString() + " '" + chatView.getText() + "'";
+        }
 
 
         @Override

@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:background="@color/colorAccent"
     android:layout_gravity="center">
 
     <TextView
@@ -13,6 +14,7 @@
         android:textFontWeight="2"
         android:layout_marginTop="20dp"
         android:textSize="24sp"
+        android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold" />
 
     <EditText
@@ -22,7 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/colorPrimaryDark"
         android:hint="name"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         />
     <EditText
         android:id="@+id/a_game_desc"
@@ -30,7 +35,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/colorPrimaryDark"
+
         android:hint="description"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         />
     <EditText
         android:id="@+id/a_game_count"
@@ -39,6 +48,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:hint="player count"/>
     <EditText
         android:id="@+id/a_game_time"
@@ -47,6 +59,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:hint="play time"/>
     <LinearLayout
         android:id="@+id/check_container"
@@ -54,15 +69,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:background="@color/colorAccent"
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/club_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/club_game"/>
+            android:buttonTint="@color/colorPrimaryDark" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Is a club game?"/>
+            android:text="Is a club game?"
+            android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>
 </LinearLayout>

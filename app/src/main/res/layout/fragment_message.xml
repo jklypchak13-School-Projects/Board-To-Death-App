@@ -4,11 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginBottom="5dp"
-    android:id="@+id/message_card">
+    android:background="@color/colorAccent"
+    android:id="@+id/newsletter_card">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,13 +20,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/postMessage"
+                    android:id="@+id/postTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="?attr/textAppearanceListItem"
                     />
-
+                <TextView
+                    android:id="@+id/postAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    />
 
             </LinearLayout>
 
@@ -42,14 +52,38 @@
                     android:gravity="right">
 
                 </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_access_time_black_24dp"
+                        android:contentDescription="Date"
+                        />
+                    <TextView
+                        android:id="@+id/postDate"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/text_margin"
+                        android:textAppearance="?attr/textAppearanceListItem"/>
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <TextView
+                android:id="@+id/postContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textAppearance="?attr/textAppearanceListItem"/>
 
         </LinearLayout>
     </LinearLayout>

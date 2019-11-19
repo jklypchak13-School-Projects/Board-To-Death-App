@@ -5,24 +5,29 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/colorAccent"
     android:layout_gravity="center">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/colorAccent">
         <Button
             android:id="@+id/user_games"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layoutDirection="inherit"
             android:text="My Games"
+            android:textColor="@color/colorPrimaryDark"
+
             style="?android:attr/borderlessButtonStyle"
             />
         <Button
@@ -31,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layoutDirection="inherit"
             android:text="All Games"
+            android:textColor="@color/colorPrimaryDark"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -40,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layoutDirection="inherit"
             android:text="Club Games"
+            android:textColor="@color/colorPrimaryDark"
             style="?android:attr/borderlessButtonStyle"
             />
     </LinearLayout>
@@ -64,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add_white_24dp"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
