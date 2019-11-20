@@ -66,6 +66,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
     private String current_user;
     private static String CLUB_USER = "Board2Death";
 
+    // Buttons
+    private Button myGamesButton;
+    private Button allGamesButton;
+    private Button clubGamesButton;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -159,18 +164,16 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
 
 
             //Get Tab Buttons
-            final Button my_games_b = view.findViewById(R.id.user_games);
-            my_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-            final Button all_games_b = view.findViewById(R.id.all_games);
-            final Button club_games_b = view.findViewById(R.id.club_games);
+            myGamesButton = view.findViewById(R.id.user_games);
+            allGamesButton = view.findViewById(R.id.all_games);
+            clubGamesButton = view.findViewById(R.id.club_games);
+            changeTabColor(myGamesButton);
 
-            all_games_b.setOnClickListener(new View.OnClickListener() {
+            allGamesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     current_items = (ArrayList<BoardGame>) BoardGameFragment.this.all_games.getItems();
-                    all_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    my_games_b.setBackgroundColor(Color.TRANSPARENT);
-                    club_games_b.setBackgroundColor(Color.TRANSPARENT);
+                    changeTabColor(allGamesButton);
                     adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.all_games.getItems(), mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").orderBy("owner");
@@ -189,13 +192,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 }
             });
 
-            my_games_b.setOnClickListener(new View.OnClickListener() {
+            myGamesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     current_items = (ArrayList<BoardGame>) BoardGameFragment.this.user_games.getItems();
-                    all_games_b.setBackgroundColor(Color.TRANSPARENT);
-                    my_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    club_games_b.setBackgroundColor(Color.TRANSPARENT);
+                    changeTabColor(myGamesButton);
                     adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.user_games.getItems(), mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
@@ -214,13 +215,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 }
             });
 
-            club_games_b.setOnClickListener(new View.OnClickListener() {
+            clubGamesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     current_items = (ArrayList<BoardGame>) BoardGameFragment.this.club_games.getItems();
-                    all_games_b.setBackgroundColor(Color.TRANSPARENT);
-                    my_games_b.setBackgroundColor(Color.TRANSPARENT);
-                    club_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    changeTabColor(clubGamesButton);
                     adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.club_games.getItems(), mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", CLUB_USER);
@@ -240,6 +239,17 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
             });
         }
         return view;
+    }
+
+    private void changeTabColor(Button button) {
+        allGamesButton.setBackgroundColor(Color.TRANSPARENT);
+        myGamesButton.setBackgroundColor(Color.TRANSPARENT);
+        clubGamesButton.setBackgroundColor(Color.TRANSPARENT);
+        allGamesButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        myGamesButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        clubGamesButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        button.setTextColor(getResources().getColor(R.color.white));
     }
 
     @Override

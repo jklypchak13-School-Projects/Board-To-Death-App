@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.calendar.AddEventFragment"
-    android:background="@color/colorAccent">
+    tools:context=".ui.calendar.AddEventFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -13,7 +12,6 @@
         android:layout_height="251dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="344dp"
-        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,7 +49,6 @@
             android:id="@+id/startDateButton"
             android:layout_width="155dp"
             android:layout_height="40dp"
-            android:background="@null"
             android:text=""
             android:textAlignment="viewStart"
             android:textAllCaps="false"
@@ -144,7 +141,6 @@
             android:hint="@string/description"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/colorPrimaryDark"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +158,6 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:src="@drawable/ic_check_white_24dp"
-            android:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
@@ -208,9 +203,6 @@
             android:background="@null"
             android:ems="10"
             android:hint="@string/add_title"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:inputType="textPersonName"
             android:text=""
             android:textSize="30sp"

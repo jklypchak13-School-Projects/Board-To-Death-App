@@ -21,7 +21,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        android:background="@color/colorAccent"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/fragment_event_card" />
 
@@ -36,7 +35,6 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintVertical_bias="0.976" />
 
     <CalendarView
@@ -44,7 +42,6 @@
         android:layout_width="411dp"
         android:layout_height="312dp"
         android:layout_marginBottom="504dp"
-        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

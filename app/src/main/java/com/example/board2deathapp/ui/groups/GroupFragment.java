@@ -46,6 +46,10 @@ public class GroupFragment extends Fragment {
     private ModelCollection<Group> my_groups;
     private RecyclerView recycleView;
     private static String TAG = "GROUPS";
+
+    private Button allGroupsButton;
+    private Button myGroupsButton;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -93,42 +97,41 @@ public class GroupFragment extends Fragment {
             all_groups.read_current(q, new DBResponse(getActivity()) {
                 @Override
                 public <T> void onSuccess(T t) {
-                    Log.d(TAG,"Reading Groups");
+                    Log.d(TAG, "Reading Groups");
                     GroupFragment.this.adpt.notifyDataSetChanged();
                 }
             });
             recyclerView.setAdapter(adpt);
-            recycleView=recyclerView;
+            recycleView = recyclerView;
             FloatingActionButton b = view.findViewById(R.id.addFab);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                     DialogFragment temp = new AddGroupFragment();
-                    temp.show(fm,"ADD_GROUP");
+                    temp.show(fm, "ADD_GROUP");
                 }
             });
 
-            final Button myGroupsButton = view.findViewById(R.id.myGroups);
-            final Button allGroupsButton = view.findViewById(R.id.allGroups);
-            allGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-            final String current_user = ((LandingActivity)getActivity()).getUser().getUsername();
+            myGroupsButton = view.findViewById(R.id.myGroups);
+            allGroupsButton = view.findViewById(R.id.allGroups);
+            changeTabColor(myGroupsButton);
+            final String current_user = ((LandingActivity) getActivity()).getUser().getUsername();
             myGroupsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    allGroupsButton.setBackgroundColor(Color.TRANSPARENT);
-                    myGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    adpt = new MyGroupRecyclerViewAdapter(GroupFragment.this.my_groups.getItems(),mListener);
+                    adpt = new MyGroupRecyclerViewAdapter(GroupFragment.this.my_groups.getItems(), mListener);
+                    changeTabColor(myGroupsButton);
                     recycleView.setAdapter(GroupFragment.this.adpt);
-                    Query q = FirebaseFirestore.getInstance().collection("group").whereArrayContains("users",current_user);
+                    Query q = FirebaseFirestore.getInstance().collection("group").whereArrayContains("users", current_user);
                     my_groups.read_current(q, new DBResponse(getActivity()) {
                         @Override
                         public <T> void onSuccess(T t) {
                             adpt.notifyDataSetChanged();
                         }
+
                         @Override
-                        public <T> void onFailure(T t){
+                        public <T> void onFailure(T t) {
 
                         }
 
@@ -138,10 +141,8 @@ public class GroupFragment extends Fragment {
             allGroupsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    myGroupsButton.setBackgroundColor(Color.TRANSPARENT);
-                    allGroupsButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    adpt = new MyGroupRecyclerViewAdapter(GroupFragment.this.all_groups.getItems(),mListener);
+                    adpt = new MyGroupRecyclerViewAdapter(GroupFragment.this.all_groups.getItems(), mListener);
+                    changeTabColor(allGroupsButton);
                     recycleView.setAdapter(GroupFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("group").orderBy("groupName");
                     all_groups.read_current(q, new DBResponse(getActivity()) {
@@ -149,8 +150,9 @@ public class GroupFragment extends Fragment {
                         public <T> void onSuccess(T t) {
                             adpt.notifyDataSetChanged();
                         }
+
                         @Override
-                        public <T> void onFailure(T t){
+                        public <T> void onFailure(T t) {
 
                         }
 
@@ -161,6 +163,14 @@ public class GroupFragment extends Fragment {
         return view;
     }
 
+    private void changeTabColor(Button button) {
+        allGroupsButton.setBackgroundColor(Color.TRANSPARENT);
+        myGroupsButton.setBackgroundColor(Color.TRANSPARENT);
+        allGroupsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        myGroupsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        button.setTextColor(getResources().getColor(R.color.white));
+    }
 
     @Override
     public void onAttach(Context context) {

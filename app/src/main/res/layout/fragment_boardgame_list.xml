@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorAccent"
     android:layout_gravity="center">
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:background="@color/colorAccent">
+        android:orientation="horizontal">
         <Button
             android:id="@+id/user_games"
             android:layout_width="wrap_content"
@@ -67,7 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add_white_24dp"
-        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"

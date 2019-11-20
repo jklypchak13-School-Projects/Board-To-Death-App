@@ -186,7 +186,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_close_black_24dp"
         android:visibility="invisible"
-        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/editTextPasswordConfirm"
         app:layout_constraintEnd_toEndOf="@+id/editTextPasswordConfirm"
         app:layout_constraintHorizontal_bias="0.974"
@@ -200,7 +199,6 @@
         android:enabled="false"
         android:text="@string/sign_up"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -217,7 +215,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/editTextUsername"
         app:layout_constraintEnd_toEndOf="@+id/editTextUsername"
         app:layout_constraintHorizontal_bias="0.974"
-        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="@+id/editTextUsername"
         app:layout_constraintTop_toTopOf="@+id/editTextUsername"
         app:layout_constraintVertical_bias="0.523" />
