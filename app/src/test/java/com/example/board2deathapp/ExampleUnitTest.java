@@ -27,46 +27,4 @@ public class ExampleUnitTest {
     public void eventBeforeIsAfterAfterDate() {
     }
 
-    @Test
-    public void addNewsletterPost() {
-        final ModelCollection<Newsletter> before = new ModelCollection<>(Newsletter.class);
-        before.read_current(FirebaseFirestore.getInstance().collection("Newsletter").orderBy("title"), new DBResponse(null) {
-            @Override
-            public <T> void onSuccess(T t) {
-                assertTrue(true);
-            }
-
-            @Override
-            public <T> void onFailure(T t) {
-                assertTrue(true);
-            }
-        });
-//            @Override
-//            public <T> void onSuccess(T t) {
-//                Newsletter event = new Newsletter("title", "content", "username");
-//                event.create(new DBResponse(null) {
-//                    @Override
-//                    public <T> void onSuccess(T t) {
-//                        final ModelCollection<Newsletter> after = new ModelCollection<>(Newsletter.class);
-//                        after.read_current(FirebaseFirestore.getInstance().collection("Newsletter").orderBy("title"), new DBResponse(null) {
-//                            @Override
-//                            public <T> void onSuccess(T t) {
-//                                assertEquals(before.getItems().size(), after.getItems().size() + 1);
-//                            }
-//
-//                            @Override
-//                            public <T> void onFailure(T t) {
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public <T> void onFailure(T t) {
-//                    }
-//                });
-//            }
-//            @Override
-//            public <T> void onFailure(T t) { }
-//        });
-    }
 }

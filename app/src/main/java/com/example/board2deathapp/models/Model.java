@@ -12,10 +12,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class Model {
@@ -34,6 +36,7 @@ public abstract class Model {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference docRef) {
+                        setID(docRef.getId());
                         Log.d(this.getClass().getName().toUpperCase(), "Successfully Created " + docRef);
                         dbResponse.onSuccess(docRef);
                     }
@@ -112,8 +115,17 @@ public abstract class Model {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    Log.d(this.getClass().getName().toUpperCase(), "Successfully acquired" + q);
-                    dbResponse.onSuccess(task.getResult());
+                    List<DocumentSnapshot> result = task.getResult().getDocuments();
+                    if(result.size()>0){
+                        //Return the first one
+                        fromMap(result.get(0).getData());
+                        setID(result.get(0).getReference().getId());
+                        Log.d(this.getClass().getName().toUpperCase(), "Successfully acquired" + q);
+                        dbResponse.onSuccess(task.getResult());
+                    }else{
+                        dbResponse.onFailure(null);
+                    }
+
                 } else {
                     Log.d(this.getClass().getName().toUpperCase(), "Failed to get" + q);
                     dbResponse.onFailure(null);

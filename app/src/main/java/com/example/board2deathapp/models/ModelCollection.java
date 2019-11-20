@@ -38,9 +38,21 @@ public class ModelCollection<T extends Model> {
                 if (task.isSuccessful()) {
                     Log.d(this.getClass().getName().toUpperCase(), "Successfully acquired" + q);
                     ModelCollection.this.data.clear();
-                    ModelCollection.this.data.addAll(task.getResult().toObjects(clazz));
+                    List<DocumentSnapshot> t = task.getResult().getDocuments();
+                    for(DocumentSnapshot doc:t){
+                        Model m;
+                        try{
+                            m =(Model) clazz.newInstance();
+                        }catch(Exception error){
+                            m= (Model) doc.toObject(clazz);
+                        }
+
+                        m.fromMap(doc.getData());
+                        m.setID(doc.getReference().getId());
+                        data.add(m);
+                    }
                     if(dbResponse != null){
-                        dbResponse.onSuccess(task.getResult());
+                        dbResponse.onSuccess(task.getResult().getDocuments());
                     }
 
                 } else {
@@ -72,7 +84,6 @@ public class ModelCollection<T extends Model> {
                             m.setID(doc.getReference().getId());
                             data.add(m);
                         }
-
                         if(dbResponse != null){
                             dbResponse.onSuccess(queryDocumentSnapshots);
                         }
