@@ -34,23 +34,6 @@ public class Newsletter extends Model {
         this.description = description;
         this.date = Calendar.getInstance().getTime();
         this.username = username;
-
-        this.create(new DBResponse(a) {
-            @Override
-            public <T> void onSuccess(T t) {
-                Log.d(TAG, t.toString());
-                if (a != null) {
-                    Toast.makeText(a.getApplicationContext(), "Successfully Created a Newsletter", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public <T> void onFailure(T t) {
-                if (a != null) {
-                    Toast.makeText(a.getApplicationContext(), "There was an issue while creating your Newsletter.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override

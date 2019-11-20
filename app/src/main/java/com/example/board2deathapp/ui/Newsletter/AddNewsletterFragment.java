@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
+import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.Newsletter;
 import com.example.board2deathapp.models.User;
 
@@ -58,7 +60,23 @@ public class AddNewsletterFragment extends DialogFragment {
                 String title = name_field.getText().toString();
                 String description = description_field.getText().toString();
 
-                new Newsletter(title, description, current_user.getUsername(), getActivity());
+                Newsletter new_post = new Newsletter(title, description, current_user.getUsername(), getActivity());
+                new_post.create(new DBResponse(getActivity()) {
+                    @Override
+                    public <T> void onSuccess(T t) {
+                        Log.d(TAG, t.toString());
+                        if (getActivity() != null) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Successfully Created a Newsletter", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public <T> void onFailure(T t) {
+                        if (getActivity() != null) {
+                            Toast.makeText(getActivity().getApplicationContext(), "There was an issue while creating your Newsletter.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
         builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
