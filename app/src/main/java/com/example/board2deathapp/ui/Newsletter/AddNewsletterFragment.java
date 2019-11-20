@@ -43,7 +43,7 @@ public class AddNewsletterFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        final User current_user = ((LandingActivity)getActivity()).getUser();
+        final User current_user = ((LandingActivity) getActivity()).getUser();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         final View v = inflater.inflate(R.layout.fragment_newsletter_dialog, null);

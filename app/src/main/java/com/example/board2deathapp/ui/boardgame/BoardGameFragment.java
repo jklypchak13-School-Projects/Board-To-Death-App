@@ -10,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -78,8 +79,8 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
         super.onCreate(savedInstanceState);
 
         //Get Current User
-        LandingActivity  a = (LandingActivity) getActivity();
-        if(a != null){
+        LandingActivity a = (LandingActivity) getActivity();
+        if (a != null) {
             current_user = a.getUser().getUsername();
         }
 
@@ -89,7 +90,7 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
         club_games = new ModelCollection<>(BoardGame.class);
 
         //Set Up the Adapter
-        this.adpt = new MyBoardGameRecyclerViewAdapter(this.user_games.getItems(),mListener);
+        this.adpt = new MyBoardGameRecyclerViewAdapter(this.user_games.getItems(), mListener);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -105,10 +106,10 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
 
         //Initialize the Sensor Event
         Activity a = getActivity();
-        if(a != null) {
+        if (a != null) {
             manager = (SensorManager) a.getSystemService(Context.SENSOR_SERVICE);
         }
-        if(manager != null){
+        if (manager != null) {
             Sensor s = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             manager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
         }
@@ -135,13 +136,14 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 public <T> void onSuccess(T t) {
                     adpt.notifyDataSetChanged();
                 }
+
                 @Override
-                public <T> void onFailure(T t){
+                public <T> void onFailure(T t) {
 
                 }
 
             });
-            current_items = (ArrayList<BoardGame>)user_games.getItems();
+            current_items = (ArrayList<BoardGame>) user_games.getItems();
 
             recycleView = recyclerView;
 
@@ -151,7 +153,7 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 public void onClick(View v) {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     DialogFragment temp = new AddBoardGameFragment();
-                    temp.show(fm,"ADD_BOARDGAME");
+                    temp.show(fm, "ADD_BOARDGAME");
                 }
             });
 
@@ -165,11 +167,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
             all_games_b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    current_items = (ArrayList<BoardGame>)BoardGameFragment.this.all_games.getItems();
+                    current_items = (ArrayList<BoardGame>) BoardGameFragment.this.all_games.getItems();
                     all_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     my_games_b.setBackgroundColor(Color.TRANSPARENT);
                     club_games_b.setBackgroundColor(Color.TRANSPARENT);
-                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.all_games.getItems(),mListener);
+                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.all_games.getItems(), mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").orderBy("owner");
                     all_games.read_current(q, new DBResponse(getActivity()) {
@@ -177,8 +179,9 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                         public <T> void onSuccess(T t) {
                             adpt.notifyDataSetChanged();
                         }
+
                         @Override
-                        public <T> void onFailure(T t){
+                        public <T> void onFailure(T t) {
 
                         }
 
@@ -189,11 +192,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
             my_games_b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    current_items = (ArrayList<BoardGame>)BoardGameFragment.this.user_games.getItems();
+                    current_items = (ArrayList<BoardGame>) BoardGameFragment.this.user_games.getItems();
                     all_games_b.setBackgroundColor(Color.TRANSPARENT);
                     my_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     club_games_b.setBackgroundColor(Color.TRANSPARENT);
-                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.user_games.getItems(),mListener);
+                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.user_games.getItems(), mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", current_user);
                     user_games.read_current(q, new DBResponse(getActivity()) {
@@ -201,8 +204,9 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                         public <T> void onSuccess(T t) {
                             adpt.notifyDataSetChanged();
                         }
+
                         @Override
-                        public <T> void onFailure(T t){
+                        public <T> void onFailure(T t) {
 
                         }
 
@@ -213,11 +217,11 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
             club_games_b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    current_items = (ArrayList<BoardGame>)BoardGameFragment.this.club_games.getItems();
+                    current_items = (ArrayList<BoardGame>) BoardGameFragment.this.club_games.getItems();
                     all_games_b.setBackgroundColor(Color.TRANSPARENT);
                     my_games_b.setBackgroundColor(Color.TRANSPARENT);
                     club_games_b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.club_games.getItems(),mListener);
+                    adpt = new MyBoardGameRecyclerViewAdapter(BoardGameFragment.this.club_games.getItems(), mListener);
                     recycleView.setAdapter(BoardGameFragment.this.adpt);
                     Query q = FirebaseFirestore.getInstance().collection("boardgame").whereEqualTo("owner", CLUB_USER);
                     club_games.read_current(q, new DBResponse(getActivity()) {
@@ -225,8 +229,9 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                         public <T> void onSuccess(T t) {
                             adpt.notifyDataSetChanged();
                         }
+
                         @Override
-                        public <T> void onFailure(T t){
+                        public <T> void onFailure(T t) {
 
                         }
 
@@ -251,7 +256,7 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if(!displaying) {
+        if (!displaying) {
 
             float x = event.values[0];
             float y = event.values[1];
@@ -269,7 +274,7 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
                 BoardGame g = current_items.get(rand.nextInt(current_items.size()));
 
                 Activity current_activity = getActivity();
-                if(current_activity != null){
+                if (current_activity != null) {
                     FragmentManager fm = ((FragmentActivity) current_activity).getSupportFragmentManager();
 
                     DetailedBoardgameFragment temp = new DetailedBoardgameFragment();
@@ -283,7 +288,8 @@ public class BoardGameFragment extends Fragment implements SensorEventListener {
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy){}
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 
 
 }

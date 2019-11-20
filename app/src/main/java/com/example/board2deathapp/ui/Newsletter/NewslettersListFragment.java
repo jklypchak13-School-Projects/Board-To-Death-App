@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,6 +26,8 @@ import com.example.board2deathapp.models.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.List;
+
 public class NewslettersListFragment extends Fragment {
 
 
@@ -35,6 +39,7 @@ public class NewslettersListFragment extends Fragment {
     private ModelCollection<Newsletter> All_Newsletters;
     private OnListFragmentInteractionListener mListener;
     private MyNewsletterRecyclerViewAdapter adpt;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -55,14 +60,31 @@ public class NewslettersListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         All_Newsletters = new ModelCollection<Newsletter>(Newsletter.class);
-
-        this.adpt = new MyNewsletterRecyclerViewAdapter(this.All_Newsletters.getItems(),mListener);
-
+        this.adpt = new MyNewsletterRecyclerViewAdapter(this.All_Newsletters.getItems(), mListener);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+    }
+
+    private void queryWithOffset() {
+        final int scrollOffset = 10;
+        List<Newsletter> newsletters = this.All_Newsletters.getItems();
+        Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date", Query.Direction.DESCENDING).limit(newsletters.size() + scrollOffset);
+        if (newsletters.isEmpty()) {
+            q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date", Query.Direction.DESCENDING).limit(scrollOffset);
+        }
+        All_Newsletters.read_current(q, new DBResponse(getActivity()) {
+            @Override
+            public <T> void onSuccess(T t) {
+                adpt.notifyDataSetChanged();
+            }
+
+            @Override
+            public <T> void onFailure(T t) {
+
+            }
+        });
     }
 
     @Override
@@ -81,42 +103,27 @@ public class NewslettersListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(this.adpt);
-            Query q = FirebaseFirestore.getInstance().collection("newsletter").orderBy("date",  Query.Direction.DESCENDING);
-            All_Newsletters.read_current(q, new DBResponse(getActivity()) {
+            queryWithOffset();
+            view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public <T> void onSuccess(T t) {
-                    adpt.notifyDataSetChanged();
+                public void onClick(View v) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    DialogFragment temp = new AddNewsletterFragment();
+                    temp.show(fm, "ADD_NEWSLETTER");
                 }
-                @Override
-                public <T> void onFailure(T t){
-
-                }
-
             });
-            LandingActivity current_activity = (LandingActivity)getActivity();
-            if(current_activity != null){
-                User current = current_activity.getUser();
-                if(current.isAdmin()){
-                    view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            FragmentManager fm = getActivity().getSupportFragmentManager();
-                            DialogFragment temp = new AddNewsletterFragment();
-                            temp.show(fm,"ADD_NEWSLETTER");
-                        }
-                    });
-                }else{
-                    view.findViewById(R.id.addFab).setVisibility(View.INVISIBLE);
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (!recyclerView.canScrollVertically(1)) {
+                        queryWithOffset();
+                    }
                 }
-            }
-
-
-
-
+            });
         }
         return view;
     }
-
 
     @Override
     public void onDetach() {
