@@ -1,4 +1,5 @@
 package com.example.board2deathapp.models;
+
 import android.app.Activity;
 import android.os.Parcel;
 import android.util.Log;
@@ -23,7 +24,7 @@ public class Group extends Model {
     private String owner;
     private String location;
 
-    public Group(String name, String description, String date, int maxGroupSize, String game, String owner, String location){
+    public Group(String name, String description, String date, int maxGroupSize, String game, String owner, String location) {
         this.groupName = name;
         this.description = description;
         this.date = date;
@@ -34,12 +35,13 @@ public class Group extends Model {
         this.location = location;
     }
 
-    public Group(){
+    public Group() {
 
     }
+
     @Override
-    public Map<String, Object> toMap(){
-        Map<String, Object> attrs = new HashMap<String,Object>();
+    public Map<String, Object> toMap() {
+        Map<String, Object> attrs = new HashMap<String, Object>();
         attrs.put("groupName", this.groupName);
         attrs.put("description", this.description);
         attrs.put("owner", this.owner);
@@ -52,77 +54,97 @@ public class Group extends Model {
     }
 
     @Override
-    public void fromMap(Map<String,Object> data){
-        this.groupName = (String)data.get("groupName");
-        this.description = (String)data.get("description");
-        this.owner = (String)data.get("owner");
-        this.date = (String)data.get("date");
-        this.game = (String)data.get("game");
-        this.maxGroupSize = Math.toIntExact((long)data.get("maxGroupSize"));
-        this.users = (ArrayList<String>)data.get("users");
-        this.location = (String)data.get("location");
-
+    public void fromMap(Map<String, Object> data) {
+        this.groupName = (String) data.get("groupName");
+        this.description = (String) data.get("description");
+        this.owner = (String) data.get("owner");
+        this.date = (String) data.get("date");
+        this.game = (String) data.get("game");
+        this.maxGroupSize = Math.toIntExact((long) data.get("maxGroupSize"));
+        this.users = (ArrayList<String>) data.get("users");
+        this.location = (String) data.get("location");
 
 
     }
 
 
-    public void join(User u){
+    public void join(User u) {
         users.add(u.getUsername());
     }
 
-    public boolean canJoin(User u){
+    public boolean canJoin(User u) {
         String username = u.getUsername();
 
-        return !users.contains(username) && users.size()<maxGroupSize;
+        return !users.contains(username) && users.size() < maxGroupSize;
     }
 
-    public void leave(User u){
+    public void leave(User u) {
         users.remove(u.getUsername());
     }
 
     //Getter Functions
-    public String getGameString(){
+    public String getGameString() {
         return game;
     }
-    public String getGroupName(){
+
+    public String getGroupName() {
         return groupName;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
-    public String getDate(){
+
+    public String getDate() {
         return date;
     }
-    public String getMaxSize() { return this.maxGroupSize+"";}
-    public String getOwner(){
+
+    public String getMaxSize() {
+        return this.maxGroupSize + "";
+    }
+
+    public String getOwner() {
         return owner;
     }
-    public String getFractionString(){ return this.users.size()+"/"+this.maxGroupSize;}
-    public String getPlayerString(){
+
+    public String getFractionString() {
+        return this.users.size() + "/" + this.maxGroupSize;
+    }
+
+    public String getPlayerString() {
         String result = "";
-        for(String player:this.users){
-            result+=player+"\n";
+        for (String player : this.users) {
+            result += player + "\n";
         }
         return result;
     }
-    public String getLocation(){return this.location;}
+
+    public String getLocation() {
+        return this.location;
+    }
 
     //Setter Functions
-    public void setGroupName(String g){
+    public void setGroupName(String g) {
         groupName = g;
     }
-    public void setDescription(String g){
+
+    public void setDescription(String g) {
         description = g;
     }
-    public void setGame(String g){
+
+    public void setGame(String g) {
         game = g;
     }
-    public void setCount(int i){
+
+    public void setCount(int i) {
         maxGroupSize = i;
     }
-    public void setDate(String g){
+
+    public void setDate(String g) {
         date = g;
     }
-    public void setLocation(String l){location = l;}
+
+    public void setLocation(String l) {
+        location = l;
+    }
 }
