@@ -29,7 +29,7 @@ public class Newsletter extends Model {
     private String title;
     private String username;
 
-    public Newsletter(String title, String description, String username, final Activity a) {
+    public Newsletter(String title, String description, String username) {
         this.title = title;
         this.description = description;
         this.date = Calendar.getInstance().getTime();

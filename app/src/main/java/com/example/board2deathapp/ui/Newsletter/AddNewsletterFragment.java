@@ -60,7 +60,7 @@ public class AddNewsletterFragment extends DialogFragment {
                 String title = name_field.getText().toString();
                 String description = description_field.getText().toString();
 
-                Newsletter new_post = new Newsletter(title, description, current_user.getUsername(), getActivity());
+                Newsletter new_post = new Newsletter(title, description, current_user.getUsername());
                 new_post.create(new DBResponse(getActivity()) {
                     @Override
                     public <T> void onSuccess(T t) {
