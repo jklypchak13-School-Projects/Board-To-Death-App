@@ -40,7 +40,7 @@ public class Newsletter extends Model {
     public Map<String, Object> toMap() {
         Map<String, Object> attrs = new HashMap<String, Object>();
 
-        attrs.put("title",this.title);
+        attrs.put("title", this.title);
         attrs.put("description", this.description);
         attrs.put("date", this.date);
         attrs.put("username", this.username);
@@ -50,10 +50,10 @@ public class Newsletter extends Model {
     @Override
     public void fromMap(Map<String, Object> data) {
 
-        this.title = (String)data.get("title");
+        this.title = (String) data.get("title");
         this.description = (String) data.get("description");
-        Timestamp t = (Timestamp)data.get("date");
-        if(t != null){
+        Timestamp t = (Timestamp) data.get("date");
+        if (t != null) {
             date = t.toDate();
         }
         this.username = (String) data.get("username");
@@ -70,14 +70,24 @@ public class Newsletter extends Model {
     public String getDescription() {
         return this.description;
     }
+
     public String getDate() {
         return DateFormat.getDateTimeInstance().format(this.date);
     }
+
     public String getUsername() {
         return this.username;
     }
-    public String getTitle(){return this.title;}
 
-    public void setTitle(String d){this.title = d;}
-    public void setDescription(String d){this.description=d;}
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String d) {
+        this.title = d;
+    }
+
+    public void setDescription(String d) {
+        this.description = d;
+    }
 }

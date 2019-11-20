@@ -104,14 +104,24 @@ public class NewslettersListFragment extends Fragment {
             }
             recyclerView.setAdapter(this.adpt);
             queryWithOffset();
-            view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    DialogFragment temp = new AddNewsletterFragment();
-                    temp.show(fm, "ADD_NEWSLETTER");
+            LandingActivity current_activity = (LandingActivity) getActivity();
+            if(current_activity != null){
+                User current_user = current_activity.getUser();
+                if(current_user.isAdmin()){
+                    view.findViewById(R.id.addFab).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            DialogFragment temp = new AddNewsletterFragment();
+                            temp.show(fm, "ADD_NEWSLETTER");
+                        }
+                    });
+                }else{
+                    view.findViewById(R.id.addFab).setVisibility(View.INVISIBLE);
                 }
-            });
+
+            }
+
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
