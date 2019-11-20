@@ -23,30 +23,12 @@ public class BoardGame extends Model {
     private double play_time;
     private static int descriptionLength = 37;
 
-    public BoardGame(String name, String des, String owner, int players, double time, final Activity a) {
+    public BoardGame(String name, String des, String owner, int players, double time) {
         this.name = name;
         this.description = des;
         this.owner = owner;
         this.player_count = players;
         this.play_time = time;
-
-        this.create(new DBResponse(a) {
-            @Override
-            public <T> void onSuccess(T t) {
-                Log.d(TAG, t.toString());
-                BoardGame.this.setID(((DocumentReference) t).getId());
-                if (a != null) {
-                    Toast.makeText(a.getApplicationContext(), "Successfully Created your Game", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public <T> void onFailure(T t) {
-                if (a != null) {
-                    Toast.makeText(a.getApplicationContext(), "There was an issue created your game.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override

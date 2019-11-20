@@ -8,17 +8,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.board2deathapp.LandingActivity;
 import com.example.board2deathapp.R;
 import com.example.board2deathapp.models.BoardGame;
+import com.example.board2deathapp.models.DBResponse;
 import com.example.board2deathapp.models.User;
+import com.google.firebase.firestore.DocumentReference;
 
 
 public class AddBoardGameFragment extends DialogFragment {
@@ -74,13 +78,26 @@ public class AddBoardGameFragment extends DialogFragment {
                 double play_time = Double.parseDouble(time_field.getText().toString());
                 boolean club = club_game.isChecked();
                 //Create New Activity
-                LandingActivity current_activity = (LandingActivity)getActivity();
+                final LandingActivity current_activity = (LandingActivity)getActivity();
                 if(current_activity != null){
+                    BoardGame new_game;
                     if(club){
-                        new BoardGame(name, description, "Board2Death", player_count, play_time, getActivity());
+                        new_game = new BoardGame(name, description, "Board2Death", player_count, play_time);
                     }else{
-                        new BoardGame(name, description, current_activity.getUser().getUsername(), player_count, play_time, getActivity());
+                        new_game = new BoardGame(name, description, current_activity.getUser().getUsername(), player_count, play_time);
                     }
+                    new_game.create(new DBResponse(current_activity) {
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            Toast.makeText(current_activity, "Successfully Created your Game", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public <T> void onFailure(T t) {
+                            Toast.makeText(current_activity, "There was an issue created your game.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
 
                 }
 
